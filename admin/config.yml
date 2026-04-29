@@ -2,6 +2,8 @@ backend:
   name: github
   repo: Bellagreyy/psychicbelle-site
   branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
@@ -18,17 +20,17 @@ collections:
     fields:
       - {label: "ID", name: "id", widget: "number", hint: "Unique number. Use the next in sequence."}
       - {label: "Slug", name: "slug", widget: "string", hint: "Lowercase, hyphens only. e.g. why-he-went-silent"}
-      - {label: "Title", name: "title", widget: "string", hint: "The full headline as it appears on the page."}
+      - {label: "Title", name: "title", widget: "string"}
       - {label: "Excerpt", name: "excerpt", widget: "text", hint: "2-3 sentence hook shown on the archive grid card."}
       - {label: "Date", name: "date", widget: "string", default: "April 2026", hint: "Display format only. e.g. April 2026"}
       - label: "Category"
         name: "category"
         widget: "select"
         options: ["Twin Flame", "No Contact", "Person of Interest", "Soulmate", "Divine Union", "Sovereign Alignment"]
-      - {label: "Read Time", name: "readTime", widget: "string", default: "5 min", hint: "e.g. 5 min"}
+      - {label: "Read Time", name: "readTime", widget: "string", default: "5 min"}
       - {label: "Featured", name: "featured", widget: "boolean", default: false, hint: "Hero card on archive page."}
       - label: "Content"
         name: "body"
         widget: "markdown"
-        hint: "Your full article. Use Heading 2 for subheadings — these auto-generate the Table of Contents."
+        hint: "Use Heading 2 for subheadings — these auto-generate the Table of Contents."
         buttons: [bold, italic, heading-two, heading-three, quote, bulleted-list, numbered-list]
