@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>The Archive — Admin | Psychic Belle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Loading screen while CMS boots */
+    body { background: #0a0a0a; margin: 0; }
+    #cms-loading {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 20px; background: #0a0a0a;
+    }
+    .cms-diamond {
+      width: 10px; height: 10px;
+      background: #D4AF37; transform: rotate(45deg);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 0.3; transform: rotate(45deg) scale(0.8); }
+      50%      { opacity: 1;   transform: rotate(45deg) scale(1.2); }
+    }
+    .cms-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px; letter-spacing: 0.4em;
+      text-transform: uppercase; color: rgba(240,234,216,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="cms-loading">
+    <div class="cms-diamond"></div>
+    <span class="cms-label">Loading Admin</span>
+  </div>
+
+  <!-- Netlify Identity widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Netlify CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</body>
+</html>

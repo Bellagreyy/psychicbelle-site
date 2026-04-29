@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Title and meta filled dynamically by JS -->
+<title>The Archive — Psychic Belle</title>
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<script src="//code.tidio.co/ymud1rzkyzk90r85ach0scowv0rblxnr.js" async></script>
+<style>
+:root {
+  --gold:       #D4AF37;
+  --gold-pale:  #e8d27a;
+  --gold-dim:   rgba(212,175,55,0.15);
+  --gold-line:  rgba(212,175,55,0.35);
+  --gold-faint: rgba(212,175,55,0.07);
+  --black:      #0a0a0a;
+  --surface:    #111111;
+  --text:       #f0ead8;
+  --text-muted: rgba(240,234,216,0.55);
+  --text-dim:   rgba(240,234,216,0.32);
+  --green:      #4ade80;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* Bottom padding so FAB doesn't cover content */
+  padding-bottom: 100px;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(212,175,55,0.05) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,10,0.95);
+  border-bottom: 0.5px solid var(--gold-line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-inner {
+  max-width: 800px; margin: 0 auto;
+  padding: 0 24px; height: 56px;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 16px;
+}
+
+.nav-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 12px; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--gold);
+  text-decoration: none;
+}
+
+.nav-back {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--text-dim);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 8px;
+  transition: color 0.2s;
+}
+.nav-back::before {
+  content: '←';
+  font-size: 12px; transition: transform 0.2s;
+}
+.nav-back:hover { color: var(--gold); }
+.nav-back:hover::before { transform: translateX(-3px); }
+
+.nav-auth {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--text-dim);
+  text-decoration: none; transition: color 0.2s;
+  white-space: nowrap;
+}
+.nav-auth:hover { color: var(--gold); }
+
+/* ── ARTICLE LAYOUT ── */
+.page {
+  position: relative; z-index: 1;
+  max-width: 720px; margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── ARTICLE HEADER ── */
+.article-header {
+  padding: 64px 0 48px;
+  border-bottom: 0.5px solid var(--gold-line);
+  margin-bottom: 52px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.article-meta {
+  display: flex; align-items: center;
+  gap: 12px; margin-bottom: 22px; flex-wrap: wrap;
+}
+
+.article-category {
+  font-family: 'Cinzel', serif;
+  font-size: 8px; letter-spacing: 0.35em;
+  text-transform: uppercase; color: var(--gold);
+  opacity: 0.85;
+}
+
+.meta-dot {
+  width: 3px; height: 3px;
+  background: var(--text-dim); border-radius: 50%;
+}
+
+.article-date,
+.article-readtime {
+  font-size: 11px; font-style: italic;
+  color: var(--text-dim); letter-spacing: 0.06em;
+}
+
+.article-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(24px, 6vw, 38px);
+  font-weight: 400; letter-spacing: 0.1em;
+  line-height: 1.25; color: var(--text);
+  margin-bottom: 20px;
+}
+
+.article-excerpt {
+  font-size: clamp(16px, 3vw, 19px);
+  font-style: italic; line-height: 1.8;
+  color: var(--text-muted); letter-spacing: 0.03em;
+}
+
+/* ── SANCTUARY SAVE BUTTON ── */
+.sanctuary-bar {
+  display: none; /* shown when logged in */
+  align-items: center; gap: 14px;
+  padding: 14px 20px;
+  border: 0.5px solid var(--gold-line);
+  background: var(--gold-faint);
+  margin-bottom: 48px;
+  animation: fadeUp 0.5s ease both 0.2s;
+}
+
+.sanctuary-bar.visible { display: flex; }
+
+.sanctuary-icon {
+  font-size: 14px; color: var(--gold); flex-shrink: 0;
+}
+
+.sanctuary-text {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--text-dim);
+  flex: 1;
+}
+
+.sanctuary-btn {
+  background: transparent;
+  border: 0.5px solid var(--gold-line);
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 8px 16px; cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  -webkit-appearance: none;
+}
+.sanctuary-btn:hover {
+  background: var(--gold); color: var(--black);
+  border-color: var(--gold);
+}
+.sanctuary-btn.saved {
+  color: var(--green); border-color: var(--green);
+  cursor: default;
+}
+.sanctuary-btn.saved:hover {
+  background: transparent; color: var(--green); border-color: var(--green);
+}
+
+/* ── READING PROGRESS BAR ── */
+.reading-progress {
+  position: fixed; top: 56px; left: 0; right: 0;
+  height: 2px; z-index: 99;
+  background: rgba(212,175,55,0.1);
+}
+.reading-progress-fill {
+  height: 100%; width: 0%;
+  background: var(--gold);
+  transition: width 0.1s linear;
+}
+
+/* ── TABLE OF CONTENTS ── */
+.toc {
+  width: 100%;
+  border: 0.5px solid var(--gold-line);
+  background: var(--gold-faint);
+  padding: 28px 28px 24px;
+  margin-bottom: 48px;
+  animation: fadeUp 0.5s ease both 0.1s;
+}
+
+.toc-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toc-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.35em;
+  text-transform: uppercase; color: var(--gold);
+  opacity: 0.8;
+}
+
+.toc-toggle {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--text-dim);
+  transition: color 0.2s;
+}
+.toc-toggle:hover { color: var(--gold); }
+
+.toc-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 0;
+}
+
+.toc-list.collapsed { display: none; }
+
+.toc-item {
+  border-top: 0.5px solid rgba(212,175,55,0.1);
+}
+.toc-item:first-child { border-top: none; }
+
+.toc-link {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 0;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  transition: color 0.2s, padding-left 0.2s;
+}
+.toc-link:hover {
+  color: var(--gold);
+  padding-left: 6px;
+}
+
+.toc-num {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.2em;
+  color: var(--gold); opacity: 0.5;
+  flex-shrink: 0; width: 18px;
+}
+
+.toc-word-count {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--text-dim);
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 0.5px solid rgba(212,175,55,0.1);
+}
+
+/* ── ARTICLE BODY TYPOGRAPHY — mobile-first 18px minimum ── */
+.article-body {
+  animation: fadeUp 0.6s ease both 0.15s;
+}
+
+.article-body p {
+  font-size: clamp(18px, 3vw, 20px);
+  line-height: 2;
+  color: rgba(240,234,216,0.72);
+  margin-bottom: 32px;
+  letter-spacing: 0.015em;
+  /* Improved dark-mode readability — slightly warm off-white not pure white */
+}
+
+.article-body h2 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(15px, 3vw, 18px);
+  font-weight: 400; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--text);
+  margin: 56px 0 20px;
+  padding-top: 32px;
+  border-top: 0.5px solid rgba(212,175,55,0.15);
+  /* Scroll offset so TOC anchors clear the sticky nav */
+  scroll-margin-top: 80px;
+}
+
+.article-body h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(17px, 3vw, 20px);
+  font-weight: 400; font-style: italic;
+  letter-spacing: 0.06em;
+  color: var(--gold); opacity: 0.9;
+  margin: 36px 0 14px;
+  scroll-margin-top: 80px;
+}
+
+.article-body strong {
+  font-weight: 400; color: var(--text);
+  font-style: normal;
+}
+
+.article-body em {
+  font-style: italic;
+  color: var(--gold); opacity: 0.85;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 20px;
+  margin-bottom: 32px;
+}
+
+.article-body li {
+  font-size: clamp(18px, 3vw, 20px);
+  line-height: 1.9;
+  color: rgba(240,234,216,0.72);
+  margin-bottom: 10px;
+  letter-spacing: 0.015em;
+}
+
+.article-body blockquote {
+  border-left: 1.5px solid var(--gold);
+  padding: 22px 26px;
+  background: rgba(212,175,55,0.06);
+  margin: 40px 0;
+  font-size: clamp(18px, 3vw, 21px);
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+}
+
+/* Divider between major sections */
+.article-body hr {
+  border: none;
+  border-top: 0.5px solid rgba(212,175,55,0.2);
+  margin: 52px 0;
+}
+
+/* ── ARTICLE CTA — mid-article Belle prompt ── */
+.article-cta {
+  border: 0.5px solid var(--gold-line);
+  background: var(--gold-faint);
+  padding: 28px 26px;
+  margin: 52px 0;
+  text-align: center;
+}
+
+.article-cta-text {
+  font-size: clamp(16px, 3vw, 18px);
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.article-cta-btn {
+  display: inline-block;
+  padding: 13px 28px;
+  background: var(--gold); color: var(--black);
+  font-family: 'Cinzel', serif;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  border: none; cursor: pointer; text-decoration: none;
+  transition: background 0.2s;
+  -webkit-appearance: none;
+}
+.article-cta-btn:hover { background: var(--gold-pale); }
+
+/* ── ARTICLE FOOTER ── */
+.article-footer {
+  margin-top: 64px;
+  padding-top: 36px;
+  border-top: 0.5px solid var(--gold-line);
+  animation: fadeUp 0.6s ease both 0.3s;
+}
+
+.article-footer-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.35em;
+  text-transform: uppercase; color: var(--text-dim);
+  display: block; margin-bottom: 28px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px; margin-bottom: 44px;
+}
+
+.related-card {
+  padding: 22px 20px;
+  border: 0.5px solid var(--gold-line);
+  background: var(--gold-faint);
+  text-decoration: none; color: inherit;
+  transition: border-color 0.25s, background 0.25s;
+}
+.related-card:hover {
+  border-color: var(--gold);
+  background: rgba(212,175,55,0.1);
+}
+
+.related-cat {
+  font-family: 'Cinzel', serif;
+  font-size: 8px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--gold);
+  opacity: 0.7; display: block; margin-bottom: 8px;
+}
+
+.related-title {
+  font-family: 'Cinzel', serif;
+  font-size: 13px; letter-spacing: 0.1em;
+  font-weight: 400; color: var(--text);
+  line-height: 1.4;
+}
+
+/* ── FLOATING ACTION BUTTON ── */
+.tidio-fab {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 200;
+  background: var(--gold);
+  display: flex; align-items: center;
+  justify-content: center; gap: 14px;
+  padding: 18px 32px;
+  cursor: pointer; border: none;
+  transition: background 0.25s;
+  -webkit-appearance: none;
+  box-shadow: 0 -4px 32px rgba(212,175,55,0.2);
+}
+.tidio-fab:hover { background: var(--gold-pale); }
+.tidio-fab:active { opacity: 0.9; }
+
+.fab-icon {
+  font-size: 16px; color: var(--black);
+  flex-shrink: 0;
+}
+
+.fab-text {
+  font-family: 'Cinzel', serif;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--black);
+}
+
+/* ── NOT FOUND ── */
+#notFound {
+  display: none;
+  text-align: center;
+  padding: 120px 24px;
+}
+.notfound-title {
+  font-family: 'Cinzel', serif;
+  font-size: 24px; letter-spacing: 0.14em;
+  color: var(--text); margin-bottom: 14px;
+}
+.notfound-sub {
+  font-style: italic; color: var(--text-muted);
+  margin-bottom: 32px;
+}
+.back-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--gold); color: var(--black);
+  font-family: 'Cinzel', serif;
+  font-size: 10px; letter-spacing: 0.28em;
+  text-transform: uppercase; text-decoration: none;
+  transition: background 0.25s;
+}
+.back-btn:hover { background: var(--gold-pale); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .page { padding: 0 16px; }
+  .related-grid { grid-template-columns: 1fr; }
+  .fab-text { font-size: 10px; letter-spacing: 0.22em; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-brand">Psychic Belle</a>
+    <a href="/archive.html" class="nav-back">The Archive</a>
+    <a href="/portal.html" class="nav-auth" id="navAuthLink">
+      <span id="navUserName">Sign In</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ── MAIN ARTICLE ── -->
+<!-- ── READING PROGRESS BAR ── -->
+<div class="reading-progress" id="readingProgress" style="display:none">
+  <div class="reading-progress-fill" id="progressFill"></div>
+</div>
+
+<main>
+  <div class="page">
+
+    <!-- Not found state -->
+    <div id="notFound">
+      <h1 class="notfound-title">Article Not Found</h1>
+      <p class="notfound-sub">This frequency has not been written yet.</p>
+      <a href="/archive.html" class="back-btn">Return to Archive</a>
+    </div>
+
+    <!-- Article content (populated by JS) -->
+    <article id="articleContent" style="display:none">
+
+      <header class="article-header">
+        <div class="article-meta">
+          <span class="article-category" id="articleCategory"></span>
+          <span class="meta-dot"></span>
+          <span class="article-date" id="articleDate"></span>
+          <span class="meta-dot"></span>
+          <span class="article-readtime" id="articleReadtime"></span>
+        </div>
+        <h1 class="article-title" id="articleTitle"></h1>
+        <p class="article-excerpt" id="articleExcerpt"></p>
+      </header>
+
+      <!-- Save to Sanctuary bar (logged-in users only) -->
+      <div class="sanctuary-bar" id="sanctuaryBar" role="complementary" aria-label="Save to Sanctuary">
+        <span class="sanctuary-icon" aria-hidden="true">&#10022;</span>
+        <span class="sanctuary-text">Save this insight to your Sanctuary</span>
+        <button class="sanctuary-btn" id="sanctuaryBtn">Save</button>
+      </div>
+
+      <!-- Table of Contents — auto-built from H2s by JS -->
+      <nav class="toc" id="tocContainer" aria-label="Table of Contents" style="display:none">
+        <div class="toc-header" id="tocHeader">
+          <span class="toc-eyebrow">In This Article</span>
+          <span class="toc-toggle" id="tocToggle">Collapse</span>
+        </div>
+        <ol class="toc-list" id="tocList"></ol>
+        <div class="toc-word-count" id="tocWordCount"></div>
+      </nav>
+
+      <!-- Article body -->
+      <div class="article-body" id="articleBody"></div>
+
+      <!-- Article footer with related posts -->
+      <footer class="article-footer">
+        <span class="article-footer-label">Continue Reading</span>
+        <div class="related-grid" id="relatedGrid"></div>
+        <a href="/archive.html" class="back-btn" style="margin-top:8px">View Full Archive</a>
+      </footer>
+
+    </article>
+
+  </div>
+</main>
+
+<!-- ── FLOATING ACTION BUTTON — Discuss with Belle ── -->
+<button class="tidio-fab" id="tidioFab" aria-label="Discuss this with Psychic Belle via live chat">
+  <span class="fab-icon" aria-hidden="true">&#9728;</span>
+  <span class="fab-text">Discuss this Frequency with Belle</span>
+</button>
+
+<!-- ── DATA ── -->
+<script src="posts.js"></script>
+
+<!-- ── CLERK ── -->
+<script>window.__clerk_publishable_key = "pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ";</script>
+<script async crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ"
+  src="https://concise-wasp-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+></script>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ── Get slug from URL ── */
+  var slug = new URLSearchParams(window.location.search).get("post") || "";
+  var post = null;
+
+  for (var i = 0; i < BELLE_POSTS.length; i++) {
+    if (BELLE_POSTS[i].slug === slug) { post = BELLE_POSTS[i]; break; }
+  }
+
+  /* ── Not found ── */
+  if (!post) {
+    document.getElementById("notFound").style.display = "block";
+    document.getElementById("tidioFab").style.display  = "none";
+  } else {
+    renderArticle(post);
+  }
+
+  /* ── Render article ── */
+  function renderArticle(p) {
+    /* Update <head> meta dynamically */
+    document.title = p.title + " — Psychic Belle";
+    setMeta("description", p.excerpt);
+    setMeta("og:title",       p.title + " — Psychic Belle");
+    setMeta("og:description", p.excerpt);
+    setMeta("og:url", "https://psychicbelle.com/article.html?post=" + p.slug);
+    setCanonical("https://psychicbelle.com/article.html?post=" + p.slug);
+
+    /* Populate article */
+    document.getElementById("articleCategory").textContent = p.category;
+    document.getElementById("articleDate").textContent     = p.date;
+    document.getElementById("articleReadtime").textContent = p.readTime + " read";
+    document.getElementById("articleTitle").textContent    = p.title;
+    document.getElementById("articleExcerpt").textContent  = p.excerpt;
+    document.getElementById("articleBody").innerHTML       = p.content;
+    document.getElementById("articleContent").style.display = "block";
+
+    /* ── Build Table of Contents from H2s ── */
+    buildTOC();
+
+    /* ── Word count ── */
+    buildWordCount(p.content);
+
+    /* ── Reading progress bar ── */
+    initProgressBar();
+
+    /* ── Related posts ── */
+    buildRelated(p);
+  }
+
+  /* ── Table of Contents ── */
+  function buildTOC() {
+    var body     = document.getElementById("articleBody");
+    var headings = body.querySelectorAll("h2");
+    if (headings.length < 2) return; /* Skip TOC for short posts */
+
+    var tocContainer = document.getElementById("tocContainer");
+    var tocList      = document.getElementById("tocList");
+    var tocHeader    = document.getElementById("tocHeader");
+    var tocToggle    = document.getElementById("tocToggle");
+    var collapsed    = false;
+
+    tocList.innerHTML = "";
+
+    headings.forEach(function (h, idx) {
+      /* Give each heading a stable anchor ID */
+      var id = "section-" + (idx + 1);
+      h.setAttribute("id", id);
+
+      var li   = document.createElement("li");
+      li.className = "toc-item";
+
+      var a    = document.createElement("a");
+      a.className = "toc-link";
+      a.href   = "#" + id;
+      a.innerHTML =
+        '<span class="toc-num">' + (idx + 1) + '</span>' +
+        h.textContent;
+
+      /* Smooth scroll with offset for sticky nav */
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        var target = document.getElementById(id);
+        if (target) {
+          var top = target.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: top, behavior: "smooth" });
+        }
+      });
+
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+
+    /* Collapse/expand toggle */
+    tocHeader.addEventListener("click", function () {
+      collapsed = !collapsed;
+      tocList.className = "toc-list" + (collapsed ? " collapsed" : "");
+      tocToggle.textContent = collapsed ? "Expand" : "Collapse";
+    });
+
+    tocContainer.style.display = "block";
+  }
+
+  /* ── Word count & reading time ── */
+  function buildWordCount(content) {
+    /* Strip HTML tags to count only words */
+    var text  = content.replace(/<[^>]+>/g, " ");
+    var words = text.trim().split(/\s+/).filter(function (w) { return w.length > 0; }).length;
+    var mins  = Math.max(1, Math.round(words / 200)); /* 200wpm comfortable reading pace */
+
+    var el = document.getElementById("tocWordCount");
+    if (el) {
+      el.textContent = words.toLocaleString() + " words \u00B7 " + mins + " min read";
+    }
+  }
+
+  /* ── Reading progress bar ── */
+  function initProgressBar() {
+    var bar    = document.getElementById("readingProgress");
+    var fill   = document.getElementById("progressFill");
+    var body   = document.getElementById("articleBody");
+    bar.style.display = "block";
+
+    window.addEventListener("scroll", function () {
+      var bodyRect  = body.getBoundingClientRect();
+      var bodyTop   = bodyRect.top + window.scrollY;
+      var bodyEnd   = bodyTop + body.offsetHeight;
+      var scrolled  = window.scrollY + window.innerHeight;
+      var progress  = Math.min(1, Math.max(0, (scrolled - bodyTop) / (bodyEnd - bodyTop)));
+      fill.style.width = (progress * 100) + "%";
+    }, { passive: true });
+  }
+
+  /* ── Related posts ── */
+  function buildRelated(p) {
+    var related = BELLE_POSTS.filter(function (rp) {
+      return rp.id !== p.id && rp.category === p.category;
+    }).slice(0, 2);
+
+    if (related.length < 2) {
+      var others = BELLE_POSTS.filter(function (rp) {
+        return rp.id !== p.id && rp.category !== p.category;
+      }).slice(0, 2 - related.length);
+      related = related.concat(others);
+    }
+
+    var grid = document.getElementById("relatedGrid");
+    related.forEach(function (rp) {
+      var card = document.createElement("a");
+      card.className = "related-card";
+      card.href = "article.html?post=" + rp.slug;
+      card.innerHTML =
+        '<span class="related-cat">' + rp.category + '</span>' +
+        '<span class="related-title">' + rp.title + '</span>';
+      grid.appendChild(card);
+    });
+  }
+
+  /* ── Meta helpers ── */
+  function setMeta(name, content) {
+    var el = document.querySelector('meta[name="' + name + '"], meta[property="' + name + '"]');
+    if (el) { el.setAttribute("content", content); return; }
+    var m = document.createElement("meta");
+    m.setAttribute(name.indexOf(":") !== -1 ? "property" : "name", name);
+    m.setAttribute("content", content);
+    document.head.appendChild(m);
+  }
+
+  function setCanonical(url) {
+    var el = document.querySelector('link[rel="canonical"]');
+    if (el) { el.href = url; return; }
+    var l = document.createElement("link");
+    l.rel = "canonical"; l.href = url;
+    document.head.appendChild(l);
+  }
+
+  /* ── Tidio FAB ── */
+  document.getElementById("tidioFab").addEventListener("click", function () {
+    try {
+      if (window.tidioChatApi && window.tidioChatApi.open) {
+        window.tidioChatApi.open();
+      } else {
+        /* Queue until Tidio is ready */
+        document.addEventListener("tidioChat-ready", function () {
+          if (window.tidioChatApi && window.tidioChatApi.open) {
+            window.tidioChatApi.open();
+          }
+        });
+      }
+    } catch (e) {}
+  });
+
+  /* ── Clerk: auth + Save to Sanctuary ── */
+  window.addEventListener("load", async function () {
+    try {
+      await window.Clerk.load();
+      var user = window.Clerk.user;
+
+      /* Nav */
+      var navLink = document.getElementById("navAuthLink");
+      var navName = document.getElementById("navUserName");
+
+      if (user) {
+        navName.textContent = user.firstName || "Member";
+        navLink.href = "/portal.html";
+
+        /* Show sanctuary bar */
+        if (post) {
+          var bar    = document.getElementById("sanctuaryBar");
+          var btn    = document.getElementById("sanctuaryBtn");
+          bar.classList.add("visible");
+
+          /* Check if already saved */
+          var saved = user.publicMetadata &&
+                      user.publicMetadata.saved_articles &&
+                      user.publicMetadata.saved_articles.indexOf(post.id) !== -1;
+
+          if (saved) {
+            btn.textContent = "Saved \u2713";
+            btn.classList.add("saved");
+          }
+
+          btn.addEventListener("click", async function () {
+            if (btn.classList.contains("saved")) return;
+            btn.disabled = true;
+            btn.textContent = "Saving\u2026";
+
+            try {
+              var token = await window.Clerk.session.getToken();
+              var res = await fetch("/.netlify/functions/save-article", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                  userId:    user.id,
+                  articleId: post.id
+                })
+              });
+
+              if (res.ok) {
+                await window.Clerk.user.reload();
+                btn.textContent = "Saved \u2713";
+                btn.classList.add("saved");
+                btn.disabled = false;
+              } else {
+                btn.textContent = "Save";
+                btn.disabled = false;
+              }
+            } catch (e) {
+              btn.textContent = "Save";
+              btn.disabled = false;
+            }
+          });
+        }
+
+      } else {
+        navName.textContent = "Sign In";
+        navLink.href = "/login.html";
+      }
+
+    } catch (e) {
+      /* Clerk unavailable */
+    }
+  });
+
+}());
+</script>
+
+</body>
+</html>
