@@ -109,12 +109,24 @@ body::after {
 }
 
 /* ── CLERK COMPONENTS OVERRIDE ── */
-.cl-rootBox { width: 100% !important; }
+#clerk-sign-in {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+.cl-rootBox {
+  width: 100% !important;
+  max-width: 100% !important;
+}
 .cl-card {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.cl-main {
+  width: 100% !important;
 }
 .cl-headerTitle,
 .cl-headerSubtitle { display: none !important; }
