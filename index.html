@@ -393,9 +393,72 @@ body.session-active{padding-top:52px}
 .fade-4{animation:fadeUp .9s ease both .7s}
 .fade-5{animation:fadeUp .9s ease both .9s}
 @media(max-width:380px){.page{padding:0 16px 60px}.proof-label{font-size:10px}.pkg-card{padding:20px 18px 18px}}
+
+/* ── GLOBAL NAV ── */
+.site-nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(10,10,10,0.97);
+  border-bottom:0.5px solid var(--gold-line);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.site-nav-inner{
+  max-width:560px;margin:0 auto;
+  padding:0 24px;height:52px;
+  display:flex;align-items:center;
+  justify-content:space-between;gap:12px;
+}
+.nav-brand{
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:0.28em;
+  text-transform:uppercase;color:var(--gold);
+  text-decoration:none;white-space:nowrap;flex-shrink:0;
+}
+.nav-links{
+  display:flex;gap:0;list-style:none;
+  border:0.5px solid var(--gold-line);
+}
+.nav-links a{
+  font-family:'Cinzel',serif;
+  font-size:8px;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--text-dim);
+  text-decoration:none;
+  padding:8px 14px;
+  display:block;
+  border-right:0.5px solid var(--gold-line);
+  transition:color .2s,background .2s;
+  white-space:nowrap;
+}
+.nav-links li:last-child a{border-right:none}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);background:var(--gold-faint)}
+.nav-member{
+  font-family:'Cinzel',serif;
+  font-size:8px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--text-dim);
+  text-decoration:none;white-space:nowrap;
+  transition:color .2s;flex-shrink:0;
+}
+.nav-member:hover{color:var(--gold)}
+@media(max-width:440px){
+  .nav-links a{padding:8px 10px;font-size:7px;letter-spacing:0.15em}
+  .nav-brand{font-size:10px}
+}
 </style>
 </head>
 <body>
+
+<!-- ── GLOBAL SITE NAV ── -->
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="/" class="nav-brand">Belle</a>
+    <ul class="nav-links">
+      <li><a href="/" class="active">Readings</a></li>
+      <li><a href="/archive.html">Archive</a></li>
+      <li><a href="/portal.html">Sanctuary</a></li>
+    </ul>
+    <a href="/login.html" class="nav-member" id="navMemberLink">Sign In</a>
+  </div>
+</nav>
 
 <div id="sessionBar">
   <span class="sb-label">Session</span>
@@ -1042,6 +1105,20 @@ body.session-active{padding-top:52px}
 </script>
 
 <script src="//code.tidio.co/ymud1rzkyzk90r85ach0scowv0rblxnr.js" async></script>
+<script>
+/* Nav member link — update when Clerk loads */
+window.addEventListener("load", function() {
+  if (!window.Clerk) return;
+  window.Clerk.load().then(function() {
+    var user = window.Clerk.user;
+    var link = document.getElementById("navMemberLink");
+    if (user && link) {
+      link.textContent = (user.firstName || "Member") + " \u2192";
+      link.href = "/portal.html";
+    }
+  }).catch(function(){});
+});
+</script>
 
 </body>
 </html>
