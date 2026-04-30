@@ -3,447 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Sanctuary — Member Dashboard</title>
+<title>The Sanctuary — Psychic Belle | Member Dashboard</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
 <script src="//code.tidio.co/ymud1rzkyzk90r85ach0scowv0rblxnr.js" async></script>
 <style>
-:root {
-  --gold:       #D4AF37;
-  --gold-pale:  #e8d27a;
-  --gold-dim:   rgba(212,175,55,0.15);
-  --gold-line:  rgba(212,175,55,0.35);
-  --gold-faint: rgba(212,175,55,0.07);
-  --black:      #0a0a0a;
-  --surface:    #111111;
-  --text:       #f0ead8;
-  --text-muted: rgba(240,234,216,0.55);
-  --text-dim:   rgba(240,234,216,0.32);
-  --green:      #4ade80;
+:root{
+  --gold:#D4AF37;--gold-pale:#e8d27a;
+  --gold-dim:rgba(212,175,55,0.15);--gold-line:rgba(212,175,55,0.35);
+  --gold-faint:rgba(212,175,55,0.07);
+  --black:#0a0a0a;--surface:#111111;
+  --text:#f0ead8;--text-muted:rgba(240,234,216,0.55);
+  --text-dim:rgba(240,234,216,0.32);--green:#4ade80;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(212,175,55,0.05) 0%,transparent 70%);pointer-events:none;z-index:0}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+/* NAV */
+.site-nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:0.5px solid var(--gold-line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.site-nav-inner{max-width:600px;margin:0 auto;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav-brand{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);text-decoration:none;white-space:nowrap;flex-shrink:0}
+.nav-links{display:flex;gap:0;list-style:none;border:0.5px solid var(--gold-line)}
+.nav-links a{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;padding:8px 14px;display:block;border-right:0.5px solid var(--gold-line);transition:color .2s,background .2s;white-space:nowrap}
+.nav-links li:last-child a{border-right:none}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);background:var(--gold-faint)}
+.nav-signout{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:color .2s;flex-shrink:0}
+.nav-signout:hover{color:var(--gold)}
 
-body {
-  background: var(--black);
-  color: var(--text);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 300;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+/* LOADING */
+#loadingScreen{position:fixed;inset:0;z-index:999;background:var(--black);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px}
+.loading-diamond{width:10px;height:10px;background:var(--gold);transform:rotate(45deg);animation:pulse-d 1.5s ease-in-out infinite}
+@keyframes pulse-d{0%,100%{opacity:.3;transform:rotate(45deg) scale(.8)}50%{opacity:1;transform:rotate(45deg) scale(1.2)}}
+.loading-text{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--text-dim)}
 
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background:
-    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(212,175,55,0.05) 0%, transparent 70%);
-  pointer-events: none; z-index: 0;
-}
+/* PAGE */
+.page{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:0 24px 80px}
 
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 0; opacity: 0.4;
-}
+/* WELCOME */
+.welcome-card{width:100%;padding:24px 24px 20px;border:0.5px solid var(--gold-line);background:var(--gold-faint);margin:36px 0 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;animation:fadeUp .6s ease both .1s}
+.welcome-greeting{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:6px}
+.welcome-name{font-size:clamp(20px,5vw,26px);font-style:italic;color:var(--text);letter-spacing:.04em}
 
-/* ── LOADING SCREEN ── */
-#loadingScreen {
-  position: fixed; inset: 0; z-index: 999;
-  background: var(--black);
-  display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: 20px;
-}
-.loading-diamond {
-  width: 10px; height: 10px;
-  background: var(--gold); transform: rotate(45deg);
-  animation: pulse-diamond 1.5s ease-in-out infinite;
-}
-@keyframes pulse-diamond {
-  0%, 100% { opacity: 0.3; transform: rotate(45deg) scale(0.8); }
-  50%       { opacity: 1;   transform: rotate(45deg) scale(1.2); }
-}
-.loading-text {
-  font-family: 'Cinzel', serif;
-  font-size: 10px; letter-spacing: 0.4em;
-  text-transform: uppercase; color: var(--text-dim);
-}
+/* SECTION DIVIDER */
+.section-div{display:flex;align-items:center;gap:16px;width:100%;margin:36px 0 24px}
+.section-div .line{flex:1;height:.5px;background:var(--gold-line)}
+.section-div .label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim);white-space:nowrap}
 
-/* ── LAYOUT ── */
-.page {
-  position: relative; z-index: 1;
-  max-width: 560px; margin: 0 auto;
-  padding: 0 24px 80px;
-}
+/* STATS GRID */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;animation:fadeUp .6s ease both .2s}
+.stat-card{padding:22px 20px;border:0.5px solid var(--gold-line);background:var(--gold-faint);text-align:center}
+.stat-value{font-family:'Cinzel',serif;font-size:clamp(20px,6vw,26px);font-weight:400;color:var(--gold);display:block;letter-spacing:.05em;margin-bottom:6px}
+.stat-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);line-height:1.4}
 
-/* ── HEADER ── */
-.portal-header {
-  padding: 40px 0 0;
-  display: flex; flex-direction: column; align-items: center;
-  text-align: center;
-  margin-bottom: 48px;
-}
+/* LIVE CHAT WIDGET */
+.chat-card{width:100%;border:0.5px solid var(--gold-line);background:var(--gold-faint);margin-bottom:24px;animation:fadeUp .6s ease both .25s;overflow:hidden}
+.chat-card-header{padding:20px 24px;border-bottom:0.5px solid var(--gold-line);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.chat-card-title{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--text);font-weight:400}
+.chat-status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse-g 2s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse-g{0%{box-shadow:0 0 0 0 rgba(74,222,128,.7)}65%{box-shadow:0 0 0 7px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.chat-status-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:8px}
+.chat-card-body{padding:20px 24px 24px}
+.chat-card-desc{font-size:15px;font-style:italic;color:var(--text-muted);line-height:1.7;margin-bottom:18px}
+.chat-open-btn{display:block;width:100%;padding:18px;background:var(--gold);color:var(--black);font-family:'Cinzel',serif;font-size:12px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;border:none;cursor:pointer;transition:background .25s;-webkit-appearance:none}
+.chat-open-btn:hover{background:var(--gold-pale)}
+.chat-quick-links{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.chat-quick{flex:1;min-width:0;padding:10px 12px;background:transparent;border:0.5px solid var(--gold-line);color:var(--text-dim);font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s,background .2s;white-space:nowrap;text-align:center}
+.chat-quick:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-faint)}
 
-.header-eyebrow {
-  font-family: 'Cinzel', serif;
-  font-size: 9px; letter-spacing: 0.38em;
-  text-transform: uppercase; color: var(--text-dim);
-  margin-bottom: 16px;
-}
+/* PROMO CARD */
+.promo-card{width:100%;border:0.5px solid var(--gold-line);background:rgba(10,10,10,.8);margin-bottom:24px;animation:fadeUp .6s ease both .3s;overflow:hidden}
+.promo-card-header{padding:20px 24px 0}
+.promo-card-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);opacity:.7;display:block;margin-bottom:8px}
+.promo-card-title{font-family:'Cinzel',serif;font-size:clamp(14px,4vw,17px);font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--text);margin-bottom:10px}
+.promo-card-desc{font-size:14px;font-style:italic;line-height:1.7;color:var(--text-muted);padding-bottom:20px;border-bottom:.5px solid rgba(212,175,55,.1)}
+.promo-card-body{padding:24px}
+#promoLoading{text-align:center;padding:8px 0}
+.promo-loading-text{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim)}
+#promoUnclaimed{display:none}
+.code-display{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:.5px solid var(--gold-line);background:var(--gold-faint);margin-bottom:20px}
+.code-value{font-family:'Cinzel',serif;font-size:clamp(20px,6vw,26px);font-weight:400;letter-spacing:.2em;color:var(--gold)}
+.code-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--text-dim)}
+.claim-btn{display:block;width:100%;padding:18px 32px;background:var(--gold);color:var(--black);font-family:'Cinzel',serif;font-size:12px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;border:none;cursor:pointer;transition:background .25s,opacity .2s;-webkit-appearance:none}
+.claim-btn:hover{background:var(--gold-pale)}.claim-btn:active{opacity:.82}.claim-btn:disabled{opacity:.4;cursor:not-allowed}
+.claim-note{font-size:11px;font-style:italic;color:var(--text-dim);margin-top:12px;text-align:center;letter-spacing:.06em}
+#promoClaimed{display:none}
+.claimed-icon{font-size:24px;color:var(--green);margin-bottom:12px;display:block;text-align:center}
+.claimed-message{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);text-align:center;margin-bottom:8px}
+.claimed-sub{font-size:13px;font-style:italic;color:var(--text-muted);text-align:center;line-height:1.7}
 
-.header-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(24px, 7vw, 34px);
-  font-weight: 400; letter-spacing: 0.14em;
-  color: var(--text); margin-bottom: 8px;
-}
+/* SAVED ARTICLES */
+.saved-section{margin-bottom:24px;animation:fadeUp .6s ease both .35s}
+.saved-empty{padding:28px 24px;border:.5px solid var(--gold-line);text-align:center}
+.saved-empty-text{font-size:14px;font-style:italic;color:var(--text-dim);line-height:1.7;margin-bottom:16px}
+.saved-empty-link{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.saved-empty-link::after{content:'';display:block;width:20px;height:.5px;background:var(--gold);transition:width .2s}
+.saved-empty-link:hover::after{width:32px}
+.saved-grid{display:flex;flex-direction:column;gap:0}
+.saved-card{padding:18px 20px;border:.5px solid var(--gold-line);border-bottom:none;background:var(--gold-faint);text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:background .2s,border-color .2s}
+.saved-card:last-child{border-bottom:.5px solid var(--gold-line)}
+.saved-card:hover{background:rgba(212,175,55,.12);border-color:var(--gold)}
+.saved-card-left{}
+.saved-card-cat{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);opacity:.7;display:block;margin-bottom:5px}
+.saved-card-title{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.1em;color:var(--text);line-height:1.4}
+.saved-card-arrow{font-size:14px;color:var(--gold);opacity:.5;transition:opacity .2s,transform .2s;flex-shrink:0}
+.saved-card:hover .saved-card-arrow{opacity:1;transform:translateX(3px)}
+.unsave-btn{background:transparent;border:none;color:var(--text-dim);font-size:12px;cursor:pointer;padding:4px 8px;transition:color .2s;flex-shrink:0}
+.unsave-btn:hover{color:rgba(255,80,80,.8)}
 
-.header-sub {
-  font-style: italic; font-size: 16px;
-  color: var(--gold); letter-spacing: 0.06em;
-  margin-bottom: 28px;
-}
+/* BOOKING CARD */
+.booking-card{width:100%;padding:28px 28px 24px;border:.5px solid var(--gold-line);background:var(--gold-faint);text-align:center;margin-bottom:24px;animation:fadeUp .6s ease both .4s}
+.booking-title{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);margin-bottom:10px}
+.booking-desc{font-size:14px;font-style:italic;color:var(--text-muted);line-height:1.7;margin-bottom:22px}
+.booking-btn{display:inline-block;padding:16px 36px;background:transparent;color:var(--gold);font-family:'Cinzel',serif;font-size:11px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;border:.5px solid var(--gold-line);cursor:pointer;text-decoration:none;transition:background .25s,border-color .25s,color .25s;-webkit-appearance:none}
+.booking-btn:hover{background:var(--gold);color:var(--black);border-color:var(--gold)}
 
-.ornament {
-  display: flex; align-items: center;
-  gap: 14px; width: 100%; max-width: 320px;
-}
-.ornament-line { flex: 1; height: 0.5px; background: var(--gold-line); }
-.ornament-diamond {
-  width: 6px; height: 6px;
-  background: var(--gold); transform: rotate(45deg); opacity: 0.8;
-}
+/* FOOTER */
+.portal-footer{margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.footer-rule{width:.5px;height:40px;background:linear-gradient(to bottom,var(--gold-line),transparent)}
+.footer-text{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim);text-align:center}
 
-/* ── WELCOME CARD ── */
-.welcome-card {
-  width: 100%;
-  padding: 28px 28px 24px;
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
-  margin-bottom: 24px;
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 16px;
-  flex-wrap: wrap;
-  animation: fadeUp 0.6s ease both 0.1s;
-}
+/* TIDIO HIDE until needed */
+body.tidio-hidden #tidio-chat,
+body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !important}
 
-.welcome-left {}
-.welcome-greeting {
-  font-family: 'Cinzel', serif;
-  font-size: 9px; letter-spacing: 0.32em;
-  text-transform: uppercase; color: var(--text-dim);
-  display: block; margin-bottom: 6px;
-}
-.welcome-name {
-  font-size: clamp(20px, 5vw, 26px);
-  font-style: italic; color: var(--text);
-  letter-spacing: 0.04em;
-}
-
-.sign-out-btn {
-  background: transparent;
-  border: 0.5px solid var(--gold-line);
-  color: var(--text-dim);
-  font-family: 'Cinzel', serif;
-  font-size: 9px; letter-spacing: 0.25em;
-  text-transform: uppercase;
-  padding: 8px 16px; cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
-  white-space: nowrap;
-}
-.sign-out-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-/* ── SECTION DIVIDER ── */
-.section-divider {
-  display: flex; align-items: center;
-  gap: 16px; width: 100%; margin: 36px 0 28px;
-}
-.section-divider .line { flex: 1; height: 0.5px; background: var(--gold-line); }
-.section-divider .label {
-  font-family: 'Cinzel', serif;
-  font-size: 9px; letter-spacing: 0.3em;
-  text-transform: uppercase; color: var(--text-dim);
-  white-space: nowrap;
-}
-
-/* ── PROMO CODE CARD ── */
-.promo-card {
-  width: 100%;
-  border: 0.5px solid var(--gold-line);
-  background: rgba(10,10,10,0.8);
-  margin-bottom: 24px;
-  animation: fadeUp 0.6s ease both 0.2s;
-  overflow: hidden;
-}
-
-.promo-card-header {
-  padding: 20px 24px 0;
-}
-.promo-card-eyebrow {
-  font-family: 'Cinzel', serif;
-  font-size: 9px; letter-spacing: 0.35em;
-  text-transform: uppercase; color: var(--gold);
-  opacity: 0.7; display: block; margin-bottom: 8px;
-}
-.promo-card-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(14px, 4vw, 17px);
-  font-weight: 400; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--text);
-  margin-bottom: 10px;
-}
-.promo-card-desc {
-  font-size: 14px; font-style: italic;
-  line-height: 1.7; color: var(--text-muted);
-  padding-bottom: 20px;
-  border-bottom: 0.5px solid rgba(212,175,55,0.1);
-}
-
-.promo-card-body { padding: 24px; }
-
-/* State: unclaimed */
-#promoUnclaimed { display: none; }
-.code-display {
-  display: flex; align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
-  margin-bottom: 20px;
-}
-.code-value {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(20px, 6vw, 26px);
-  font-weight: 400; letter-spacing: 0.2em;
-  color: var(--gold);
-}
-.code-label {
-  font-family: 'Cinzel', serif;
-  font-size: 9px; letter-spacing: 0.25em;
-  text-transform: uppercase; color: var(--text-dim);
-}
-
-.claim-btn {
-  display: block; width: 100%;
-  padding: 18px 32px;
-  background: var(--gold); color: var(--black);
-  font-family: 'Cinzel', serif;
-  font-size: 12px; font-weight: 500;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  border: none; cursor: pointer;
-  transition: background 0.25s, opacity 0.2s;
-  -webkit-appearance: none;
-}
-.claim-btn:hover { background: var(--gold-pale); }
-.claim-btn:active { opacity: 0.82; }
-.claim-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.claim-note {
-  font-size: 11px; font-style: italic;
-  color: var(--text-dim); margin-top: 12px;
-  text-align: center; letter-spacing: 0.06em;
-}
-
-/* State: claimed */
-#promoClaimed { display: none; }
-.claimed-icon {
-  font-size: 24px; color: var(--green);
-  margin-bottom: 12px; display: block;
-  text-align: center;
-}
-.claimed-message {
-  font-family: 'Cinzel', serif;
-  font-size: 11px; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--green);
-  text-align: center; margin-bottom: 8px;
-}
-.claimed-sub {
-  font-size: 13px; font-style: italic;
-  color: var(--text-muted); text-align: center;
-  line-height: 1.7;
-}
-
-/* State: loading */
-#promoLoading {
-  text-align: center; padding: 8px 0;
-}
-.promo-loading-text {
-  font-family: 'Cinzel', serif;
-  font-size: 10px; letter-spacing: 0.3em;
-  text-transform: uppercase; color: var(--text-dim);
-}
-
-/* ── INFO CARDS ── */
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 24px;
-  animation: fadeUp 0.6s ease both 0.3s;
-}
-
-.info-card {
-  padding: 22px 20px;
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
-  text-align: center;
-}
-
-.info-card-value {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(20px, 6vw, 26px);
-  font-weight: 400; color: var(--gold);
-  display: block; letter-spacing: 0.05em;
-  margin-bottom: 6px;
-}
-
-.info-card-label {
-  font-size: 10px; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--text-dim);
-  line-height: 1.4;
-}
-
-/* ── BOOKING CARD ── */
-.booking-card {
-  width: 100%;
-  padding: 28px 28px 24px;
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
-  text-align: center;
-  margin-bottom: 24px;
-  animation: fadeUp 0.6s ease both 0.4s;
-}
-
-.booking-title {
-  font-family: 'Cinzel', serif;
-  font-size: 13px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--text);
-  margin-bottom: 10px;
-}
-
-.booking-desc {
-  font-size: 14px; font-style: italic;
-  color: var(--text-muted); line-height: 1.7;
-  margin-bottom: 22px;
-}
-
-.booking-btn {
-  display: inline-block;
-  padding: 16px 36px;
-  background: transparent; color: var(--gold);
-  font-family: 'Cinzel', serif;
-  font-size: 11px; font-weight: 500;
-  letter-spacing: 0.28em; text-transform: uppercase;
-  border: 0.5px solid var(--gold-line);
-  cursor: pointer; text-decoration: none;
-  transition: background 0.25s, border-color 0.25s, color 0.25s;
-  -webkit-appearance: none;
-}
-.booking-btn:hover {
-  background: var(--gold); color: var(--black);
-  border-color: var(--gold);
-}
-
-/* ── FOOTER ── */
-.portal-footer {
-  margin-top: 52px;
-  display: flex; flex-direction: column;
-  align-items: center; gap: 18px;
-}
-.footer-rule {
-  width: 0.5px; height: 40px;
-  background: linear-gradient(to bottom, var(--gold-line), transparent);
-}
-.footer-text {
-  font-size: 10px; letter-spacing: 0.22em;
-  text-transform: uppercase; color: var(--text-dim);
-  text-align: center;
-}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 400px) {
-  .page { padding: 0 16px 60px; }
-  .info-grid { grid-template-columns: 1fr; }
-  .welcome-card { flex-direction: column; align-items: flex-start; }
-}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:400px){.page{padding:0 16px 60px}.stats-grid{grid-template-columns:1fr}.welcome-card{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
 
-<!-- Loading screen -->
 <div id="loadingScreen">
   <div class="loading-diamond"></div>
   <span class="loading-text">Entering the Sanctuary</span>
 </div>
 
-<div class="page" id="mainContent" style="display:none">
-
-  <!-- Header -->
-  <div class="portal-header">
-    <span class="header-eyebrow">Member Portal</span>
-    <h1 class="header-title">The Sanctuary</h1>
-    <p class="header-sub">Psychic Belle &mdash; Private Advisor</p>
-    <div class="ornament">
-      <div class="ornament-line"></div>
-      <div class="ornament-diamond"></div>
-      <div class="ornament-line"></div>
-    </div>
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="/" class="nav-brand">Belle</a>
+    <ul class="nav-links">
+      <li><a href="/">Readings</a></li>
+      <li><a href="/archive.html">Archive</a></li>
+      <li><a href="/portal.html" class="active">Sanctuary</a></li>
+    </ul>
+    <button class="nav-signout" id="signOutBtn">Sign Out</button>
   </div>
+</nav>
+
+<div class="page" id="mainContent" style="display:none">
 
   <!-- Welcome -->
   <div class="welcome-card">
-    <div class="welcome-left">
+    <div>
       <span class="welcome-greeting">Welcome back</span>
       <div class="welcome-name" id="welcomeName">Loading&hellip;</div>
     </div>
-    <button class="sign-out-btn" id="signOutBtn">Sign Out</button>
   </div>
 
   <!-- Stats -->
-  <div class="info-grid">
-    <div class="info-card">
-      <span class="info-card-value">$5.99</span>
-      <span class="info-card-label">Per Minute<br>Live Session</span>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-value">$5.99</span>
+      <span class="stat-label">Per Minute<br>Live Session</span>
     </div>
-    <div class="info-card">
-      <span class="info-card-value">24h</span>
-      <span class="info-card-label">Offline Reading<br>Response Time</span>
+    <div class="stat-card">
+      <span class="stat-value">24h</span>
+      <span class="stat-label">Offline Reading<br>Response Time</span>
     </div>
   </div>
 
-  <!-- Promo Code Section -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">Member Benefit</span>
-    <div class="line"></div>
+  <!-- Live Chat Widget -->
+  <div class="section-div">
+    <div class="line"></div><span class="label">Live Chat</span><div class="line"></div>
+  </div>
+
+  <div class="chat-card">
+    <div class="chat-card-header">
+      <div class="chat-card-title">Chat with Belle</div>
+      <div class="chat-status-label">
+        <div class="chat-status-dot"></div>
+        <span id="chatStatusText">Belle is live</span>
+      </div>
+    </div>
+    <div class="chat-card-body">
+      <p class="chat-card-desc">
+        Open the live chat below to connect directly with Belle.
+        Your session begins the moment you send your first message.
+      </p>
+      <button class="chat-open-btn" id="openChatBtn">Open Live Chat</button>
+      <div class="chat-quick-links">
+        <button class="chat-quick" data-msg="I need a Twin Flame reading">Twin Flame</button>
+        <button class="chat-quick" data-msg="I need a Person of Interest reading">Person of Interest</button>
+        <button class="chat-quick" data-msg="I need No Contact guidance">No Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promo Code -->
+  <div class="section-div">
+    <div class="line"></div><span class="label">Member Benefit</span><div class="line"></div>
   </div>
 
   <div class="promo-card">
     <div class="promo-card-header">
       <span class="promo-card-eyebrow">Exclusive Offer</span>
       <div class="promo-card-title">Activation Credit</div>
-      <p class="promo-card-desc">
-        As a Sanctuary member, you have access to a one-time
-        10% session credit. Claim your code below and apply it
-        at checkout.
-      </p>
+      <p class="promo-card-desc">As a Sanctuary member you have access to a one-time 10% session credit. Claim your code below and apply it at checkout.</p>
     </div>
     <div class="promo-card-body">
-
-      <!-- Loading state -->
-      <div id="promoLoading">
-        <span class="promo-loading-text">Verifying membership&hellip;</span>
-      </div>
-
-      <!-- Unclaimed state -->
+      <div id="promoLoading"><span class="promo-loading-text">Verifying membership&hellip;</span></div>
       <div id="promoUnclaimed">
         <div class="code-display">
           <div class="code-value">BELLE10</div>
@@ -452,35 +224,34 @@ body::after {
         <button class="claim-btn" id="claimBtn">Claim Activation Credit</button>
         <p class="claim-note">This code can only be redeemed once per membership.</p>
       </div>
-
-      <!-- Claimed state -->
       <div id="promoClaimed">
         <span class="claimed-icon">&#10003;</span>
         <div class="claimed-message">Activation Credit Redeemed</div>
-        <p class="claimed-sub">Your activation credit has already been redeemed.<br>
-        Apply code <strong style="color:var(--text);font-style:normal">BELLE10</strong> at checkout for 10% off.</p>
+        <p class="claimed-sub">Your activation credit has already been redeemed.<br>Apply code <strong style="color:var(--text);font-style:normal">BELLE10</strong> at checkout for 10% off.</p>
       </div>
-
     </div>
   </div>
 
+  <!-- Saved Articles -->
+  <div class="section-div">
+    <div class="line"></div><span class="label">Saved Articles</span><div class="line"></div>
+  </div>
+
+  <div class="saved-section">
+    <div id="savedContainer"></div>
+  </div>
+
   <!-- Book Session -->
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">Book a Session</span>
-    <div class="line"></div>
+  <div class="section-div">
+    <div class="line"></div><span class="label">Book a Session</span><div class="line"></div>
   </div>
 
   <div class="booking-card">
     <div class="booking-title">Ready for your reading?</div>
-    <p class="booking-desc">
-      Select your credit package on the main site and
-      your live session will open the moment payment clears.
-    </p>
-    <a href="/index.html" class="booking-btn">Return to Booking</a>
+    <p class="booking-desc">Select your credit package on the main site and your live session opens the moment payment clears.</p>
+    <a href="/" class="booking-btn">Return to Booking</a>
   </div>
 
-  <!-- Footer -->
   <div class="portal-footer">
     <div class="footer-rule"></div>
     <p class="footer-text">&copy; Psychic Belle &middot; The Sanctuary<br>Member sessions are private &amp; confidential</p>
@@ -488,119 +259,152 @@ body::after {
 
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     CLERK CONFIGURATION
-     ═══════════════════════════════════════════════════ -->
-<script>
-  window.__clerk_publishable_key = "pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ";
-</script>
-<script
-  async
-  crossorigin="anonymous"
+<!-- Clerk -->
+<script>window.__clerk_publishable_key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ";</script>
+<script async crossorigin="anonymous"
   data-clerk-publishable-key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ"
   src="https://concise-wasp-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
-  type="text/javascript"
 ></script>
+<script src="/posts.js"></script>
 
 <script>
-(function () {
+(function(){
   "use strict";
 
-  window.addEventListener("load", async function () {
+  /* Tidio gate — keep hidden until user opens chat */
+  document.body.classList.add("tidio-hidden");
+
+  function openTidio(msg) {
+    document.body.classList.remove("tidio-hidden");
+    try {
+      if (window.tidioChatApi && window.tidioChatApi.open) {
+        window.tidioChatApi.open();
+        if (msg && window.tidioChatApi.setVisitorData) {
+          window.tidioChatApi.setVisitorData({ tags: [msg] });
+        }
+      } else {
+        document.addEventListener("tidioChat-ready", function() {
+          window.tidioChatApi && window.tidioChatApi.open && window.tidioChatApi.open();
+        });
+      }
+    } catch(e) {}
+  }
+
+  /* Chat buttons */
+  document.getElementById("openChatBtn").addEventListener("click", function() {
+    openTidio();
+  });
+
+  document.querySelectorAll(".chat-quick").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      openTidio(btn.getAttribute("data-msg"));
+    });
+  });
+
+  /* Sign out */
+  document.getElementById("signOutBtn").addEventListener("click", async function() {
+    await window.Clerk.signOut();
+    window.location.href = "/login.html";
+  });
+
+  window.addEventListener("load", async function() {
     await window.Clerk.load();
 
-    /* ── Auth gate — redirect to login if not signed in ── */
     if (!window.Clerk.user) {
       window.location.href = "/login.html";
       return;
     }
 
     var user = window.Clerk.user;
-
-    /* ── Populate welcome name ── */
-    var name = user.firstName
-      || (user.emailAddresses[0] && user.emailAddresses[0].emailAddress.split("@")[0])
-      || "Member";
+    var name = user.firstName || user.emailAddresses[0].emailAddress.split("@")[0] || "Member";
     document.getElementById("welcomeName").textContent = name;
 
-    /* ── Sign out ── */
-    document.getElementById("signOutBtn").addEventListener("click", async function () {
-      await window.Clerk.signOut();
-      window.location.href = "/login.html";
-    });
+    /* Promo logic */
+    checkPromo(user);
 
-    /* ── Check promo claim status ── */
-    checkPromoStatus(user);
+    /* Saved articles */
+    renderSaved(user);
 
-    /* ── Show page ── */
+    /* Show page */
     document.getElementById("loadingScreen").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
+    document.getElementById("mainContent").style.display   = "block";
   });
 
-
-  /* ═══════════════════════════════════════════════
-     PROMO CODE LOGIC
-     Reads user.publicMetadata.belle10_claimed
-     which is exposed via the session token claim
-     configured in Clerk Dashboard (see README)
-  ═══════════════════════════════════════════════ */
-  function checkPromoStatus(user) {
+  /* Promo */
+  function checkPromo(user) {
     var loading   = document.getElementById("promoLoading");
     var unclaimed = document.getElementById("promoUnclaimed");
     var claimed   = document.getElementById("promoClaimed");
     var claimBtn  = document.getElementById("claimBtn");
-
-    /* Read from publicMetadata (available after session token config) */
     var isClaimed = user.publicMetadata && user.publicMetadata.belle10_claimed === true;
 
     loading.style.display = "none";
-
     if (isClaimed) {
       claimed.style.display = "block";
     } else {
       unclaimed.style.display = "block";
-
-      claimBtn.addEventListener("click", async function () {
+      claimBtn.addEventListener("click", async function() {
         claimBtn.disabled = true;
         claimBtn.textContent = "Processing\u2026";
-
         try {
-          /* Call our Netlify serverless function which writes to Clerk backend */
           var token = await window.Clerk.session.getToken();
-
-          var res = await fetch("/.netlify/functions/claim", {
+          var res   = await fetch("/.netlify/functions/claim", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify({ userId: window.Clerk.user.id })
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+            body: JSON.stringify({ userId: user.id })
           });
-
           if (res.ok) {
-            /* Reload metadata and show claimed state */
             await window.Clerk.user.reload();
             unclaimed.style.display = "none";
             claimed.style.display   = "block";
           } else {
-            var err = await res.json();
             claimBtn.disabled = false;
             claimBtn.textContent = "Claim Activation Credit";
-            alert("Something went wrong. Please try again.");
-            console.error("Claim error:", err);
           }
-        } catch (e) {
+        } catch(e) {
           claimBtn.disabled = false;
           claimBtn.textContent = "Claim Activation Credit";
-          console.error("Claim error:", e);
-          alert("Network error. Please try again.");
         }
       });
     }
   }
 
+  /* Saved articles */
+  function renderSaved(user) {
+    var container  = document.getElementById("savedContainer");
+    var savedIds   = (user.publicMetadata && user.publicMetadata.saved_articles) || [];
+    var allPosts   = (typeof BELLE_POSTS !== "undefined") ? BELLE_POSTS : [];
+    var savedPosts = allPosts.filter(function(p) { return savedIds.indexOf(p.id) !== -1; });
+
+    if (savedPosts.length === 0) {
+      container.innerHTML =
+        '<div class="saved-empty">' +
+          '<p class="saved-empty-text">You have not saved any articles yet.<br>Browse the Archive and click Save on any article to add it here.</p>' +
+          '<a href="/archive.html" class="saved-empty-link">Go to Archive</a>' +
+        '</div>';
+      return;
+    }
+
+    var grid = document.createElement("div");
+    grid.className = "saved-grid";
+
+    savedPosts.forEach(function(p) {
+      var card = document.createElement("a");
+      card.className = "saved-card";
+      card.href = "/article.html?post=" + p.slug;
+      card.innerHTML =
+        '<div class="saved-card-left">' +
+          '<span class="saved-card-cat">' + p.category + '</span>' +
+          '<span class="saved-card-title">' + p.title + '</span>' +
+        '</div>' +
+        '<span class="saved-card-arrow" aria-hidden="true">&#8594;</span>';
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  }
+
 }());
 </script>
-
 </body>
 </html>
