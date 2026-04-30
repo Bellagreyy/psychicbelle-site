@@ -142,17 +142,29 @@ body::after {
   border-radius: 0 !important;
   padding: 14px !important;
   transition: background 0.2s, border-color 0.2s !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
 }
 .cl-socialButtonsBlockButton:hover {
   background: var(--gold-dim) !important;
   border-color: var(--gold) !important;
 }
-.cl-socialButtonsBlockButton__google svg { display: none !important; }
-.cl-socialButtonsBlockButton__google::before {
+/* Hide ALL internal Clerk button content */
+.cl-socialButtonsBlockButton > * { display: none !important; }
+.cl-socialButtonsBlockButton svg { display: none !important; }
+.cl-socialButtonsBlockButtonText { display: none !important; }
+.cl-socialButtonsBlockButtonArrow { display: none !important; }
+/* Show only our custom label */
+.cl-socialButtonsBlockButton::after {
   content: 'Continue with Google';
+  display: block !important;
   font-family: 'Cinzel', serif;
   font-size: 11px;
   letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
 }
 
 .cl-dividerRow { margin: 20px 0 !important; }
