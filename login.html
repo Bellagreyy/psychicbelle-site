@@ -10,15 +10,14 @@
 <script src="//code.tidio.co/ymud1rzkyzk90r85ach0scowv0rblxnr.js" async></script>
 <style>
 :root {
-  --gold:       #D4AF37;
-  --gold-pale:  #e8d27a;
-  --gold-dim:   rgba(212,175,55,0.15);
-  --gold-line:  rgba(212,175,55,0.35);
+  --gold: #D4AF37; --gold-pale: #e8d27a;
+  --gold-dim: rgba(212,175,55,0.15);
+  --gold-line: rgba(212,175,55,0.35);
   --gold-faint: rgba(212,175,55,0.07);
-  --black:      #0a0a0a;
-  --text:       #f0ead8;
+  --black: #0a0a0a;
+  --text: #f0ead8;
   --text-muted: rgba(240,234,216,0.55);
-  --text-dim:   rgba(240,234,216,0.32);
+  --text-dim: rgba(240,234,216,0.32);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,10 +28,10 @@ body {
   font-family: 'Cormorant Garamond', Georgia, serif;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 24px;
-  overflow: hidden;
 }
 
 body::before {
@@ -41,22 +40,14 @@ body::before {
   background:
     radial-gradient(ellipse 60% 50% at 50% 0%, rgba(212,175,55,0.06) 0%, transparent 70%),
     radial-gradient(ellipse 40% 40% at 100% 100%, rgba(212,175,55,0.04) 0%, transparent 60%);
-  pointer-events: none;
+  pointer-events: none; z-index: 0;
 }
 
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none; opacity: 0.4;
-}
-
-.card {
+/* Page wrapper — matches Clerk's natural width */
+.login-wrap {
   position: relative; z-index: 1;
-  width: 100%; max-width: 420px;
-  padding: 52px 44px 48px;
-  border: 0.5px solid var(--gold-line);
-  background: rgba(10,10,10,0.95);
+  width: 100%;
+  max-width: 480px;
   animation: fadeUp 0.8s ease both;
 }
 
@@ -65,42 +56,44 @@ body::after {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Our header sits above Clerk's card */
+.login-header {
+  text-align: center;
+  padding: 36px 28px 28px;
+  border: 0.5px solid var(--gold-line);
+  border-bottom: none;
+  background: rgba(10,10,10,0.98);
+}
+
 .top-rule {
-  width: 1px; height: 32px;
+  width: 1px; height: 28px;
   background: linear-gradient(to bottom, transparent, var(--gold-line));
-  margin: 0 auto 20px;
+  margin: 0 auto 18px;
 }
 
 .eyebrow {
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.38em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  text-align: center;
-  display: block;
-  margin-bottom: 14px;
+  text-transform: uppercase; color: var(--text-dim);
+  display: block; margin-bottom: 12px;
 }
 
 .title {
   font-family: 'Cinzel', serif;
   font-size: clamp(22px, 6vw, 28px);
   font-weight: 400; letter-spacing: 0.14em;
-  text-align: center; color: var(--text);
-  margin-bottom: 8px;
+  color: var(--text); margin-bottom: 6px;
 }
 
 .subtitle {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 15px; letter-spacing: 0.06em;
-  color: var(--text-muted);
-  text-align: center;
-  margin-bottom: 40px;
+  font-style: italic; font-size: 15px;
+  letter-spacing: 0.06em; color: var(--text-muted);
+  margin-bottom: 20px;
 }
 
 .ornament {
   display: flex; align-items: center;
-  gap: 12px; margin-bottom: 40px;
+  gap: 12px; max-width: 200px; margin: 0 auto;
 }
 .ornament-line { flex: 1; height: 0.5px; background: var(--gold-line); }
 .ornament-diamond {
@@ -108,166 +101,51 @@ body::after {
   background: var(--gold); transform: rotate(45deg); opacity: 0.7;
 }
 
-/* ── CLERK COMPONENTS OVERRIDE ── */
-#clerk-sign-in {
-  width: 100% !important;
-  overflow: hidden !important;
-}
-.cl-rootBox {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-.cl-card {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-}
-.cl-main {
-  width: 100% !important;
-}
-.cl-headerTitle,
-.cl-headerSubtitle { display: none !important; }
+/* Clerk mounts here — no wrapper border so Clerk's own card sits flush */
+#clerk-sign-in { width: 100%; }
 
-.cl-socialButtonsBlockButton {
-  background: var(--gold-faint) !important;
-  border: 0.5px solid var(--gold-line) !important;
-  color: var(--text) !important;
-  font-family: 'Cinzel', serif !important;
-  font-size: 11px !important;
-  letter-spacing: 0.2em !important;
-  text-transform: uppercase !important;
-  border-radius: 0 !important;
-  padding: 14px !important;
-  transition: background 0.2s, border-color 0.2s !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-}
-.cl-socialButtonsBlockButton:hover {
-  background: var(--gold-dim) !important;
-  border-color: var(--gold) !important;
-}
-/* Hide ALL internal Clerk button content */
-.cl-socialButtonsBlockButton > * { display: none !important; }
-.cl-socialButtonsBlockButton svg { display: none !important; }
-.cl-socialButtonsBlockButtonText { display: none !important; }
-.cl-socialButtonsBlockButtonArrow { display: none !important; }
-/* Show only our custom label */
-.cl-socialButtonsBlockButton::after {
-  content: 'Continue with Google';
-  display: block !important;
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.cl-dividerRow { margin: 20px 0 !important; }
-.cl-dividerLine { background: var(--gold-line) !important; }
-.cl-dividerText {
-  font-family: 'Cinzel', serif !important;
-  font-size: 9px !important;
-  letter-spacing: 0.3em !important;
-  text-transform: uppercase !important;
-  color: var(--text-dim) !important;
-  background: var(--black) !important;
-}
-
-.cl-formFieldLabel {
-  font-family: 'Cinzel', serif !important;
-  font-size: 9px !important;
-  letter-spacing: 0.3em !important;
-  text-transform: uppercase !important;
-  color: var(--text-dim) !important;
-  margin-bottom: 8px !important;
-}
-
-.cl-formFieldInput {
-  background: var(--gold-faint) !important;
-  border: 0.5px solid var(--gold-line) !important;
-  border-radius: 0 !important;
-  color: var(--text) !important;
-  font-family: 'Cormorant Garamond', serif !important;
-  font-size: 16px !important;
-  padding: 13px 16px !important;
-  transition: border-color 0.2s !important;
-}
-.cl-formFieldInput:focus {
-  border-color: var(--gold) !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.cl-formButtonPrimary {
-  background: var(--gold) !important;
-  color: #0a0a0a !important;
-  font-family: 'Cinzel', serif !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.3em !important;
-  text-transform: uppercase !important;
-  border-radius: 0 !important;
-  padding: 16px !important;
-  border: none !important;
-  transition: background 0.2s !important;
-  box-shadow: none !important;
-}
-.cl-formButtonPrimary:hover { background: var(--gold-pale) !important; }
-
-.cl-footerAction,
-.cl-footerActionText,
-.cl-footerActionLink { display: none !important; }
-
-.cl-internal-b3fm6y,
-.cl-alternativeMethodsBlockButton {
-  font-family: 'Cinzel', serif !important;
-  font-size: 10px !important;
-  letter-spacing: 0.2em !important;
-  color: var(--gold) !important;
-}
-
-.bottom-rule {
-  width: 1px; height: 32px;
-  background: linear-gradient(to bottom, var(--gold-line), transparent);
-  margin: 36px auto 0;
+/* Footer sits below Clerk's card */
+.login-footer {
+  text-align: center;
+  padding: 16px 28px 24px;
+  border: 0.5px solid var(--gold-line);
+  border-top: none;
+  background: rgba(10,10,10,0.98);
 }
 
 .privacy-note {
   font-size: 11px; font-style: italic;
-  color: var(--text-dim); text-align: center;
-  margin-top: 20px; letter-spacing: 0.05em;
+  color: var(--text-dim); letter-spacing: 0.05em;
 }
 </style>
 </head>
 <body>
 
-<div class="card">
-  <div class="top-rule"></div>
-  <span class="eyebrow">Private Access</span>
-  <h1 class="title">The Sanctuary</h1>
-  <p class="subtitle">Psychic Belle &mdash; Member Portal</p>
+<div class="login-wrap">
 
-  <div class="ornament">
-    <div class="ornament-line"></div>
-    <div class="ornament-diamond"></div>
-    <div class="ornament-line"></div>
+  <!-- Our header above Clerk -->
+  <div class="login-header">
+    <div class="top-rule"></div>
+    <span class="eyebrow">Private Access</span>
+    <h1 class="title">The Sanctuary</h1>
+    <p class="subtitle">Psychic Belle &mdash; Member Portal</p>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line"></div>
+    </div>
   </div>
 
-  <!-- Clerk Sign-In component mounts here -->
+  <!-- Clerk mounts here — full width, no clipping -->
   <div id="clerk-sign-in"></div>
 
-  <div class="bottom-rule"></div>
-  <p class="privacy-note">Your session is private and encrypted.</p>
+  <!-- Our footer below Clerk -->
+  <div class="login-footer">
+    <p class="privacy-note">Your session is private and encrypted.</p>
+  </div>
+
 </div>
 
-<!-- ═══════════════════════════════════════════
-     CLERK CONFIGURATION
-     ═══════════════════════════════════════════ -->
 <script>
   window.__clerk_publishable_key = "pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ";
 </script>
@@ -282,7 +160,6 @@ body::after {
 window.addEventListener("load", async function () {
   await window.Clerk.load();
 
-  /* If already signed in, go straight to portal */
   if (window.Clerk.user) {
     window.location.href = "/portal.html";
     return;
@@ -293,8 +170,150 @@ window.addEventListener("load", async function () {
     afterSignInUrl: "/portal.html",
     afterSignUpUrl: "/portal.html",
     appearance: {
+      layout: {
+        logoPlacement: "none",
+        showOptionalFields: false,
+        socialButtonsVariant: "blockButton"
+      },
+      variables: {
+        colorPrimary:         "#D4AF37",
+        colorBackground:      "#0a0a0a",
+        colorText:            "#f0ead8",
+        colorTextSecondary:   "rgba(240,234,216,0.55)",
+        colorInputBackground: "rgba(212,175,55,0.07)",
+        colorInputText:       "#f0ead8",
+        colorNeutral:         "#f0ead8",
+        borderRadius:         "0px",
+        fontFamily:           "'Cormorant Garamond', Georgia, serif",
+        fontSize:             "16px",
+        spacingUnit:          "18px"
+      },
       elements: {
-        /* Additional element overrides can go here */
+        /* Card — matches our header/footer seamlessly */
+        card: {
+          backgroundColor: "#0a0a0a",
+          borderRadius:    "0",
+          boxShadow:       "none",
+          border:          "0.5px solid rgba(212,175,55,0.35)",
+          borderTop:       "none",
+          borderBottom:    "none",
+          padding:         "24px 28px 28px",
+          width:           "100%",
+          maxWidth:        "100%"
+        },
+        /* Hide Clerk's own header — we have ours above */
+        headerTitle:    { display: "none" },
+        headerSubtitle: { display: "none" },
+        logoBox:        { display: "none" },
+        /* Social button (Google) */
+        socialButtonsBlockButton: {
+          backgroundColor: "rgba(212,175,55,0.07)",
+          border:          "0.5px solid rgba(212,175,55,0.35)",
+          borderRadius:    "0",
+          color:           "#f0ead8",
+          fontFamily:      "'Cinzel', serif",
+          fontSize:        "11px",
+          letterSpacing:   "0.2em",
+          textTransform:   "uppercase",
+          padding:         "14px",
+          width:           "100%"
+        },
+        socialButtonsBlockButtonText: {
+          fontFamily:    "'Cinzel', serif",
+          fontSize:      "11px",
+          letterSpacing: "0.2em",
+          textTransform: "uppercase"
+        },
+        /* Divider */
+        dividerLine: { backgroundColor: "rgba(212,175,55,0.35)" },
+        dividerText: {
+          fontFamily:    "'Cinzel', serif",
+          fontSize:      "9px",
+          letterSpacing: "0.3em",
+          textTransform: "uppercase",
+          color:         "rgba(240,234,216,0.32)"
+        },
+        /* Form fields */
+        formFieldLabel: {
+          fontFamily:    "'Cinzel', serif",
+          fontSize:      "9px",
+          letterSpacing: "0.3em",
+          textTransform: "uppercase",
+          color:         "rgba(240,234,216,0.32)"
+        },
+        formFieldInput: {
+          backgroundColor: "rgba(212,175,55,0.07)",
+          border:          "0.5px solid rgba(212,175,55,0.35)",
+          borderRadius:    "0",
+          color:           "#f0ead8",
+          fontFamily:      "'Cormorant Garamond', Georgia, serif",
+          fontSize:        "16px",
+          padding:         "13px 16px"
+        },
+        /* Primary button */
+        formButtonPrimary: {
+          backgroundColor: "#D4AF37",
+          color:           "#0a0a0a",
+          fontFamily:      "'Cinzel', serif",
+          fontSize:        "11px",
+          fontWeight:      "500",
+          letterSpacing:   "0.3em",
+          textTransform:   "uppercase",
+          borderRadius:    "0",
+          padding:         "16px",
+          border:          "none",
+          boxShadow:       "none",
+          width:           "100%"
+        },
+        /* Resend / secondary actions — make them clear and readable */
+        footerActionLink: {
+          color:         "#D4AF37",
+          fontFamily:    "'Cinzel', serif",
+          fontSize:      "11px",
+          letterSpacing: "0.15em",
+          textTransform: "uppercase"
+        },
+        identityPreviewText: {
+          color:      "#f0ead8",
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize:   "15px"
+        },
+        identityPreviewEditButton: {
+          color:         "#D4AF37",
+          fontFamily:    "'Cinzel', serif",
+          fontSize:      "10px",
+          letterSpacing: "0.2em"
+        },
+        /* Verification screen — resend link */
+        alternativeMethodsBlockButton: {
+          backgroundColor: "rgba(212,175,55,0.07)",
+          border:          "0.5px solid rgba(212,175,55,0.35)",
+          borderRadius:    "0",
+          color:           "#f0ead8",
+          fontFamily:      "'Cinzel', serif",
+          fontSize:        "11px",
+          letterSpacing:   "0.18em",
+          textTransform:   "uppercase",
+          padding:         "13px",
+          width:           "100%",
+          marginTop:       "12px"
+        },
+        /* "Didn't receive a code? Resend" text */
+        formResendCodeLink: {
+          color:         "#D4AF37",
+          fontFamily:    "'Cinzel', serif",
+          fontSize:      "11px",
+          letterSpacing: "0.15em",
+          textTransform: "uppercase",
+          display:       "block",
+          textAlign:     "center",
+          marginTop:     "16px",
+          padding:       "12px",
+          border:        "0.5px solid rgba(212,175,55,0.35)"
+        },
+        /* Hide Clerk footer branding */
+        footer:           { display: "none" },
+        footerPages:      { display: "none" }
       }
     }
   });
