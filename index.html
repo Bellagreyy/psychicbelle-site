@@ -995,45 +995,99 @@ body.session-active{padding-top:52px}
       window.location.href = STRIPE.offline;
     });
 
-    /* promo */
-    function applyPromo() {
+    /* promo — server-validated */
+    var promoDiscount = 0;
+
+    async function applyPromo() {
       var val = pinput.value.trim().toUpperCase();
-      if (val === PROMO) {
-        promoOn = true;
-        pinput.disabled  = true;
-        papply.disabled  = true;
-        papply.textContent = "\u2713";
-        pwrap.classList.remove("invalid");
-        pwrap.classList.add("applied");
-        pstatus.textContent = "\u2736 BELLE10 applied \u2014 10% off all packages";
-        pstatus.className   = "promo-status ok";
+      if (!val) return;
 
-        var keys = ["starter","standard","premium"];
-        for (var k = 0; k < keys.length; k++) {
-          var key = keys[k];
-          var cap = key.charAt(0).toUpperCase()+key.slice(1);
-          var wel = $("was"+cap);
-          var pel = $("price"+cap);
-          wel.textContent = fmtMoney(PKG[key].price);
-          wel.classList.add("visible");
-          pel.textContent = fmtMoney(PKG[key].disc);
-          pel.classList.add("discounted");
+      /* Show loading state */
+      papply.disabled  = true;
+      papply.textContent = "\u2026";
+      pstatus.textContent = "";
+      pstatus.className = "promo-status";
+
+      /* Check if user is logged in */
+      var userId = null;
+      var token  = null;
+      try {
+        if (window.Clerk && window.Clerk.user) {
+          userId = window.Clerk.user.id;
+          token  = await window.Clerk.session.getToken();
         }
-        var ow = $("offlineWas");
-        var op = $("offlinePrice");
-        ow.textContent = fmtMoney(PKG.offline.price);
-        ow.classList.add("visible");
-        op.textContent = fmtMoney(PKG.offline.disc);
-        op.classList.add("discounted");
+      } catch(e) {}
 
-      } else {
-        promoOn = false;
-        pwrap.classList.remove("applied");
+      if (!userId) {
+        /* Not logged in — prompt to sign in */
+        papply.disabled = false;
+        papply.textContent = "Apply";
+        pstatus.textContent = "Sign in to The Sanctuary to use your code.";
+        pstatus.className = "promo-status err";
         pwrap.classList.add("invalid");
-        pstatus.textContent = "That code is not recognised.";
-        pstatus.className   = "promo-status err";
-        setTimeout(function () { pwrap.classList.remove("invalid"); }, 400);
+        setTimeout(function(){ pwrap.classList.remove("invalid"); }, 400);
+        return;
       }
+
+      try {
+        var res  = await fetch("/.netlify/functions/validate-promo", {
+          method: "POST",
+          headers: { "Content-Type":"application/json", "Authorization":"Bearer "+token },
+          body: JSON.stringify({ userId: userId, code: val })
+        });
+        var data = await res.json();
+
+        if (data.valid) {
+          promoOn       = true;
+          promoDiscount = data.discount;
+          pinput.disabled  = true;
+          papply.disabled  = true;
+          papply.textContent = "\u2713";
+          pwrap.classList.remove("invalid");
+          pwrap.classList.add("applied");
+          pstatus.textContent = "\u2736 " + data.code + " applied \u2014 " + data.discount + "% off";
+          pstatus.className   = "promo-status ok";
+          applyDiscountToUI(data.discount);
+        } else {
+          promoOn = false;
+          papply.disabled = false;
+          papply.textContent = "Apply";
+          pwrap.classList.remove("applied");
+          pwrap.classList.add("invalid");
+          pstatus.textContent = data.reason || "Code not valid.";
+          pstatus.className   = "promo-status err";
+          setTimeout(function(){ pwrap.classList.remove("invalid"); }, 400);
+        }
+      } catch(e) {
+        papply.disabled = false;
+        papply.textContent = "Apply";
+        pstatus.textContent = "Could not validate. Please try again.";
+        pstatus.className = "promo-status err";
+      }
+    }
+
+    function applyDiscountToUI(discountPct) {
+      var keys = ["starter","standard","premium"];
+      for (var k = 0; k < keys.length; k++) {
+        var key  = keys[k];
+        var cap  = key.charAt(0).toUpperCase()+key.slice(1);
+        var wel  = $("was"+cap);
+        var pel  = $("price"+cap);
+        var orig = PKG[key].price;
+        var disc = parseFloat((orig * (1 - discountPct/100)).toFixed(2));
+        wel.textContent = fmtMoney(orig);
+        wel.classList.add("visible");
+        pel.textContent = fmtMoney(disc);
+        pel.classList.add("discounted");
+      }
+      var ow = $("offlineWas");
+      var op = $("offlinePrice");
+      var origOff = PKG.offline.price;
+      var discOff = parseFloat((origOff * (1 - discountPct/100)).toFixed(2));
+      ow.textContent = fmtMoney(origOff);
+      ow.classList.add("visible");
+      op.textContent = fmtMoney(discOff);
+      op.classList.add("discounted");
     }
 
     /* ── Review carousel ── */
