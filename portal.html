@@ -665,9 +665,16 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     setChatLocked(true);
 
     if(alreadyGo && remaining > 0){
-      if(startBtn){ startBtn.disabled=true; startBtn.textContent="Session Active"; }
+      /* Session was previously started — restore in paused state.
+         Client must click Resume. Timer never auto-starts on load. */
+      if(startBtn){ startBtn.disabled=true; startBtn.textContent="Resume Session"; }
+      paused = true;
+      var bar = document.getElementById("sessionBar");
+      if(bar) bar.classList.add("active");
+      document.body.classList.add("session-active");
+      updateBar();
+      updatePauseBtn();
       setChatLocked(false);
-      startTimer();
     }
 
     if(startBtn){
@@ -678,6 +685,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
         localStorage.setItem(LS.started,"1");
         setChatLocked(false);
         openTidio();
+        paused = false;
         startTimer();
       });
     }
