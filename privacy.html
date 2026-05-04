@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Psychic Belle</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#D4AF37;--gold-pale:#e8d27a;
+  --gold-dim:rgba(212,175,55,0.15);--gold-line:rgba(212,175,55,0.35);
+  --gold-faint:rgba(212,175,55,0.07);
+  --black:#0a0a0a;
+  --text:#f0ead8;--text-muted:rgba(240,234,216,0.6);
+  --text-dim:rgba(240,234,216,0.32);--green:#4ade80;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);color:var(--text);
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:300;min-height:100vh;overflow-x:hidden;
+  line-height:1.8;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.35;
+}
+.site-nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:0.5px solid var(--gold-line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.site-nav-inner{max-width:720px;margin:0 auto;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav-brand{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);text-decoration:none;white-space:nowrap;flex-shrink:0}
+.nav-links{display:flex;gap:0;list-style:none;border:0.5px solid var(--gold-line)}
+.nav-links a{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;padding:8px 14px;display:block;border-right:0.5px solid var(--gold-line);transition:color .2s,background .2s;white-space:nowrap}
+.nav-links li:last-child a{border-right:none}
+.nav-links a:hover{color:var(--gold);background:var(--gold-faint)}
+.nav-member{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;white-space:nowrap;transition:color .2s;flex-shrink:0}
+.nav-member:hover{color:var(--gold)}
+@media(max-width:440px){.nav-links a{padding:8px 10px;font-size:7px}.nav-brand{font-size:10px}}
+.page{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 24px 80px}
+.privacy-header{padding:52px 0 44px;text-align:center;border-bottom:0.5px solid var(--gold-line);margin-bottom:52px}
+.privacy-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);opacity:.7;display:block;margin-bottom:18px}
+.privacy-title{font-family:'Cinzel',serif;font-size:clamp(22px,6vw,32px);font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--text);margin-bottom:16px;line-height:1.3}
+.privacy-updated{font-size:12px;letter-spacing:.12em;color:var(--text-dim);font-style:italic}
+.notice-box{
+  width:100%;padding:24px 28px;
+  border:0.5px solid var(--gold);
+  background:rgba(212,175,55,0.06);
+  margin-bottom:48px;position:relative;
+}
+.notice-box::before{content:'';position:absolute;inset:3px;border:0.5px solid rgba(212,175,55,0.2);pointer-events:none}
+.notice-box-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px}
+.notice-box p{font-size:15px;line-height:1.8;color:var(--text-muted);font-style:italic}
+.notice-box strong{font-style:normal;color:var(--text);font-weight:400}
+.privacy-section{margin-bottom:44px;padding-bottom:44px;border-bottom:0.5px solid rgba(212,175,55,0.12)}
+.privacy-section:last-of-type{border-bottom:none}
+.section-number{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);opacity:.6;display:block;margin-bottom:8px}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(14px,4vw,17px);font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--text);margin-bottom:18px}
+.privacy-body{font-size:15px;line-height:1.85;color:var(--text-muted)}
+.privacy-body p{margin-bottom:14px}
+.privacy-body p:last-child{margin-bottom:0}
+.privacy-body strong{color:var(--text);font-weight:400;font-style:normal}
+.privacy-body a{color:var(--gold);text-decoration:none}
+.privacy-body a:hover{text-decoration:underline}
+.data-table{width:100%;border:0.5px solid var(--gold-line);margin:20px 0;border-collapse:collapse}
+.data-table tr:first-child{background:var(--gold-faint)}
+.data-table th{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding:14px 18px;text-align:left;border-bottom:0.5px solid var(--gold-line);font-weight:400;border-right:0.5px solid rgba(212,175,55,0.1)}
+.data-table th:last-child{border-right:none}
+.data-table td{font-size:13.5px;color:var(--text-muted);padding:12px 18px;border-bottom:0.5px solid rgba(212,175,55,0.08);vertical-align:top;border-right:0.5px solid rgba(212,175,55,0.06)}
+.data-table td:last-child{border-right:none}
+.data-table tr:last-child td{border-bottom:none}
+.highlight-box{
+  padding:20px 22px;
+  border-left:2px solid var(--gold);
+  background:rgba(212,175,55,0.04);
+  margin:20px 0;
+}
+.highlight-box p{font-size:14.5px;line-height:1.8;color:var(--text-muted)}
+.highlight-box strong{color:var(--gold);font-weight:400}
+.data-list{list-style:none;margin:14px 0}
+.data-list li{font-size:14.5px;line-height:1.7;color:var(--text-muted);padding:8px 0 8px 22px;border-bottom:0.5px solid rgba(212,175,55,0.08);position:relative}
+.data-list li:last-child{border-bottom:none}
+.data-list li::before{content:'—';position:absolute;left:0;color:var(--gold);opacity:.5;font-family:'Cinzel',serif}
+.contact-block{padding:24px 24px 20px;border:0.5px solid var(--gold-line);background:var(--gold-faint);margin-top:20px;text-align:center}
+.contact-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:8px}
+.contact-email{font-family:'Cinzel',serif;font-size:16px;letter-spacing:.12em;color:var(--gold);text-decoration:none;display:block;transition:color .2s}
+.contact-email:hover{color:var(--gold-pale)}
+.contact-sub{font-size:13px;font-style:italic;color:var(--text-dim);margin-top:8px}
+.back-btn{display:inline-block;margin-top:48px;padding:16px 36px;background:transparent;color:var(--gold);font-family:'Cinzel',serif;font-size:11px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;border:0.5px solid var(--gold-line);text-decoration:none;transition:background .25s,border-color .25s,color .25s}
+.back-btn:hover{background:var(--gold);color:var(--black);border-color:var(--gold)}
+.privacy-footer{margin-top:60px;padding-top:32px;border-top:0.5px solid var(--gold-line);text-align:center}
+.footer-text{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeUp .8s ease both}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="/" class="nav-brand">Belle</a>
+    <ul class="nav-links">
+      <li><a href="/">Readings</a></li>
+      <li><a href="/archive.html">Archive</a></li>
+      <li><a href="/portal.html">Sanctuary</a></li>
+    </ul>
+    <a href="/login.html" class="nav-member" id="navMemberLink">Sign In</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="privacy-header fade-in">
+    <span class="privacy-eyebrow">Data &amp; Privacy</span>
+    <h1 class="privacy-title">Privacy Policy</h1>
+    <span class="privacy-updated">Last updated: May 2026 &nbsp;&middot;&nbsp; Psychic Belle</span>
+  </div>
+
+  <div class="notice-box fade-in">
+    <span class="notice-box-label">Summary</span>
+    <p>This policy explains what personal data Psychic Belle collects, why it is collected, how it is used, and your rights. <strong>By using this website or purchasing any service, you agree to the collection and use of your data as described here.</strong> This includes the possibility that anonymised session data may be used for AI research and development purposes, as described in Section 6.</p>
+  </div>
+
+  <!-- 1. WHO WE ARE -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Who We Are</h2>
+    <div class="privacy-body">
+      <p>This website is operated by <strong>Psychic Belle</strong>, an independent psychic advisor operating internationally. References to "we," "us," or "Belle" in this policy refer to Psychic Belle as the data controller for personal information collected through this website.</p>
+      <p>For any privacy-related enquiries, contact: <a href="mailto:support@psychicbelle.com">support@psychicbelle.com</a></p>
+    </div>
+  </div>
+
+  <!-- 2. WHAT WE COLLECT -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">02</span>
+    <h2 class="section-title">What We Collect</h2>
+    <div class="privacy-body">
+      <p>We collect the following categories of personal data:</p>
+      <table class="data-table">
+        <tr>
+          <th>Data Type</th>
+          <th>How Collected</th>
+          <th>Purpose</th>
+        </tr>
+        <tr>
+          <td>Email address</td>
+          <td>Account registration, offline reading form, checkout</td>
+          <td>Session delivery, account access, communication</td>
+        </tr>
+        <tr>
+          <td>First name</td>
+          <td>Account registration, offline reading form</td>
+          <td>Personalisation, reading preparation</td>
+        </tr>
+        <tr>
+          <td>Date of birth (yours)</td>
+          <td>Offline reading form</td>
+          <td>Astrological and energetic reading context</td>
+        </tr>
+        <tr>
+          <td>Date of birth (person of interest)</td>
+          <td>Offline reading form</td>
+          <td>Astrological and energetic reading context</td>
+        </tr>
+        <tr>
+          <td>Session questions and context</td>
+          <td>Offline reading form, live chat</td>
+          <td>Delivering your reading; AI research (see Section 6)</td>
+        </tr>
+        <tr>
+          <td>Live chat transcripts</td>
+          <td>Tidio chat platform</td>
+          <td>Quality assurance, session continuity, AI research (see Section 6)</td>
+        </tr>
+        <tr>
+          <td>Payment reference</td>
+          <td>Stripe checkout</td>
+          <td>Order fulfilment and fraud prevention</td>
+        </tr>
+        <tr>
+          <td>Session credit data</td>
+          <td>Browser localStorage</td>
+          <td>Timer state, credit balance, expiry tracking</td>
+        </tr>
+        <tr>
+          <td>Device and browser data</td>
+          <td>Automatic</td>
+          <td>Site functionality and security</td>
+        </tr>
+      </table>
+      <p>We do <strong>not</strong> collect or store full payment card details. All payment processing is handled by Stripe.</p>
+    </div>
+  </div>
+
+  <!-- 3. HOW WE USE YOUR DATA -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">03</span>
+    <h2 class="section-title">How We Use Your Data</h2>
+    <div class="privacy-body">
+      <p>Your data is used for the following purposes:</p>
+      <ul class="data-list">
+        <li>Delivering live and offline psychic reading sessions you have purchased</li>
+        <li>Managing your Sanctuary member account via Clerk</li>
+        <li>Processing payments and managing credit balances via Stripe</li>
+        <li>Sending your reading responses by email</li>
+        <li>Maintaining session continuity across visits via browser localStorage</li>
+        <li>Preventing fraud and enforcing our Terms &amp; Session Agreement</li>
+        <li>Improving the quality of readings and services</li>
+        <li>AI model research and development — see Section 6</li>
+      </ul>
+      <p>We do not use your data for third-party advertising. We do not sell your personal data to any third party.</p>
+    </div>
+  </div>
+
+  <!-- 4. THIRD-PARTY PROCESSORS -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">04</span>
+    <h2 class="section-title">Third-Party Data Processors</h2>
+    <div class="privacy-body">
+      <p>We work with the following trusted third-party processors who may handle your personal data on our behalf. Each operates under its own privacy policy and data processing agreement:</p>
+      <ul class="data-list">
+        <li><strong>Stripe</strong> — payment processing. Handles card data under PCI DSS compliance. <a href="https://stripe.com/privacy" target="_blank">stripe.com/privacy</a></li>
+        <li><strong>Clerk</strong> — authentication and account management. GDPR-compliant. <a href="https://clerk.com/privacy" target="_blank">clerk.com/privacy</a></li>
+        <li><strong>Tidio</strong> — live chat platform. Stores chat transcripts for session continuity and quality assurance. <a href="https://www.tidio.com/privacy-policy/" target="_blank">tidio.com/privacy-policy</a></li>
+        <li><strong>Netlify</strong> — website hosting and form submissions. GDPR-compliant. <a href="https://www.netlify.com/privacy/" target="_blank">netlify.com/privacy</a></li>
+        <li><strong>Google Fonts</strong> — font delivery. May process IP address for font serving.</li>
+      </ul>
+      <p>All third-party processors are contractually required to process your data only as directed by us and in accordance with applicable data protection law.</p>
+    </div>
+  </div>
+
+  <!-- 5. COOKIES & LOCAL STORAGE -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">05</span>
+    <h2 class="section-title">Cookies &amp; Local Storage</h2>
+    <div class="privacy-body">
+      <p>This website uses <strong>browser localStorage</strong> — not traditional cookies — to store your session state locally on your device. The following values are stored:</p>
+      <ul class="data-list">
+        <li><strong>b_secs</strong> — your remaining session credits in seconds</li>
+        <li><strong>b_pkg</strong> — the package you purchased</li>
+        <li><strong>b_started</strong> — whether your session has been started</li>
+        <li><strong>b_expiry</strong> — the expiry date of your credits (12 months from purchase)</li>
+        <li><strong>b_terms_ok</strong> — whether you have accepted the Terms &amp; Session Agreement</li>
+      </ul>
+      <p>This data is stored entirely on your device and is never transmitted to our servers. You can clear it at any time by clearing your browser's local storage or site data.</p>
+      <p>Third-party services (Clerk, Tidio, Stripe) may set their own cookies for authentication, session management, and fraud prevention. These are governed by their respective privacy policies.</p>
+    </div>
+  </div>
+
+  <!-- 6. AI RESEARCH & DATA TRAINING — KEY SECTION -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">06</span>
+    <h2 class="section-title">AI Research &amp; Model Development</h2>
+    <div class="privacy-body">
+      <div class="highlight-box">
+        <p><strong>Important disclosure:</strong> Psychic Belle is engaged in the development of AI-powered spiritual guidance technology. Anonymised, non-identifying conversational data collected through this platform may be used to train, fine-tune, and improve AI models as part of this research. By using this service, you consent to this use of your data as described below.</p>
+      </div>
+      <p>The following types of data may be used for AI research and model development:</p>
+      <ul class="data-list">
+        <li>General age ranges derived from sessions (e.g. "late 20s", "mid 40s") — never exact dates of birth</li>
+        <li>The nature and category of issues brought to sessions (e.g. twin flame separation, no contact, person of interest, reunion) — without identifying the specific individuals involved</li>
+        <li>How specific types of issues were explored and resolved within sessions — conversational patterns and guidance approaches only</li>
+        <li>The frequency and types of questions asked across sessions — aggregated thematic data only</li>
+        <li>Energetic and astrological themes that arose during readings — without linking to any individual</li>
+      </ul>
+      <p><strong>What is never used for AI training:</strong></p>
+      <ul class="data-list">
+        <li>Names — yours or anyone else's</li>
+        <li>Exact dates of birth</li>
+        <li>Email addresses or any contact information</li>
+        <li>Location data of any kind</li>
+        <li>Any information that could identify you or another person</li>
+      </ul>
+      <p>All data used for AI training is <strong>fully anonymised and aggregated</strong> before use. The resulting AI models are developed exclusively for use within Psychic Belle's own platform and services and will not be shared with or sold to third parties.</p>
+      <p>The legal basis for this processing is <strong>legitimate interests</strong> (GDPR Article 6(1)(f)) in developing proprietary AI-powered guidance technology, balanced against the strong anonymisation protections described above.</p>
+      <p><strong>Right to opt out:</strong> You may opt out of your session data being used for AI research at any time by emailing <a href="mailto:support@psychicbelle.com">support@psychicbelle.com</a> with the subject line <strong>"AI Data Opt Out"</strong>. We will process your request within 30 days. Opting out has no effect on your ability to use the service or receive readings.</p>
+    </div>
+  </div>
+
+  <!-- 7. DATA RETENTION -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">07</span>
+    <h2 class="section-title">Data Retention</h2>
+    <div class="privacy-body">
+      <p>We retain your personal data for as long as necessary to fulfil the purposes described in this policy:</p>
+      <ul class="data-list">
+        <li><strong>Account data</strong> — retained for the duration of your active account. Deleted within 30 days of an account deletion request</li>
+        <li><strong>Session and reading data</strong> — retained for up to 3 years for quality assurance and AI research purposes, after which it is anonymised or deleted</li>
+        <li><strong>Payment records</strong> — retained for 7 years as required by financial regulations</li>
+        <li><strong>Chat transcripts</strong> — retained by Tidio per their data retention policy; Belle retains anonymised extracts for up to 3 years</li>
+        <li><strong>LocalStorage data</strong> — stored on your device only; session credits expire after 12 months</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 8. DATA SECURITY -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">08</span>
+    <h2 class="section-title">Data Security</h2>
+    <div class="privacy-body">
+      <p>We take reasonable technical and organisational measures to protect your personal data against unauthorised access, loss, or disclosure. These include:</p>
+      <ul class="data-list">
+        <li>HTTPS encryption for all data in transit</li>
+        <li>Payment data handled exclusively by Stripe under PCI DSS compliance</li>
+        <li>Authentication managed by Clerk with industry-standard security practices</li>
+        <li>No storage of financial details on our own servers</li>
+      </ul>
+      <p>In the event of a personal data breach that is likely to affect your rights and freedoms, we will notify you within <strong>72 hours</strong> of becoming aware of the breach.</p>
+    </div>
+  </div>
+
+  <!-- 9. YOUR RIGHTS -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">09</span>
+    <h2 class="section-title">Your Rights</h2>
+    <div class="privacy-body">
+      <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+      <ul class="data-list">
+        <li><strong>Right of access</strong> — request a copy of the personal data we hold about you</li>
+        <li><strong>Right to rectification</strong> — request correction of inaccurate or incomplete data</li>
+        <li><strong>Right to erasure</strong> — request deletion of your personal data where there is no lawful reason to retain it</li>
+        <li><strong>Right to restriction</strong> — request that we limit how we use your data in certain circumstances</li>
+        <li><strong>Right to data portability</strong> — request your data in a structured, machine-readable format</li>
+        <li><strong>Right to object</strong> — object to processing based on legitimate interests, including AI model training (see Section 6)</li>
+        <li><strong>Right to withdraw consent</strong> — where processing is based on consent, withdraw it at any time without affecting prior lawful processing</li>
+      </ul>
+      <p><strong>California residents (CCPA):</strong> You have the right to know what personal information is collected about you, the right to request deletion, and the right to opt out of the sale of personal information. We do not sell personal information.</p>
+      <p>To exercise any of these rights, email <a href="mailto:support@psychicbelle.com">support@psychicbelle.com</a>. We will respond within 30 days.</p>
+    </div>
+  </div>
+
+  <!-- 10. CHILDREN -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">10</span>
+    <h2 class="section-title">Children's Privacy</h2>
+    <div class="privacy-body">
+      <p>This service is intended for users aged 18 and over. We do not knowingly collect personal data from anyone under the age of 18. If you believe a minor has submitted personal data through this website, please contact us immediately at <a href="mailto:support@psychicbelle.com">support@psychicbelle.com</a> and we will delete it promptly.</p>
+    </div>
+  </div>
+
+  <!-- 11. CHANGES -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">11</span>
+    <h2 class="section-title">Changes to This Policy</h2>
+    <div class="privacy-body">
+      <p>We may update this Privacy Policy from time to time. The date of the most recent update is shown at the top of this page. Where changes are material — particularly to how we use your data for AI research — we will notify active users by email where possible. Continued use of the service following any update constitutes acceptance of the revised policy.</p>
+    </div>
+  </div>
+
+  <!-- 12. CONTACT -->
+  <div class="privacy-section fade-in">
+    <span class="section-number">12</span>
+    <h2 class="section-title">Contact</h2>
+    <div class="privacy-body">
+      <p>For any privacy-related questions, data requests, or to exercise your rights under this policy:</p>
+      <div class="contact-block">
+        <span class="contact-label">Privacy Enquiries</span>
+        <a href="mailto:support@psychicbelle.com" class="contact-email">support@psychicbelle.com</a>
+        <p class="contact-sub">Subject line: Privacy Request &nbsp;&middot;&nbsp; Response within 30 days</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="/" class="back-btn fade-in">&#8592; &nbsp; Return to Readings</a>
+
+  <div class="privacy-footer">
+    <p class="footer-text">&copy; Psychic Belle &middot; All rights reserved &middot; <a href="/terms.html" style="color:var(--text-dim);text-decoration:none" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-dim)'">Terms &amp; Session Agreement</a></p>
+  </div>
+
+</div>
+
+<script>
+window.addEventListener("load", function() {
+  if (!window.Clerk) return;
+  window.Clerk.load().then(function() {
+    var user = window.Clerk.user;
+    var link = document.getElementById("navMemberLink");
+    if (user && link) {
+      link.textContent = (user.firstName || "Member") + " \u2192";
+      link.href = "/portal.html";
+    }
+  }).catch(function(){});
+});
+</script>
+<script>window.__clerk_publishable_key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ";</script>
+<script async crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ"
+  src="https://concise-wasp-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+></script>
+
+</body>
+</html>
