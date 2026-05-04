@@ -474,13 +474,6 @@ body.session-active{padding-top:52px}
     <span class="status-text" id="statusText"></span>
   </div>
 
-  <!-- ═══════════════════════════════════════════════
-       IDENTITY VERIFICATION BANNER
-       Edit the text inside rank-text spans to update.
-       To add a badge image, replace the src="" value
-       with the URL of your uploaded badge/screenshot.
-       You can add up to 3 badge images.
-       ═══════════════════════════════════════════════ -->
   <div class="id-verify fade-1">
     <span class="id-verify-label">Verified Advisor</span>
     <span class="id-verify-text">
@@ -508,12 +501,6 @@ body.session-active{padding-top:52px}
     The answers you have been circling &mdash; I have them.
   </p>
 
-  <!-- ═══════════════════════════════════════════════
-       YOUTUBE VIDEO
-       Replace PASTE_YOUR_YOUTUBE_ID_HERE with your ID.
-       e.g. https://youtube.com/watch?v=dQw4w9WgXcQ
-            → paste: dQw4w9WgXcQ
-       ═══════════════════════════════════════════════ -->
   <div class="video-wrap fade-3">
     <iframe
       src="https://www.youtube.com/embed/PASTE_YOUR_YOUTUBE_ID_HERE?rel=0&modestbranding=1"
@@ -523,10 +510,6 @@ body.session-active{padding-top:52px}
     </iframe>
   </div>
 
-  <!-- ═══════════════════════════════════════════════
-       PLATFORM RANKING BAR
-       Edit the rank-text line below to update wording
-       ═══════════════════════════════════════════════ -->
   <div class="platform-rank fade-3">
     <span class="rank-eyebrow">Recognised Advisor</span>
     <span class="rank-text">Elite Top-Ranked on Purple Garden &amp; BitWine</span>
@@ -717,8 +700,7 @@ body.session-active{padding-top:52px}
   /* ============================================================
      CONFIG
      ============================================================ */
-  var LIVE        = true;   /* true = live, false = offline */
-  var PROMO       = "BELLE10";
+  var LIVE  = true;   /* true = live, false = offline */
 
   var STRIPE = {
     starter:      "https://buy.stripe.com/28EbJ2b6p3z32lQbOzffy02",
@@ -753,6 +735,21 @@ body.session-active{padding-top:52px}
   var params     = new URLSearchParams(window.location.search);
   var SUCCESS    = params.get("success") === "true";
   var PKG_PARAM  = params.get("pkg") || "";
+  var TOPUP      = params.get("topup") === "true";
+
+  /* ============================================================
+     STALE SESSION CLEANUP
+     Clear any localStorage where timer has already hit zero
+     so the session panel never shows on a fresh landing page load.
+     ============================================================ */
+  (function cleanStale() {
+    var savedSecs = parseInt(localStorage.getItem(LS.secs), 10);
+    if (!isNaN(savedSecs) && savedSecs <= 0) {
+      localStorage.removeItem(LS.secs);
+      localStorage.removeItem(LS.pkg);
+      localStorage.removeItem(LS.started);
+    }
+  })();
 
   /* ============================================================
      TIDIO GATE
@@ -771,8 +768,8 @@ body.session-active{padding-top:52px}
   /* ============================================================
      TIMER ENGINE
      ============================================================ */
-  var ticker   = null;
-  var total    = 0;
+  var ticker    = null;
+  var total     = 0;
   var remaining = 0;
 
   function updateBar() {
@@ -833,15 +830,25 @@ body.session-active{padding-top:52px}
   }
 
   function openTidio() {
-    try {
-      if (window.tidioChatApi && window.tidioChatApi.open) {
-        window.tidioChatApi.open();
-      } else {
-        document.addEventListener("tidioChat-ready", function () {
-          if (window.tidioChatApi && window.tidioChatApi.open) window.tidioChatApi.open();
-        });
-      }
-    } catch(e) {}
+    document.body.classList.remove("tidio-hidden");
+    // Force-show iframe directly in case API isn't ready yet
+    var iframe = document.getElementById("tidio-chat-iframe");
+    if (iframe) iframe.style.cssText = "";
+
+    function doOpen() {
+      try {
+        if (window.tidioChatApi) {
+          if (window.tidioChatApi.show) window.tidioChatApi.show();
+          if (window.tidioChatApi.open) window.tidioChatApi.open();
+        }
+      } catch(e) {}
+    }
+
+    if (window.tidioChatApi && window.tidioChatApi.open) {
+      doOpen();
+    } else {
+      document.addEventListener("tidioChat-ready", doOpen, { once: true });
+    }
   }
 
   /* ============================================================
@@ -915,17 +922,15 @@ body.session-active{padding-top:52px}
     var promoOn = false;
     var selPkg  = null;
 
-    /* top-up button */
+    /* ── Top-up button: preserve session, redirect to package select ── */
     if (topup) {
       topup.addEventListener("click", function () {
-        localStorage.removeItem(LS.secs);
-        localStorage.removeItem(LS.pkg);
-        localStorage.removeItem(LS.started);
-        window.location.href = window.location.pathname;
+        /* Do NOT clear localStorage — session resumes after top-up payment */
+        window.location.href = "/?topup=true";
       });
     }
 
-    /* post-payment return */
+    /* ── Post-payment return ── */
     if (SUCCESS && PKG_PARAM && PKG[PKG_PARAM] && PKG[PKG_PARAM].mins > 0) {
       initSession(PKG_PARAM);
       if (packSec) packSec.style.display = "none";
@@ -933,12 +938,12 @@ body.session-active{padding-top:52px}
       dot.classList.add("live");
       txt.classList.add("live");
       txt.textContent    = "Payment confirmed";
-      preamble.innerHTML = "Your session is ready.<br>\x3cstrong\x3ePress Start Session when Belle is ready for you.\x3c/strong\x3e";
+      preamble.innerHTML = "Your session is ready.<br><strong>Press Start Session when Belle is ready for you.</strong>";
       avail.innerHTML    = "Your live session begins the moment you click Start Session.";
       return;
     }
 
-    /* localStorage restore mid-session */
+    /* ── localStorage restore: mid-session page refresh ── */
     var savedPkg  = localStorage.getItem(LS.pkg);
     var savedSecs = parseInt(localStorage.getItem(LS.secs), 10);
     if (savedPkg && !isNaN(savedSecs) && savedSecs > 0 && PKG[savedPkg]) {
@@ -948,29 +953,45 @@ body.session-active{padding-top:52px}
       dot.classList.add("live");
       txt.classList.add("live");
       txt.textContent    = "Session in progress";
-      preamble.innerHTML = "Your session is active.<br>\x3cstrong\x3ePress Start Session to resume the timer.\x3c/strong\x3e";
+      preamble.innerHTML = "Your session is active.<br><strong>Press Start Session to resume the timer.</strong>";
       avail.innerHTML    = "Your live session is ready to continue.";
       return;
     }
 
-    /* normal page load */
+    /* ── Top-up return: skip landing, show packages directly ── */
+    if (TOPUP) {
+      dot.classList.add("live");
+      txt.classList.add("live");
+      txt.textContent    = "Belle is live now";
+      packSec.classList.add("visible");
+      preamble.innerHTML = "Top up your session below.<br><strong>Your timer resumes the moment payment clears.</strong>";
+      avail.innerHTML    = "Select a package to add time to your current session.";
+      /* scroll to packages smoothly */
+      setTimeout(function() {
+        var el = $("packagesSection");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 300);
+      return;
+    }
+
+    /* ── Normal page load ── */
     if (LIVE) {
       dot.classList.add("live");
       txt.classList.add("live");
       txt.textContent    = "Belle is live now";
       packSec.classList.add("visible");
-      preamble.innerHTML = "Choose your credit package below.<br>\x3cstrong\x3eLive chat opens immediately after payment.\x3c/strong\x3e";
+      preamble.innerHTML = "Choose your credit package below.<br><strong>Live chat opens immediately after payment.</strong>";
       avail.innerHTML    = "Sessions begin the moment payment clears.<br>I am here and ready for you now.";
     } else {
       dot.classList.add("offline");
       txt.classList.add("offline");
       txt.textContent    = "Currently offline";
       offSec.classList.add("visible");
-      preamble.innerHTML = "I am offline right now but \x3cstrong\x3estill reading today.\x3c/strong\x3e<br>Submit your question below &mdash; delivered within 24 hours.";
+      preamble.innerHTML = "I am offline right now but <strong>still reading today.</strong><br>Submit your question below &mdash; delivered within 24 hours.";
       avail.innerHTML    = "Questions received after payment.<br>Full reading delivered within 24 hours by email.";
     }
 
-    /* card selection */
+    /* ── Card selection ── */
     var cards = document.querySelectorAll(".pkg-card");
     for (var i = 0; i < cards.length; i++) {
       (function (card) {
@@ -983,32 +1004,30 @@ body.session-active{padding-top:52px}
       })(cards[i]);
     }
 
-    /* chat now */
+    /* ── Chat now ── */
     liveBtn.addEventListener("click", function () {
       if (!selPkg) return;
       var url = promoOn ? STRIPE[selPkg+"Disc"] : STRIPE[selPkg];
       window.location.href = url;
     });
 
-    /* send question */
+    /* ── Send question ── */
     offBtn.addEventListener("click", function () {
       window.location.href = STRIPE.offline;
     });
 
-    /* promo — server-validated */
+    /* ── Promo — server-validated ── */
     var promoDiscount = 0;
 
     async function applyPromo() {
       var val = pinput.value.trim().toUpperCase();
       if (!val) return;
 
-      /* Show loading state */
-      papply.disabled  = true;
-      papply.textContent = "\u2026";
+      papply.disabled     = true;
+      papply.textContent  = "\u2026";
       pstatus.textContent = "";
-      pstatus.className = "promo-status";
+      pstatus.className   = "promo-status";
 
-      /* Check if user is logged in */
       var userId = null;
       var token  = null;
       try {
@@ -1019,11 +1038,10 @@ body.session-active{padding-top:52px}
       } catch(e) {}
 
       if (!userId) {
-        /* Not logged in — prompt to sign in */
-        papply.disabled = false;
+        papply.disabled    = false;
         papply.textContent = "Apply";
         pstatus.textContent = "Sign in to The Sanctuary to use your code.";
-        pstatus.className = "promo-status err";
+        pstatus.className   = "promo-status err";
         pwrap.classList.add("invalid");
         setTimeout(function(){ pwrap.classList.remove("invalid"); }, 400);
         return;
@@ -1049,8 +1067,8 @@ body.session-active{padding-top:52px}
           pstatus.className   = "promo-status ok";
           applyDiscountToUI(data.discount);
         } else {
-          promoOn = false;
-          papply.disabled = false;
+          promoOn            = false;
+          papply.disabled    = false;
           papply.textContent = "Apply";
           pwrap.classList.remove("applied");
           pwrap.classList.add("invalid");
@@ -1059,10 +1077,10 @@ body.session-active{padding-top:52px}
           setTimeout(function(){ pwrap.classList.remove("invalid"); }, 400);
         }
       } catch(e) {
-        papply.disabled = false;
+        papply.disabled    = false;
         papply.textContent = "Apply";
         pstatus.textContent = "Could not validate. Please try again.";
-        pstatus.className = "promo-status err";
+        pstatus.className   = "promo-status err";
       }
     }
 
@@ -1097,13 +1115,12 @@ body.session-active{padding-top:52px}
     var nextBtn  = document.getElementById("carouselNext");
 
     if (track && dotsWrap && prevBtn && nextBtn) {
-      var cards     = track.querySelectorAll(".review-card");
-      var total     = cards.length;
-      var current   = 0;
-      var autoTimer = null;
+      var reviewCards = track.querySelectorAll(".review-card");
+      var reviewTotal = reviewCards.length;
+      var current     = 0;
+      var autoTimer   = null;
 
-      /* build dots */
-      for (var d = 0; d < total; d++) {
+      for (var d = 0; d < reviewTotal; d++) {
         (function(idx) {
           var dot = document.createElement("button");
           dot.className = "carousel-dot" + (idx === 0 ? " active" : "");
@@ -1114,8 +1131,7 @@ body.session-active{padding-top:52px}
       }
 
       function goTo(idx) {
-        current = (idx + total) % total;
-        /* use pixel width of the outer container for exact snapping */
+        current = (idx + reviewTotal) % reviewTotal;
         var cardWidth = track.parentElement.offsetWidth;
         track.style.transform = "translateX(-" + (current * cardWidth) + "px)";
         var dots = dotsWrap.querySelectorAll(".carousel-dot");
@@ -1129,13 +1145,10 @@ body.session-active{padding-top:52px}
         autoTimer = setInterval(function() { goTo(current + 1); }, 5000);
       }
 
-      /* recalculate on resize so it never drifts */
       window.addEventListener("resize", function() { goTo(current); });
-
       prevBtn.addEventListener("click", function() { goTo(current - 1); resetAuto(); });
       nextBtn.addEventListener("click", function() { goTo(current + 1); resetAuto(); });
 
-      /* touch swipe */
       var touchStartX = 0;
       track.addEventListener("touchstart", function(e) {
         touchStartX = e.touches[0].clientX;
