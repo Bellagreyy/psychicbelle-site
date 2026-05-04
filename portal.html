@@ -38,6 +38,11 @@ body.session-active .page{padding-top:12px}
 .sb-fill.critical{background:#ef4444}
 .sb-topup{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--black);background:var(--gold);border:none;padding:6px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .2s}
 .sb-topup:hover{background:var(--gold-pale)}
+.sb-pause{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);background:transparent;border:0.5px solid var(--gold-line);padding:6px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:color .2s,border-color .2s,background .2s}
+.sb-pause:hover{color:var(--gold-pale);border-color:var(--gold)}
+.sb-pause.paused{color:var(--black);background:var(--gold);border-color:var(--gold)}
+/* Credit expiry note */
+.sp-expiry{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-top:10px;display:block}
 
 /* NAV */
 .site-nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:0.5px solid var(--gold-line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
@@ -166,6 +171,84 @@ body.session-active .page{padding-top:12px}
 body.tidio-hidden #tidio-chat,
 body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !important}
 
+/* ── TOP-UP MODAL ── */
+.topup-overlay{
+  display:none;position:fixed;inset:0;z-index:10000;
+  background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  align-items:flex-end;justify-content:center;
+}
+.topup-overlay.open{display:flex}
+.topup-sheet{
+  width:100%;max-width:600px;
+  background:#0d0d0d;
+  border-top:0.5px solid var(--gold-line);
+  border-left:0.5px solid var(--gold-line);
+  border-right:0.5px solid var(--gold-line);
+  padding:28px 24px 40px;
+  transform:translateY(100%);
+  transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);
+}
+.topup-overlay.open .topup-sheet{transform:translateY(0)}
+.topup-sheet-handle{
+  width:36px;height:3px;background:var(--gold-line);
+  border-radius:2px;margin:0 auto 24px;
+}
+.topup-sheet-eyebrow{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.35em;
+  text-transform:uppercase;color:var(--gold);opacity:0.7;
+  display:block;margin-bottom:6px;text-align:center;
+}
+.topup-sheet-title{
+  font-family:'Cinzel',serif;font-size:clamp(16px,5vw,20px);
+  font-weight:400;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--text);text-align:center;margin-bottom:6px;
+}
+.topup-sheet-sub{
+  font-size:13px;font-style:italic;color:var(--text-muted);
+  text-align:center;margin-bottom:24px;line-height:1.6;
+}
+.topup-timer-remaining{
+  font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--text-dim);
+  text-align:center;margin-bottom:20px;
+}
+.topup-timer-remaining span{color:var(--gold)}
+.topup-pkgs{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.topup-pkg{
+  width:100%;padding:16px 20px;
+  border:0.5px solid var(--gold-line);background:var(--gold-faint);
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.topup-pkg:hover{border-color:var(--gold);background:rgba(212,175,55,0.11)}
+.topup-pkg.selected{
+  border-color:var(--gold);background:rgba(212,175,55,0.13);
+  box-shadow:0 0 0 1px var(--gold);
+}
+.topup-pkg-name{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text)}
+.topup-pkg-detail{font-size:12px;font-style:italic;color:var(--text-muted);margin-top:3px}
+.topup-pkg-price{font-family:'Cinzel',serif;font-size:clamp(18px,5vw,22px);font-weight:400;color:var(--gold);letter-spacing:0.04em}
+.topup-pkg-price.discounted{color:var(--green)}
+.topup-go-btn{
+  display:block;width:100%;padding:18px;
+  background:var(--gold);color:var(--black);
+  font-family:'Cinzel',serif;font-size:12px;font-weight:500;
+  letter-spacing:0.3em;text-transform:uppercase;
+  border:none;cursor:pointer;
+  transition:background .25s,opacity .2s;-webkit-appearance:none;
+}
+.topup-go-btn:hover{background:var(--gold-pale)}
+.topup-go-btn:disabled{opacity:.35;cursor:not-allowed;background:var(--gold)}
+.topup-cancel{
+  display:block;width:100%;margin-top:12px;padding:12px;
+  background:transparent;border:0.5px solid rgba(255,255,255,0.08);
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--text-dim);cursor:pointer;
+  transition:color .2s,border-color .2s;
+}
+.topup-cancel:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:400px){.page{padding:0 16px 60px}.stats-grid{grid-template-columns:1fr}.welcome-card{flex-direction:column;align-items:flex-start}}
 </style>
@@ -177,7 +260,44 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
   <span class="sb-label">Session</span>
   <span class="sb-time" id="sbTime">00:00</span>
   <div class="sb-track"><div class="sb-fill" id="sbFill"></div></div>
+  <button class="sb-pause" id="sbPause" aria-label="Pause session">Pause</button>
   <button class="sb-topup" id="sbTopup">Top Up</button>
+</div>
+
+<!-- ── TOP-UP MODAL ── -->
+<div class="topup-overlay" id="topupOverlay">
+  <div class="topup-sheet">
+    <div class="topup-sheet-handle"></div>
+    <span class="topup-sheet-eyebrow">Add Credits</span>
+    <div class="topup-sheet-title">Top Up Session</div>
+    <p class="topup-sheet-sub">Select a package to add time.<br>Your session resumes immediately after payment.</p>
+    <p class="topup-timer-remaining">Time remaining: <span id="topupTimeRemaining">--:--</span></p>
+    <div class="topup-pkgs">
+      <div class="topup-pkg" data-pkg="starter">
+        <div>
+          <div class="topup-pkg-name">Starter</div>
+          <div class="topup-pkg-detail">Approx. 4 minutes</div>
+        </div>
+        <div class="topup-pkg-price" id="topupPriceStarter">$25</div>
+      </div>
+      <div class="topup-pkg" data-pkg="standard">
+        <div>
+          <div class="topup-pkg-name">Standard</div>
+          <div class="topup-pkg-detail">Approx. 8 minutes</div>
+        </div>
+        <div class="topup-pkg-price" id="topupPriceStandard">$50</div>
+      </div>
+      <div class="topup-pkg" data-pkg="premium">
+        <div>
+          <div class="topup-pkg-name">Premium</div>
+          <div class="topup-pkg-detail">Approx. 17 minutes</div>
+        </div>
+        <div class="topup-pkg-price" id="topupPricePremium">$100</div>
+      </div>
+    </div>
+    <button class="topup-go-btn" id="topupGoBtn" disabled>Select a Package</button>
+    <button class="topup-cancel" id="topupCancel">Cancel — Return to Chat</button>
+  </div>
 </div>
 
 <!-- LOADING -->
@@ -227,6 +347,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     <div class="sp-min-label">minutes remaining</div>
     <button class="start-session-btn" id="startSessionBtn">Start Session</button>
     <div class="sp-note">Clicking Start Session opens the live chat<br>and begins your countdown timer.</div>
+    <span class="sp-expiry" id="spExpiry"></span>
   </div>
 
   <!-- LIVE CHAT -->
@@ -328,7 +449,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
 
   <div class="portal-footer">
     <div class="footer-rule"></div>
-    <p class="footer-text">&copy; Psychic Belle &middot; The Sanctuary<br>Member sessions are private &amp; confidential</p>
+    <p class="footer-text">&copy; Psychic Belle &middot; The Sanctuary<br>Member sessions are private &amp; confidential<br><a href="/terms.html" style="color:var(--text-dim);text-decoration:none;letter-spacing:0.15em;font-size:9px;font-family:'Cinzel',serif;text-transform:uppercase" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-dim)'">Terms &amp; Session Agreement</a></p>
   </div>
 
 </div>
@@ -351,7 +472,16 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     standard: { label:"Standard", mins:8,  price:50   },
     premium:  { label:"Premium",  mins:17, price:100  }
   };
-  var LS = { secs:"b_secs", pkg:"b_pkg", started:"b_started" };
+  var LS = {
+    secs:    "b_secs",
+    pkg:     "b_pkg",
+    started: "b_started",
+    expiry:  "b_expiry",
+    terms:   "b_terms_ok"
+  };
+
+  var TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
+  var paused = false;
   var THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
 
   /* ── Timer state ── */
@@ -388,16 +518,17 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
 
   function startTimer(){
     if(ticker) return;
+    paused = false;
     var bar = document.getElementById("sessionBar");
     if(bar) bar.classList.add("active");
     document.body.classList.add("session-active");
     updateBar();
+    updatePauseBtn();
     ticker = setInterval(function(){
       remaining--;
       localStorage.setItem(LS.secs, remaining);
       updateBar();
 
-      /* Operator alerts */
       if(remaining === 180) fireTidio("\u26a0\ufe0f Client has 3 minutes remaining.");
       if(remaining === 60)  fireTidio("\u26a0\ufe0f 1 minute remaining \u2014 wrap up or offer top up.");
 
@@ -407,10 +538,37 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
         localStorage.removeItem(LS.secs);
         localStorage.removeItem(LS.pkg);
         localStorage.removeItem(LS.started);
+        localStorage.removeItem(LS.expiry);
         fireTidio("Your credits have been used. Please top up to continue.");
         completeSession();
       }
     }, 1000);
+  }
+
+  function pauseTimer(){
+    if(!ticker) return;
+    clearInterval(ticker); ticker = null;
+    paused = true;
+    localStorage.setItem(LS.secs, remaining);
+    updatePauseBtn();
+  }
+
+  function resumeTimer(){
+    if(ticker || remaining <= 0) return;
+    paused = false;
+    startTimer();
+  }
+
+  function updatePauseBtn(){
+    var btn = document.getElementById("sbPause");
+    if(!btn) return;
+    if(paused){
+      btn.textContent = "Resume";
+      btn.classList.add("paused");
+    } else {
+      btn.textContent = "Pause";
+      btn.classList.remove("paused");
+    }
   }
 
   /* ── Complete session — unlocks BELIEVE15 ── */
@@ -488,6 +646,10 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       localStorage.setItem(LS.secs, remaining);
       localStorage.setItem(LS.pkg, pkgKey);
       localStorage.removeItem(LS.started);
+      if(!localStorage.getItem(LS.expiry)){
+        var expDate = new Date(Date.now() + TWELVE_MONTHS_MS);
+        localStorage.setItem(LS.expiry, expDate.toISOString());
+      }
       alreadyGo = false;
     }
 
@@ -543,10 +705,86 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     }
   }
 
-  /* ── Top-up: preserve session state, redirect to package select ── */
+  /* ── Stripe links for top-up modal ── */
+  var STRIPE_PORTAL = {
+    starter:      "https://buy.stripe.com/28EbJ2b6p3z32lQbOzffy02",
+    standard:     "https://buy.stripe.com/cNi9AUdexglP8KedWHffy03",
+    premium:      "https://buy.stripe.com/eVqcN61vP3z31hMg4Pffy04",
+    starterDisc:  "https://buy.stripe.com/cNifZicat9Xr0dI2dZffy05",
+    standardDisc: "https://buy.stripe.com/9B628s6Q92uZ7Ga4m7ffy06",
+    premiumDisc:  "https://buy.stripe.com/aFadRa5M57Pj3pU8Cnffy07"
+  };
+
+  /* ── Top-up modal state ── */
+  var topupSelPkg  = null;
+  var promoActive  = false; /* set true if user has unclaimed BELLE10 */
+
+  function openTopupModal(){
+    if(ticker){ clearInterval(ticker); ticker = null; }
+    var el = document.getElementById("topupTimeRemaining");
+    if(el) el.textContent = toTime(remaining);
+    /* If user has active promo (BELLE10 claimed but not yet used on a purchase),
+       show discounted prices */
+    if(promoActive){
+      var map = { starter:25, standard:50, premium:100 };
+      var caps = ["Starter","Standard","Premium"];
+      var keys2 = ["starter","standard","premium"];
+      for(var k=0;k<keys2.length;k++){
+        var disc = parseFloat((map[keys2[k]] * 0.90).toFixed(2));
+        var pel  = document.getElementById("topupPrice"+caps[k]);
+        if(pel){ pel.textContent = "$"+disc; pel.classList.add("discounted"); }
+      }
+    }
+    document.getElementById("topupOverlay").classList.add("open");
+  }
+
+  function closeTopupModal(){
+    document.getElementById("topupOverlay").classList.remove("open");
+    if(remaining > 0 && localStorage.getItem(LS.started) === "1"){
+      startTimer();
+    }
+  }
+
+  /* ── Pause button ── */
+  var pauseBtn = document.getElementById("sbPause");
+  if(pauseBtn){
+    pauseBtn.addEventListener("click", function(){
+      if(paused){
+        resumeTimer();
+      } else {
+        pauseTimer();
+      }
+    });
+  }
+
+  /* ── Top-up button ── */
   document.getElementById("sbTopup").addEventListener("click", function(){
-    /* Do NOT clear localStorage — session state is needed to resume after payment */
-    window.location.href = "/?topup=true";
+    openTopupModal();
+  });
+
+  /* ── Modal package selection ── */
+  document.querySelectorAll(".topup-pkg").forEach(function(el){
+    el.addEventListener("click", function(){
+      document.querySelectorAll(".topup-pkg").forEach(function(e){ e.classList.remove("selected"); });
+      el.classList.add("selected");
+      topupSelPkg = el.getAttribute("data-pkg");
+      var goBtn = document.getElementById("topupGoBtn");
+      goBtn.disabled = false;
+      goBtn.textContent = "Proceed to Payment";
+    });
+  });
+
+  /* ── Modal go to Stripe ── */
+  document.getElementById("topupGoBtn").addEventListener("click", function(){
+    if(!topupSelPkg) return;
+    var url = promoActive ? STRIPE_PORTAL[topupSelPkg+"Disc"] : STRIPE_PORTAL[topupSelPkg];
+    window.location.href = url;
+  });
+
+  /* ── Modal cancel ── */
+  document.getElementById("topupCancel").addEventListener("click", closeTopupModal);
+  document.getElementById("topupOverlay").addEventListener("click", function(e){
+    if(e.target === document.getElementById("topupOverlay")) closeTopupModal();
   });
 
   /* ── Quick chat buttons ── */
@@ -705,6 +943,16 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     var savedSecs = parseInt(localStorage.getItem(LS.secs), 10);
     var hasActive = savedPkg && !isNaN(savedSecs) && savedSecs > 0 && PACKAGES[savedPkg];
 
+    /* Credit expiry check — wipe if expired */
+    var expiry = localStorage.getItem(LS.expiry);
+    if(expiry && Date.now() > new Date(expiry).getTime()){
+      localStorage.removeItem(LS.secs);
+      localStorage.removeItem(LS.pkg);
+      localStorage.removeItem(LS.started);
+      localStorage.removeItem(LS.expiry);
+      hasActive = false;
+    }
+
     if(SUCCESS && PKG_PARAM && PACKAGES[PKG_PARAM]){
       initSession(PKG_PARAM);
     } else if(hasActive){
@@ -713,9 +961,32 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       setChatLocked(true);
     }
 
+    /* Show credit expiry date in session panel */
+    var expiryStored = localStorage.getItem(LS.expiry);
+    var spExpiry = document.getElementById("spExpiry");
+    if(spExpiry && expiryStored){
+      var expDate = new Date(expiryStored);
+      var expStr  = expDate.toLocaleDateString("en-GB", { day:"numeric", month:"long", year:"numeric" });
+      spExpiry.textContent = "Credits expire: " + expStr;
+    }
+
+    /* Terms acceptance — note for returning members */
+    var termsAgreed = localStorage.getItem(LS.terms) === "1";
+    if(!termsAgreed){
+      /* Show subtle reminder in booking card */
+      var bookingDesc = document.querySelector(".booking-desc");
+      if(bookingDesc){
+        bookingDesc.innerHTML = 'Select your credit package and your live session opens the moment payment clears. By purchasing you agree to the <a href="/terms.html" style="color:var(--gold);text-decoration:none">Terms &amp; Session Agreement</a>.';
+      }
+    }
+
     renderBelle10(user);
     renderBelieve15(user);
     renderSaved(user);
+
+    /* Set promo flag for top-up modal — active if BELLE10 claimed but BELIEVE15 not yet used */
+    var meta = user.publicMetadata || {};
+    if(meta.belle10_claimed === true) promoActive = true;
 
     document.getElementById("loadingScreen").style.display = "none";
     document.getElementById("mainContent").style.display   = "block";
