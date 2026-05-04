@@ -1288,8 +1288,15 @@ body.session-active{padding-top:52px}
     if (spMin) spMin.textContent = fmtTime(remaining);
 
     if (alreadyGo && remaining > 0) {
-      if (btn) { btn.disabled = true; btn.textContent = "Session Active"; }
-      startTimer();
+      /* Session was previously started — restore in paused state.
+         Client must click Resume to continue. Timer never auto-starts on load. */
+      if (btn) { btn.disabled = true; btn.textContent = "Resume Session"; }
+      paused = true;
+      var bar = $("sessionBar");
+      if (bar) bar.classList.add("active");
+      document.body.classList.add("session-active");
+      updateBar();
+      updatePauseBtn();
     }
 
     if (btn) {
@@ -1299,6 +1306,7 @@ body.session-active{padding-top:52px}
         btn.textContent = "Session Active";
         localStorage.setItem(LS.started, "1");
         openTidio();
+        paused = false;
         startTimer();
       });
     }
