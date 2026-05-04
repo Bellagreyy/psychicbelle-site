@@ -593,6 +593,20 @@ body.session-active{padding-top:52px}
   font-size:14px;font-style:italic;color:var(--text-muted);
   line-height:1.75;margin-bottom:28px;
 }
+.oform-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0;
+}
+.oform-row .oform-field{margin-bottom:20px}
+.oform-date{
+  color-scheme:dark;
+}
+.oform-date::-webkit-calendar-picker-indicator{
+  filter:invert(0.7) sepia(1) saturate(2) hue-rotate(5deg);
+  cursor:pointer;opacity:0.7;
+}
+@media(max-width:420px){
+  .oform-row{grid-template-columns:1fr}
+}
 .oform-field{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
 .oform-label{
   font-family:'Cinzel',serif;font-size:9px;letter-spacing:.28em;
@@ -962,6 +976,37 @@ body.session-active{padding-top:52px}
             class="oform-input" id="oEmail" name="email" type="email"
             placeholder="you@example.com" required autocomplete="email">
           <span class="oform-hint">Belle's response will be sent here</span>
+        </div>
+
+        <div class="oform-row">
+          <div class="oform-field">
+            <label class="oform-label" for="oClientName">Your First Name</label>
+            <input
+              class="oform-input" id="oClientName" name="client_name" type="text"
+              placeholder="e.g. Sofia" required autocomplete="given-name">
+          </div>
+          <div class="oform-field">
+            <label class="oform-label" for="oClientDOB">Your Date of Birth</label>
+            <input
+              class="oform-input oform-date" id="oClientDOB" name="client_dob" type="date"
+              required>
+          </div>
+        </div>
+
+        <div class="oform-row">
+          <div class="oform-field">
+            <label class="oform-label" for="oPoiName">Person of Interest — First Name</label>
+            <input
+              class="oform-input" id="oPoiName" name="poi_name" type="text"
+              placeholder="e.g. James" required>
+          </div>
+          <div class="oform-field">
+            <label class="oform-label" for="oPoiDOB">Person of Interest — Date of Birth</label>
+            <input
+              class="oform-input oform-date" id="oPoiDOB" name="poi_dob" type="date"
+              required>
+            <span class="oform-hint">Approximate is fine if unknown</span>
+          </div>
         </div>
 
         <div class="oform-field">
