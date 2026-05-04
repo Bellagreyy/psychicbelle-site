@@ -1272,11 +1272,9 @@ body.session-active{padding-top:52px}
       localStorage.setItem(LS.secs, remaining);
       localStorage.setItem(LS.pkg, pkgKey);
       localStorage.removeItem(LS.started);
-      /* Store expiry 12 months from now if not already set */
-      if (!localStorage.getItem(LS.expiry)) {
-        var expDate = new Date(Date.now() + TWELVE_MONTHS_MS);
-        localStorage.setItem(LS.expiry, expDate.toISOString());
-      }
+      /* Always reset expiry to 12 months from latest purchase */
+      var expDate = new Date(Date.now() + TWELVE_MONTHS_MS);
+      localStorage.setItem(LS.expiry, expDate.toISOString());
       alreadyGo = false;
     }
 
