@@ -646,10 +646,9 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       localStorage.setItem(LS.secs, remaining);
       localStorage.setItem(LS.pkg, pkgKey);
       localStorage.removeItem(LS.started);
-      if(!localStorage.getItem(LS.expiry)){
-        var expDate = new Date(Date.now() + TWELVE_MONTHS_MS);
-        localStorage.setItem(LS.expiry, expDate.toISOString());
-      }
+      /* Always reset expiry to 12 months from latest purchase */
+      var expDate = new Date(Date.now() + TWELVE_MONTHS_MS);
+      localStorage.setItem(LS.expiry, expDate.toISOString());
       alreadyGo = false;
     }
 
