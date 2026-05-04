@@ -374,6 +374,9 @@ body.session-active{padding-top:52px}
 .sb-fill.critical{background:#ef4444}
 .sb-topup{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--black);background:var(--gold);border:none;padding:6px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .2s}
 .sb-topup:hover{background:var(--gold-pale)}
+.sb-pause{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);background:transparent;border:0.5px solid var(--gold-line);padding:6px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:color .2s,border-color .2s,background .2s}
+.sb-pause:hover{color:var(--gold-pale);border-color:var(--gold);}
+.sb-pause.paused{color:var(--black);background:var(--gold);border-color:var(--gold)}
 /* session panel */
 #sessionPanel{display:none;width:100%;padding:28px 28px 26px;border:0.5px solid var(--gold-line);background:rgba(212,175,55,0.05);text-align:center;margin-bottom:32px}
 #sessionPanel.visible{display:block}
@@ -443,6 +446,119 @@ body.session-active{padding-top:52px}
   .nav-links a{padding:8px 10px;font-size:7px;letter-spacing:0.15em}
   .nav-brand{font-size:10px}
 }
+
+/* ── TERMS AGREE ── */
+.terms-agree-wrap{
+  width:100%;max-width:380px;margin:18px auto 0;
+  padding:16px 18px;
+  border:0.5px solid var(--gold-line);
+  background:var(--gold-faint);
+}
+.terms-agree-label{
+  display:flex;align-items:flex-start;gap:12px;cursor:pointer;
+}
+.terms-agree-check{
+  appearance:none;-webkit-appearance:none;
+  width:16px;height:16px;min-width:16px;
+  border:0.5px solid var(--gold-line);
+  background:transparent;cursor:pointer;
+  margin-top:3px;position:relative;
+  transition:border-color .2s,background .2s;
+}
+.terms-agree-check:checked{
+  background:var(--gold);border-color:var(--gold);
+}
+.terms-agree-check:checked::after{
+  content:'';position:absolute;
+  left:4px;top:1px;width:5px;height:9px;
+  border-right:1.5px solid var(--black);
+  border-bottom:1.5px solid var(--black);
+  transform:rotate(45deg);
+}
+.terms-agree-text{
+  font-size:12.5px;line-height:1.65;color:var(--text-muted);
+  font-style:italic;
+}
+.terms-link{color:var(--gold);text-decoration:none;font-style:normal;letter-spacing:0.04em}
+.terms-link:hover{text-decoration:underline}
+
+/* ── TOP-UP MODAL ── */
+.topup-overlay{
+  display:none;position:fixed;inset:0;z-index:10000;
+  background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  align-items:flex-end;justify-content:center;
+}
+.topup-overlay.open{display:flex}
+.topup-sheet{
+  width:100%;max-width:480px;
+  background:#0d0d0d;
+  border-top:0.5px solid var(--gold-line);
+  border-left:0.5px solid var(--gold-line);
+  border-right:0.5px solid var(--gold-line);
+  padding:28px 24px 40px;
+  transform:translateY(100%);
+  transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);
+}
+.topup-overlay.open .topup-sheet{transform:translateY(0)}
+.topup-sheet-handle{
+  width:36px;height:3px;background:var(--gold-line);
+  border-radius:2px;margin:0 auto 24px;
+}
+.topup-sheet-eyebrow{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.35em;
+  text-transform:uppercase;color:var(--gold);opacity:0.7;
+  display:block;margin-bottom:6px;text-align:center;
+}
+.topup-sheet-title{
+  font-family:'Cinzel',serif;font-size:clamp(16px,5vw,20px);
+  font-weight:400;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--text-primary);text-align:center;margin-bottom:6px;
+}
+.topup-sheet-sub{
+  font-size:13px;font-style:italic;color:var(--text-muted);
+  text-align:center;margin-bottom:24px;line-height:1.6;
+}
+.topup-timer-remaining{
+  font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--text-dim);
+  text-align:center;margin-bottom:20px;
+}
+.topup-timer-remaining span{color:var(--gold)}
+.topup-pkgs{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.topup-pkg{
+  width:100%;padding:16px 20px;
+  border:0.5px solid var(--gold-line);background:var(--gold-faint);
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.topup-pkg:hover{border-color:var(--gold);background:rgba(212,175,55,0.11)}
+.topup-pkg.selected{
+  border-color:var(--gold);background:rgba(212,175,55,0.13);
+  box-shadow:0 0 0 1px var(--gold);
+}
+.topup-pkg-name{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-primary)}
+.topup-pkg-detail{font-size:12px;font-style:italic;color:var(--text-muted);margin-top:3px}
+.topup-pkg-price{font-family:'Cinzel',serif;font-size:clamp(18px,5vw,22px);font-weight:400;color:var(--gold);letter-spacing:0.04em}
+.topup-pkg-price.discounted{color:var(--green)}
+.topup-go-btn{
+  display:block;width:100%;padding:18px;
+  background:var(--gold);color:var(--black);
+  font-family:'Cinzel',serif;font-size:12px;font-weight:500;
+  letter-spacing:0.3em;text-transform:uppercase;
+  border:none;cursor:pointer;
+  transition:background .25s,opacity .2s;-webkit-appearance:none;
+}
+.topup-go-btn:hover{background:var(--gold-pale)}
+.topup-go-btn:disabled{opacity:.35;cursor:not-allowed;background:var(--gold)}
+.topup-cancel{
+  display:block;width:100%;margin-top:12px;padding:12px;
+  background:transparent;border:0.5px solid rgba(255,255,255,0.08);
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--text-dim);cursor:pointer;
+  transition:color .2s,border-color .2s;
+}
+.topup-cancel:hover{color:var(--text-primary);border-color:rgba(255,255,255,0.2)}
 </style>
 </head>
 <body>
@@ -464,7 +580,44 @@ body.session-active{padding-top:52px}
   <span class="sb-label">Session</span>
   <span class="sb-time" id="sbTime">00:00</span>
   <div class="sb-track"><div class="sb-fill" id="sbFill"></div></div>
+  <button class="sb-pause" id="sbPause" aria-label="Pause session">Pause</button>
   <button class="sb-topup" id="sbTopup">Top Up</button>
+</div>
+
+<!-- ── TOP-UP MODAL ── -->
+<div class="topup-overlay" id="topupOverlay">
+  <div class="topup-sheet">
+    <div class="topup-sheet-handle"></div>
+    <span class="topup-sheet-eyebrow">Add Credits</span>
+    <div class="topup-sheet-title">Top Up Session</div>
+    <p class="topup-sheet-sub">Select a package to add time.<br>Your session resumes immediately after payment.</p>
+    <p class="topup-timer-remaining">Time remaining: <span id="topupTimeRemaining">--:--</span></p>
+    <div class="topup-pkgs" id="topupPkgs">
+      <div class="topup-pkg" data-pkg="starter">
+        <div>
+          <div class="topup-pkg-name">Starter</div>
+          <div class="topup-pkg-detail">Approx. 4 minutes</div>
+        </div>
+        <div class="topup-pkg-price" id="topupPriceStarter">$25</div>
+      </div>
+      <div class="topup-pkg" data-pkg="standard">
+        <div>
+          <div class="topup-pkg-name">Standard</div>
+          <div class="topup-pkg-detail">Approx. 8 minutes</div>
+        </div>
+        <div class="topup-pkg-price" id="topupPriceStandard">$50</div>
+      </div>
+      <div class="topup-pkg" data-pkg="premium">
+        <div>
+          <div class="topup-pkg-name">Premium</div>
+          <div class="topup-pkg-detail">Approx. 17 minutes</div>
+        </div>
+        <div class="topup-pkg-price" id="topupPricePremium">$100</div>
+      </div>
+    </div>
+    <button class="topup-go-btn" id="topupGoBtn" disabled>Select a Package</button>
+    <button class="topup-cancel" id="topupCancel">Cancel — Return to Chat</button>
+  </div>
 </div>
 
 <main class="page">
@@ -662,6 +815,14 @@ body.session-active{padding-top:52px}
       </div>
 
       <p class="pkg-rate">Rate: $5.99 per minute</p>
+
+      <div class="terms-agree-wrap" id="termsAgreeWrap">
+        <label class="terms-agree-label">
+          <input type="checkbox" id="termsAgree" class="terms-agree-check">
+          <span class="terms-agree-text">I have read and agree to the <a href="/terms.html" target="_blank" class="terms-link">Terms &amp; Session Agreement</a>. I understand this service is for entertainment purposes only and I am 18 or older.</span>
+        </label>
+      </div>
+
       <button class="live-cta-btn" id="liveBtn" disabled>Chat Now</button>
       <p class="btn-subtext">Select a package above &middot; Secure checkout</p>
 
@@ -688,7 +849,7 @@ body.session-active{padding-top:52px}
 
   <footer class="footer-ornament">
     <div class="footer-line"></div>
-    <p class="footer-text">&copy; Psychic Belle &middot; All rights reserved<br>Results are personal &amp; for entertainment purposes</p>
+    <p class="footer-text">&copy; Psychic Belle &middot; All rights reserved<br>Results are personal &amp; for entertainment purposes<br><a href="/terms.html" style="color:var(--text-dim);text-decoration:none;letter-spacing:0.15em;font-size:9px;font-family:'Cinzel',serif;text-transform:uppercase" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-dim)'">Terms &amp; Session Agreement</a></p>
   </footer>
 
 </main>
@@ -719,7 +880,16 @@ body.session-active{padding-top:52px}
     offline:  { label:"Offline",  mins:0,  price:12.50, disc:11.25 }
   };
 
-  var LS = { secs:"b_secs", pkg:"b_pkg", started:"b_started" };
+  var LS = {
+    secs:    "b_secs",
+    pkg:     "b_pkg",
+    started: "b_started",
+    expiry:  "b_expiry",
+    terms:   "b_terms_ok"
+  };
+
+  var TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
+  var paused = false;
 
   /* ============================================================
      HELPERS
@@ -748,6 +918,15 @@ body.session-active{padding-top:52px}
       localStorage.removeItem(LS.secs);
       localStorage.removeItem(LS.pkg);
       localStorage.removeItem(LS.started);
+      localStorage.removeItem(LS.expiry);
+    }
+    /* Credit expiry check — clear if 12 months have passed */
+    var expiry = localStorage.getItem(LS.expiry);
+    if (expiry && Date.now() > new Date(expiry).getTime()) {
+      localStorage.removeItem(LS.secs);
+      localStorage.removeItem(LS.pkg);
+      localStorage.removeItem(LS.started);
+      localStorage.removeItem(LS.expiry);
     }
   })();
 
@@ -792,10 +971,12 @@ body.session-active{padding-top:52px}
 
   function startTimer() {
     if (ticker) return;
+    paused = false;
     var bar = $("sessionBar");
     if (bar) bar.classList.add("active");
     document.body.classList.add("session-active");
     updateBar();
+    updatePauseBtn();
 
     ticker = setInterval(function () {
       remaining--;
@@ -810,9 +991,32 @@ body.session-active{padding-top:52px}
         localStorage.removeItem(LS.secs);
         localStorage.removeItem(LS.pkg);
         localStorage.removeItem(LS.started);
+        localStorage.removeItem(LS.expiry);
         sendTidio("Your credits have been used. Please top up to continue.");
       }
     }, 1000);
+  }
+
+  function pauseTimer() {
+    if (!ticker) return;
+    clearInterval(ticker);
+    ticker = null;
+    paused = true;
+    localStorage.setItem(LS.secs, remaining);
+    updatePauseBtn();
+  }
+
+  function resumeTimer() {
+    if (ticker || remaining <= 0) return;
+    paused = false;
+    startTimer();
+  }
+
+  function updatePauseBtn() {
+    var btn = $("sbPause");
+    if (!btn) return;
+    btn.textContent = paused ? "Resume" : "Pause";
+    btn.setAttribute("aria-label", paused ? "Resume session" : "Pause session");
   }
 
   function sendTidio(msg) {
@@ -871,6 +1075,11 @@ body.session-active{padding-top:52px}
       localStorage.setItem(LS.secs, remaining);
       localStorage.setItem(LS.pkg, pkgKey);
       localStorage.removeItem(LS.started);
+      /* Store expiry 12 months from now if not already set */
+      if (!localStorage.getItem(LS.expiry)) {
+        var expDate = new Date(Date.now() + TWELVE_MONTHS_MS);
+        localStorage.setItem(LS.expiry, expDate.toISOString());
+      }
       alreadyGo = false;
     }
 
@@ -921,14 +1130,116 @@ body.session-active{padding-top:52px}
 
     var promoOn = false;
     var selPkg  = null;
+    var promoDiscount = 0;
 
-    /* ── Top-up button: preserve session, redirect to package select ── */
-    if (topup) {
-      topup.addEventListener("click", function () {
-        /* Do NOT clear localStorage — session resumes after top-up payment */
-        window.location.href = "/?topup=true";
+    /* ── Pause button ── */
+    var pauseBtn = $("sbPause");
+    if (pauseBtn) {
+      pauseBtn.addEventListener("click", function () {
+        if (paused) {
+          resumeTimer();
+          pauseBtn.classList.remove("paused");
+          pauseBtn.textContent = "Pause";
+        } else {
+          pauseTimer();
+          pauseBtn.classList.add("paused");
+          pauseBtn.textContent = "Resume";
+        }
       });
     }
+
+    /* ── Terms agreement persistence ──
+       If user already agreed in a previous visit, pre-check and skip gate.
+    ── */
+    var termsAgree = $("termsAgree");
+    var termsAgreeWrap = $("termsAgreeWrap");
+    if (termsAgree && localStorage.getItem(LS.terms) === "1") {
+      termsAgree.checked = true;
+    }
+    if (termsAgree) {
+      termsAgree.addEventListener("change", function () {
+        if (termsAgree.checked) {
+          localStorage.setItem(LS.terms, "1");
+        } else {
+          localStorage.removeItem(LS.terms);
+        }
+        updateLiveBtn();
+      });
+    }
+
+    /* ── Top-up modal ── */
+    var topupOverlay  = $("topupOverlay");
+    var topupGoBtn    = $("topupGoBtn");
+    var topupCancel   = $("topupCancel");
+    var topupPkgEls   = document.querySelectorAll(".topup-pkg");
+    var topupSelPkg   = null;
+
+    function openTopupModal() {
+      /* Pause the timer while modal is open */
+      if (ticker) { clearInterval(ticker); ticker = null; }
+      /* Update remaining display */
+      var el = $("topupTimeRemaining");
+      if (el) el.textContent = fmtTime(remaining);
+      /* Apply promo prices if active */
+      if (promoOn) {
+        var keys = ["starter","standard","premium"];
+        var caps = ["Starter","Standard","Premium"];
+        for (var k = 0; k < keys.length; k++) {
+          var orig = PKG[keys[k]].price;
+          var disc = parseFloat((orig * (1 - promoDiscount/100)).toFixed(2));
+          var el2  = $("topupPrice"+caps[k]);
+          if (el2) { el2.textContent = fmtMoney(disc); el2.classList.add("discounted"); }
+        }
+      }
+      topupOverlay.classList.add("open");
+    }
+
+    function closeTopupModal() {
+      topupOverlay.classList.remove("open");
+      /* Resume timer if session still active */
+      if (remaining > 0 && localStorage.getItem(LS.started) === "1") {
+        startTimer();
+      }
+    }
+
+    if (topup) {
+      topup.addEventListener("click", function () {
+        if (remaining > 0) {
+          openTopupModal();
+        } else {
+          /* No active session — just show packages */
+          window.location.href = "/?topup=true";
+        }
+      });
+    }
+
+    /* Modal package selection */
+    for (var ti = 0; ti < topupPkgEls.length; ti++) {
+      (function(el) {
+        el.addEventListener("click", function() {
+          for (var j = 0; j < topupPkgEls.length; j++) topupPkgEls[j].classList.remove("selected");
+          el.classList.add("selected");
+          topupSelPkg = el.getAttribute("data-pkg");
+          topupGoBtn.disabled = false;
+          topupGoBtn.textContent = "Proceed to Payment";
+        });
+      })(topupPkgEls[ti]);
+    }
+
+    /* Modal go to Stripe */
+    topupGoBtn.addEventListener("click", function() {
+      if (!topupSelPkg) return;
+      var url = promoOn ? STRIPE[topupSelPkg+"Disc"] : STRIPE[topupSelPkg];
+      window.location.href = url;
+    });
+
+    /* Modal cancel — resume */
+    topupCancel.addEventListener("click", closeTopupModal);
+
+    /* Close on overlay backdrop click */
+    topupOverlay.addEventListener("click", function(e) {
+      if (e.target === topupOverlay) closeTopupModal();
+    });
 
     /* ── Post-payment return ── */
     if (SUCCESS && PKG_PARAM && PKG[PKG_PARAM] && PKG[PKG_PARAM].mins > 0) {
@@ -993,13 +1304,20 @@ body.session-active{padding-top:52px}
 
     /* ── Card selection ── */
     var cards = document.querySelectorAll(".pkg-card");
+
+    function updateLiveBtn() {
+      var agreed = termsAgree && termsAgree.checked;
+      var hasPkg = !!selPkg;
+      liveBtn.disabled = !(agreed && hasPkg);
+    }
+
     for (var i = 0; i < cards.length; i++) {
       (function (card) {
         card.addEventListener("click", function () {
           for (var j = 0; j < cards.length; j++) cards[j].classList.remove("selected");
           card.classList.add("selected");
           selPkg = card.getAttribute("data-pkg");
-          liveBtn.disabled = false;
+          updateLiveBtn();
         });
       })(cards[i]);
     }
@@ -1017,8 +1335,6 @@ body.session-active{padding-top:52px}
     });
 
     /* ── Promo — server-validated ── */
-    var promoDiscount = 0;
-
     async function applyPromo() {
       var val = pinput.value.trim().toUpperCase();
       if (!val) return;
