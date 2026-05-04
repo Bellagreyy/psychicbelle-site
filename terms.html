@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms &amp; Session Agreement — Psychic Belle</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#D4AF37;--gold-pale:#e8d27a;
+  --gold-dim:rgba(212,175,55,0.15);--gold-line:rgba(212,175,55,0.35);
+  --gold-faint:rgba(212,175,55,0.07);
+  --black:#0a0a0a;
+  --text:#f0ead8;--text-muted:rgba(240,234,216,0.6);
+  --text-dim:rgba(240,234,216,0.32);--green:#4ade80;
+  --red:rgba(255,90,90,0.85);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);color:var(--text);
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:300;min-height:100vh;overflow-x:hidden;
+  line-height:1.8;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.35;
+}
+
+/* NAV */
+.site-nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:0.5px solid var(--gold-line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.site-nav-inner{max-width:720px;margin:0 auto;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav-brand{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);text-decoration:none;white-space:nowrap;flex-shrink:0}
+.nav-links{display:flex;gap:0;list-style:none;border:0.5px solid var(--gold-line)}
+.nav-links a{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;padding:8px 14px;display:block;border-right:0.5px solid var(--gold-line);transition:color .2s,background .2s;white-space:nowrap}
+.nav-links li:last-child a{border-right:none}
+.nav-links a:hover{color:var(--gold);background:var(--gold-faint)}
+.nav-member{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;white-space:nowrap;transition:color .2s;flex-shrink:0}
+.nav-member:hover{color:var(--gold)}
+@media(max-width:440px){.nav-links a{padding:8px 10px;font-size:7px}.nav-brand{font-size:10px}}
+
+/* PAGE */
+.page{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 24px 80px}
+
+/* HEADER */
+.terms-header{padding:52px 0 44px;text-align:center;border-bottom:0.5px solid var(--gold-line);margin-bottom:52px}
+.terms-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);opacity:.7;display:block;margin-bottom:18px}
+.terms-title{font-family:'Cinzel',serif;font-size:clamp(22px,6vw,32px);font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--text);margin-bottom:16px;line-height:1.3}
+.terms-updated{font-size:12px;letter-spacing:.12em;color:var(--text-dim);font-style:italic}
+
+/* AGREEMENT HIGHLIGHT BOX */
+.agreement-box{
+  width:100%;padding:28px 28px 24px;
+  border:0.5px solid var(--gold);
+  background:rgba(212,175,55,0.06);
+  margin-bottom:48px;
+  position:relative;
+}
+.agreement-box::before{
+  content:'';position:absolute;inset:3px;
+  border:0.5px solid rgba(212,175,55,0.2);
+  pointer-events:none;
+}
+.agreement-box-label{
+  font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:.35em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:12px;
+}
+.agreement-box p{
+  font-size:15px;line-height:1.8;color:var(--text-muted);
+  font-style:italic;
+}
+.agreement-box strong{font-style:normal;color:var(--text);font-weight:400}
+
+/* SECTION */
+.terms-section{margin-bottom:44px;padding-bottom:44px;border-bottom:0.5px solid rgba(212,175,55,0.12)}
+.terms-section:last-of-type{border-bottom:none}
+.section-number{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--gold);opacity:.6;
+  display:block;margin-bottom:8px;
+}
+.section-title{
+  font-family:'Cinzel',serif;font-size:clamp(14px,4vw,17px);
+  font-weight:400;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text);margin-bottom:18px;
+}
+.terms-body{font-size:15px;line-height:1.85;color:var(--text-muted)}
+.terms-body p{margin-bottom:14px}
+.terms-body p:last-child{margin-bottom:0}
+.terms-body strong{color:var(--text);font-weight:400;font-style:normal}
+.terms-body em{color:var(--text-muted)}
+
+/* WARNING BOX */
+.warning-box{
+  padding:20px 22px;
+  border-left:2px solid var(--red);
+  background:rgba(255,90,90,0.04);
+  margin:20px 0;
+}
+.warning-box p{font-size:14px;line-height:1.75;color:rgba(240,234,216,0.65)}
+.warning-box strong{color:rgba(255,150,150,0.9);font-weight:400}
+
+/* PROHIBITED LIST */
+.prohibited-list{list-style:none;margin:18px 0}
+.prohibited-list li{
+  font-size:14.5px;line-height:1.7;color:var(--text-muted);
+  padding:10px 0 10px 24px;
+  border-bottom:0.5px solid rgba(212,175,55,0.08);
+  position:relative;
+}
+.prohibited-list li:last-child{border-bottom:none}
+.prohibited-list li::before{
+  content:'—';
+  position:absolute;left:0;
+  color:var(--gold);opacity:.5;
+  font-family:'Cinzel',serif;
+}
+
+/* CREDIT TABLE */
+.credit-table{width:100%;border:0.5px solid var(--gold-line);margin:20px 0}
+.credit-table tr:first-child{background:var(--gold-faint)}
+.credit-table th{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);padding:14px 18px;
+  text-align:left;border-bottom:0.5px solid var(--gold-line);
+  font-weight:400;
+}
+.credit-table td{
+  font-size:14px;color:var(--text-muted);padding:12px 18px;
+  border-bottom:0.5px solid rgba(212,175,55,0.08);
+  vertical-align:top;
+}
+.credit-table tr:last-child td{border-bottom:none}
+
+/* CONTACT BLOCK */
+.contact-block{
+  padding:24px 24px 20px;
+  border:0.5px solid var(--gold-line);
+  background:var(--gold-faint);
+  margin-top:20px;
+  text-align:center;
+}
+.contact-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:8px}
+.contact-email{font-family:'Cinzel',serif;font-size:16px;letter-spacing:.12em;color:var(--gold);text-decoration:none;display:block;transition:color .2s}
+.contact-email:hover{color:var(--gold-pale)}
+.contact-sub{font-size:13px;font-style:italic;color:var(--text-dim);margin-top:8px}
+
+/* BACK BUTTON */
+.back-btn{
+  display:inline-block;margin-top:48px;padding:16px 36px;
+  background:transparent;color:var(--gold);
+  font-family:'Cinzel',serif;font-size:11px;font-weight:500;
+  letter-spacing:.28em;text-transform:uppercase;
+  border:0.5px solid var(--gold-line);
+  text-decoration:none;
+  transition:background .25s,border-color .25s,color .25s;
+}
+.back-btn:hover{background:var(--gold);color:var(--black);border-color:var(--gold)}
+
+/* FOOTER */
+.terms-footer{margin-top:60px;padding-top:32px;border-top:0.5px solid var(--gold-line);text-align:center}
+.footer-text{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeUp .8s ease both}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="/" class="nav-brand">Belle</a>
+    <ul class="nav-links">
+      <li><a href="/">Readings</a></li>
+      <li><a href="/archive.html">Archive</a></li>
+      <li><a href="/portal.html">Sanctuary</a></li>
+    </ul>
+    <a href="/login.html" class="nav-member" id="navMemberLink">Sign In</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="terms-header fade-in">
+    <span class="terms-eyebrow">Legal Agreement</span>
+    <h1 class="terms-title">Terms &amp; Session Agreement</h1>
+    <span class="terms-updated">Last updated: May 2026 &nbsp;&middot;&nbsp; Psychic Belle</span>
+  </div>
+
+  <div class="agreement-box fade-in">
+    <span class="agreement-box-label">Please Read Before Proceeding</span>
+    <p>By purchasing a session, submitting a question, or using any service on this website, you confirm that you have read, understood, and agreed to be bound by these Terms in full. <strong>If you do not agree, do not proceed with any purchase or use of this service.</strong> These Terms constitute a binding legal agreement between you and Psychic Belle.</p>
+  </div>
+
+  <!-- 1. ENTERTAINMENT DISCLAIMER -->
+  <div class="terms-section fade-in">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Entertainment Purposes Only</h2>
+    <div class="terms-body">
+      <p>All readings, sessions, guidance, predictions, and any other content or communications provided by Psychic Belle are intended <strong>for entertainment, inspirational, and personal insight purposes only.</strong> They do not constitute and must not be relied upon as professional, medical, legal, financial, psychological, psychiatric, or therapeutic advice of any kind.</p>
+      <p>Psychic Belle does not diagnose illness, predict specific outcomes with certainty, or guarantee the accuracy of any reading. <strong>The future is not fixed</strong> — it is subject to free will, shifting energy, and personal choices. Any predictions, timeframes, or insights provided are possibilities, not certainties.</p>
+      <p>Testimonials and reviews reflect individual experiences only and are not representative of typical results. No specific outcome is guaranteed.</p>
+      <div class="warning-box">
+        <p><strong>Important:</strong> Always seek the advice of a licensed professional for medical, legal, financial, mental health, or any other serious matter. Do not make life-altering decisions based solely on a reading. Psychic Belle is not responsible for any actions taken or not taken as a result of a session.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ELIGIBILITY -->
+  <div class="terms-section fade-in">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Eligibility &amp; Age Requirement</h2>
+    <div class="terms-body">
+      <p>You must be <strong>18 years of age or older</strong> to purchase any session or service. By proceeding with any purchase, you confirm that you are at least 18 years old and legally capable of entering into a binding agreement under the laws applicable to you.</p>
+      <p>All payments must be made by the card or account holder. You confirm that you are authorised to use the payment method provided. Using another person's payment details without their consent is strictly prohibited and may be reported to the relevant authorities.</p>
+      <p>This service is intended for personal use only. You may not purchase sessions on behalf of a third party without their knowledge and consent.</p>
+    </div>
+  </div>
+
+  <!-- 3. PROHIBITED TOPICS -->
+  <div class="terms-section fade-in">
+    <span class="section-number">03</span>
+    <h2 class="section-title">Prohibited Topics &amp; Questions</h2>
+    <div class="terms-body">
+      <p>To protect both client and advisor, the following topics will not be addressed under any circumstances. Sessions containing prohibited questions may be terminated immediately without refund:</p>
+      <ul class="prohibited-list">
+        <li>Medical questions of any kind, including questions about pregnancy, illness, diagnosis, prognosis, or treatment</li>
+        <li>Legal questions, including matters relating to court cases, contracts, custody, criminal matters, or legal strategy</li>
+        <li>Financial or investment advice, including stock tips, business decisions, or specific monetary predictions</li>
+        <li>Criminal matters, including information about crimes, perpetrators, missing persons investigations, or evidence</li>
+        <li>Questions intended to locate, identify, or surveil another person without their consent</li>
+        <li>Lottery numbers, gambling outcomes, or any form of speculative financial prediction</li>
+        <li>Specific dates, exact locations, full names, physical descriptions, or ethnic backgrounds of third parties</li>
+        <li>Questions about death — including specific predictions about when a person will die</li>
+        <li>Any request that could facilitate harm to yourself or another person</li>
+      </ul>
+      <div class="warning-box">
+        <p><strong>Note for residents of Pennsylvania, New York, and Oklahoma:</strong> Laws in these jurisdictions specifically restrict the charging of fees for fortune-telling, prediction, or the use of claimed occult powers. All services provided by Psychic Belle are for entertainment purposes only and do not constitute fortune-telling, the claiming of supernatural powers, or the prediction of future events as fact.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. CODE OF CONDUCT -->
+  <div class="terms-section fade-in">
+    <span class="section-number">04</span>
+    <h2 class="section-title">Code of Conduct &amp; Right to Refuse</h2>
+    <div class="terms-body">
+      <p>Psychic Belle reserves the right to refuse, suspend, or immediately terminate any session or account at her sole discretion. This includes but is not limited to the following situations:</p>
+      <ul class="prohibited-list">
+        <li>Threatening, aggressive, abusive, or harassing language or behaviour directed at the advisor</li>
+        <li>Sexual harassment or the submission of explicit, lewd, or inappropriate content</li>
+        <li>Apparent intoxication, impairment, or incoherence at the time of the session</li>
+        <li>Repeated bad-faith requests designed to test or discredit the advisor</li>
+        <li>Suspected fraudulent activity, including chargebacks or the use of stolen payment details</li>
+        <li>Violation of any provision of these Terms</li>
+      </ul>
+      <p>Sessions terminated due to misconduct or Terms violations are <strong>non-refundable.</strong> Psychic Belle further reserves the right to permanently ban any user found to be in serious or repeated violation of these Terms.</p>
+      <p>All interactions must remain on this platform. Soliciting or providing personal contact information — including social media handles, phone numbers, or email addresses — for the purpose of off-platform sessions is strictly prohibited.</p>
+    </div>
+  </div>
+
+  <!-- 5. CREDITS, PAYMENTS & EXPIRY -->
+  <div class="terms-section fade-in">
+    <span class="section-number">05</span>
+    <h2 class="section-title">Credits, Payments &amp; Expiry</h2>
+    <div class="terms-body">
+      <p>Sessions are purchased in advance as time-based credit packages at a rate of <strong>$5.99 per minute.</strong> Credits are stored in your browser session and linked to your Sanctuary account where applicable.</p>
+
+      <table class="credit-table">
+        <tr>
+          <th>Package</th>
+          <th>Time</th>
+          <th>Price</th>
+          <th>Rate</th>
+        </tr>
+        <tr>
+          <td>Starter</td>
+          <td>Approx. 4 minutes</td>
+          <td>$25.00</td>
+          <td>$5.99/min</td>
+        </tr>
+        <tr>
+          <td>Standard</td>
+          <td>Approx. 8 minutes</td>
+          <td>$50.00</td>
+          <td>$5.99/min</td>
+        </tr>
+        <tr>
+          <td>Premium</td>
+          <td>Approx. 17 minutes</td>
+          <td>$100.00</td>
+          <td>$5.99/min</td>
+        </tr>
+        <tr>
+          <td>Offline Reading</td>
+          <td>One question</td>
+          <td>$12.50</td>
+          <td>Fixed</td>
+        </tr>
+      </table>
+
+      <p><strong>Credit Expiry:</strong> Unused session credits expire <strong>12 months</strong> from the date of purchase. After this period, unused credits are forfeited with no refund. It is your responsibility to use purchased credits within this window.</p>
+      <p>Credits are non-transferable, have no cash value, and may not be exchanged, sold, or gifted to another person.</p>
+      <p>All payments are processed securely through Stripe. Psychic Belle does not store your card details. By completing a purchase, you agree to Stripe's terms of service.</p>
+      <p>You agree to provide accurate and complete payment information at all times. You confirm that you are the authorised holder of the payment method used.</p>
+    </div>
+  </div>
+
+  <!-- 6. REFUND POLICY -->
+  <div class="terms-section fade-in">
+    <span class="section-number">06</span>
+    <h2 class="section-title">Refund Policy</h2>
+    <div class="terms-body">
+      <p>Due to the personal and digital nature of psychic services, <strong>all sales are final once a session has commenced.</strong> Refunds will not be issued for completed sessions on the basis of dissatisfaction, a change of mind, or disagreement with the reading received. The entertainment value of a reading is inherently subjective.</p>
+      <p><strong>Unused credits</strong> may be eligible for a credit-based refund under the following conditions:</p>
+      <ul class="prohibited-list">
+        <li>A refund request is submitted within <strong>3 days</strong> of the original purchase date</li>
+        <li>The session has not yet commenced (timer has not been started)</li>
+        <li>The request is sent by email to <a href="mailto:support@psychicbelle.com" style="color:var(--gold);text-decoration:none">support@psychicbelle.com</a> with your order details and reason</li>
+      </ul>
+      <p>All approved refunds are issued as <strong>session credits only</strong> — not cash or card reversals. Credits will be applied to your account for use on a future session. Refunds are reviewed on a case-by-case basis at the sole discretion of Psychic Belle.</p>
+      <p><strong>Technical failures:</strong> If a technical fault on our end prevents your session from starting, a full credit refund will be issued within 48 hours of a verified report submitted to support@psychicbelle.com.</p>
+      <p><strong>Duplicate charges:</strong> Verified duplicate charges will be refunded to the original payment method within 7 days of a confirmed report.</p>
+      <p><strong>No cash refunds</strong> will be issued under any circumstance other than a verified duplicate charge.</p>
+    </div>
+  </div>
+
+  <!-- 7. CHARGEBACK POLICY -->
+  <div class="terms-section fade-in">
+    <span class="section-number">07</span>
+    <h2 class="section-title">Chargeback Policy</h2>
+    <div class="terms-body">
+      <p>Before initiating any dispute or chargeback with your bank or payment provider, you agree to first contact Psychic Belle at <a href="mailto:support@psychicbelle.com" style="color:var(--gold);text-decoration:none">support@psychicbelle.com</a> to attempt resolution in good faith.</p>
+      <p>Initiating a fraudulent, misleading, or bad-faith chargeback — including chargebacks for completed services where no technical fault occurred — constitutes a material breach of these Terms. In such cases, Psychic Belle reserves the right to:</p>
+      <ul class="prohibited-list">
+        <li>Permanently terminate your account and access to all services</li>
+        <li>Forfeit any remaining credits without refund</li>
+        <li>Pursue recovery of disputed amounts through available legal channels</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 8. LIMITATION OF LIABILITY -->
+  <div class="terms-section fade-in">
+    <span class="section-number">08</span>
+    <h2 class="section-title">Limitation of Liability</h2>
+    <div class="terms-body">
+      <p>To the fullest extent permitted by applicable law, Psychic Belle's total liability to you for any claim arising out of or relating to these Terms or the services provided shall not exceed the total amount you paid for the specific session in question.</p>
+      <p>Psychic Belle is not liable for any indirect, incidental, consequential, special, punitive, or exemplary damages, including but not limited to loss of profits, loss of data, emotional distress, or damages resulting from decisions made based on a reading — even if advised of the possibility of such damages.</p>
+      <p>The services are provided on an "as is" and "as available" basis. No warranty is made that the service will be uninterrupted, error-free, or that any reading will be accurate. All express and implied warranties, including warranties of merchantability and fitness for a particular purpose, are hereby disclaimed.</p>
+    </div>
+  </div>
+
+  <!-- 9. INDEMNIFICATION -->
+  <div class="terms-section fade-in">
+    <span class="section-number">09</span>
+    <h2 class="section-title">Indemnification</h2>
+    <div class="terms-body">
+      <p>You agree to indemnify, defend, and hold harmless Psychic Belle from and against any and all claims, liabilities, damages, losses, costs, and expenses (including reasonable legal fees) arising out of or relating to:</p>
+      <ul class="prohibited-list">
+        <li>Your use of the services or this website</li>
+        <li>Your violation of any provision of these Terms</li>
+        <li>Any action taken or not taken by you based on a reading or session</li>
+        <li>Any false, misleading, or fraudulent information you have provided</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 10. PRIVACY & DATA -->
+  <div class="terms-section fade-in">
+    <span class="section-number">10</span>
+    <h2 class="section-title">Privacy &amp; Data</h2>
+    <div class="terms-body">
+      <p>Session content and communications may be stored for quality assurance and record-keeping purposes. By proceeding, you consent to this storage. Your data is never sold to third parties.</p>
+      <p>Account and authentication data is managed through Clerk. Payment data is processed through Stripe. Both are GDPR-compliant third-party processors operating under their own privacy policies. Your financial information is never stored on Psychic Belle's servers.</p>
+      <p><strong>EU residents (GDPR):</strong> You have the right to access, correct, update, or request erasure of your personal data at any time. To exercise these rights, email <a href="mailto:support@psychicbelle.com" style="color:var(--gold);text-decoration:none">support@psychicbelle.com</a>.</p>
+      <p><strong>California residents (CCPA):</strong> You have the right to know what personal information is collected, the right to delete it, and the right to opt out of its sale (we do not sell personal information).</p>
+      <p>In the event of a data breach affecting your personal information, you will be notified within 72 hours of discovery.</p>
+    </div>
+  </div>
+
+  <!-- 11. GOVERNING LAW -->
+  <div class="terms-section fade-in">
+    <span class="section-number">11</span>
+    <h2 class="section-title">Governing Law &amp; Disputes</h2>
+    <div class="terms-body">
+      <p>These Terms are governed by and construed in accordance with international commercial principles. As Psychic Belle operates internationally and is not domiciled in any single jurisdiction, disputes shall be resolved through good-faith negotiation in the first instance.</p>
+      <p>If a dispute cannot be resolved informally, both parties agree to attempt mediation before pursuing any legal action. Nothing in this clause limits your statutory consumer rights under the laws of your country of residence.</p>
+      <p>Psychic Belle reserves the right to update or amend these Terms at any time. Continued use of the services following any such update constitutes your acceptance of the revised Terms. The date of last update is displayed at the top of this page.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="terms-section fade-in">
+    <span class="section-number">12</span>
+    <h2 class="section-title">Contact &amp; Support</h2>
+    <div class="terms-body">
+      <p>For refund requests, billing disputes, data requests, or any questions relating to these Terms, please contact:</p>
+      <div class="contact-block">
+        <span class="contact-label">Support</span>
+        <a href="mailto:support@psychicbelle.com" class="contact-email">support@psychicbelle.com</a>
+        <p class="contact-sub">Responses within 48 hours &middot; Refund requests reviewed within 3 business days</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="/" class="back-btn fade-in">&#8592; &nbsp; Return to Readings</a>
+
+  <div class="terms-footer">
+    <p class="footer-text">&copy; Psychic Belle &middot; All rights reserved &middot; For entertainment purposes only</p>
+  </div>
+
+</div>
+
+<script>
+window.addEventListener("load", function() {
+  if (!window.Clerk) return;
+  window.Clerk.load().then(function() {
+    var user = window.Clerk.user;
+    var link = document.getElementById("navMemberLink");
+    if (user && link) {
+      link.textContent = (user.firstName || "Member") + " \u2192";
+      link.href = "/portal.html";
+    }
+  }).catch(function(){});
+});
+</script>
+
+<!-- Clerk -->
+<script>window.__clerk_publishable_key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ";</script>
+<script async crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ"
+  src="https://concise-wasp-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+></script>
+
+</body>
+</html>
