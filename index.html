@@ -559,8 +559,99 @@ body.session-active{padding-top:52px}
   transition:color .2s,border-color .2s;
 }
 .topup-cancel:hover{color:var(--text-primary);border-color:rgba(255,255,255,0.2)}
+/* ── OFFLINE DIVIDER ── */
+.offline-divider{
+  display:flex;align-items:center;gap:16px;
+  width:100%;margin:40px 0 32px;
+}
+.offline-divider-line{flex:1;height:0.5px;background:var(--gold-line)}
+.offline-divider-text{
+  font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--text-dim);white-space:nowrap;
+}
+
+/* ── OFFLINE FORM PANEL ── */
+#offlineFormPanel{
+  display:none;width:100%;
+  padding:32px 28px 28px;
+  border:0.5px solid var(--gold-line);
+  background:rgba(212,175,55,0.05);
+  margin-bottom:32px;
+}
+.offline-form-eyebrow{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:.35em;
+  text-transform:uppercase;color:var(--gold);opacity:.7;
+  margin-bottom:10px;
+}
+.offline-form-title{
+  font-family:'Cinzel',serif;font-size:clamp(16px,5vw,20px);
+  font-weight:400;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-primary);margin-bottom:10px;
+}
+.offline-form-sub{
+  font-size:14px;font-style:italic;color:var(--text-muted);
+  line-height:1.75;margin-bottom:28px;
+}
+.oform-field{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.oform-label{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--text-dim);
+}
+.oform-input,.oform-textarea{
+  background:rgba(255,255,255,0.03);
+  border:0.5px solid var(--gold-line);
+  outline:none;padding:13px 16px;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:15px;font-weight:300;
+  color:var(--text-primary);
+  caret-color:var(--gold);
+  transition:border-color .2s,background .2s;
+  resize:vertical;
+  width:100%;
+}
+.oform-input:focus,.oform-textarea:focus{
+  border-color:var(--gold);background:rgba(212,175,55,0.06);
+}
+.oform-input::placeholder,.oform-textarea::placeholder{
+  color:var(--text-dim);font-style:italic;
+}
+.oform-hint{
+  font-size:11px;font-style:italic;
+  color:var(--text-dim);letter-spacing:.06em;
+  text-align:right;
+}
+.oform-submit{
+  display:block;width:100%;padding:20px 32px;
+  background:var(--gold);color:var(--black);
+  font-family:'Cinzel',serif;font-size:12px;font-weight:500;
+  letter-spacing:.3em;text-transform:uppercase;
+  border:none;cursor:pointer;margin-top:8px;
+  transition:background .25s,opacity .2s;-webkit-appearance:none;
+}
+.oform-submit:hover{background:var(--gold-pale)}
+.oform-submit:disabled{opacity:.4;cursor:not-allowed;background:var(--gold)}
+.oform-note{
+  font-size:11px;letter-spacing:.12em;
+  color:var(--text-dim);text-transform:uppercase;
+  margin-top:12px;text-align:center;
+  font-family:'Cinzel',serif;
+}
+/* Success state */
+.offline-success-icon{
+  font-size:28px;color:var(--gold);
+  text-align:center;display:block;margin-bottom:14px;
+}
+.offline-success-title{
+  font-family:'Cinzel',serif;font-size:clamp(15px,4vw,18px);
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-primary);text-align:center;margin-bottom:10px;
+}
+.offline-success-sub{
+  font-size:14px;font-style:italic;color:var(--text-muted);
+  line-height:1.75;text-align:center;
+}
 </style>
-</head>
 <body>
 
 <!-- ── GLOBAL SITE NAV ── -->
@@ -829,15 +920,76 @@ body.session-active{padding-top:52px}
     </div>
 
     <div class="offline-section" id="offlineSection">
+
+      <!-- divider -->
+      <div class="offline-divider">
+        <div class="offline-divider-line"></div>
+        <div class="offline-divider-text">Or</div>
+        <div class="offline-divider-line"></div>
+      </div>
+
       <div class="offline-card">
-        <div class="offline-card-eyebrow">Offline Reading</div>
+        <div class="offline-card-eyebrow">No Schedule Needed</div>
         <div class="offline-card-title">Priority Offline Reading</div>
         <div class="offline-card-was" id="offlineWas">$12.50</div>
         <div class="offline-card-price" id="offlinePrice">$12.50</div>
-        <div class="offline-card-desc">One specific question + expanded insight.<br>Delivered within 24 hours.</div>
+        <div class="offline-card-desc">One specific question. Belle reads and responds with a full written insight &mdash; delivered to your email within 24 hours.</div>
       </div>
-      <button class="offline-cta-btn" id="offlineBtn">Send Question</button>
+      <button class="offline-cta-btn" id="offlineBtn">Send Question — $12.50</button>
       <p class="btn-subtext">Secure &middot; Encrypted &middot; Response within 24 hrs</p>
+
+    </div>
+
+    <!-- OFFLINE QUESTION FORM — shown after payment -->
+    <div id="offlineFormPanel">
+      <div class="offline-form-eyebrow">Payment Confirmed</div>
+      <div class="offline-form-title">Submit Your Question</div>
+      <p class="offline-form-sub">Belle will respond with a full written reading within 24 hours. Be as specific as you can — the clearer the question, the deeper the insight.</p>
+
+      <form
+        name="offline-reading"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        id="offlineForm"
+      >
+        <input type="hidden" name="form-name" value="offline-reading">
+        <p style="display:none"><input name="bot-field"></p>
+
+        <div class="oform-field">
+          <label class="oform-label" for="oEmail">Your Email Address</label>
+          <input
+            class="oform-input" id="oEmail" name="email" type="email"
+            placeholder="you@example.com" required autocomplete="email">
+          <span class="oform-hint">Belle's response will be sent here</span>
+        </div>
+
+        <div class="oform-field">
+          <label class="oform-label" for="oQuestion">Your Question</label>
+          <textarea
+            class="oform-textarea" id="oQuestion" name="question"
+            placeholder="e.g. What is my person of interest truly feeling about me right now, and what is holding him back?"
+            rows="5" required maxlength="600"></textarea>
+          <span class="oform-hint" id="oCharCount">0 / 600</span>
+        </div>
+
+        <div class="oform-field">
+          <label class="oform-label" for="oContext">Additional Context <span style="opacity:.5;font-style:italic">(optional)</span></label>
+          <textarea
+            class="oform-textarea" id="oContext" name="context"
+            placeholder="e.g. His name, your connection, how long you've known each other, any recent events..."
+            rows="3" maxlength="400"></textarea>
+        </div>
+
+        <button class="oform-submit" id="oformSubmit" type="submit">Submit Question to Belle</button>
+        <p class="oform-note">One question per purchase &middot; Response within 24 hours &middot; Check your spam folder</p>
+      </form>
+
+      <div id="offlineSuccess" style="display:none">
+        <div class="offline-success-icon">✦</div>
+        <div class="offline-success-title">Question Received</div>
+        <p class="offline-success-sub">Belle has received your question and will respond within 24 hours. Please check your inbox — and your spam folder just in case.</p>
+      </div>
     </div>
 
   </div>
@@ -1245,12 +1397,66 @@ body.session-active{padding-top:52px}
     if (SUCCESS && PKG_PARAM && PKG[PKG_PARAM] && PKG[PKG_PARAM].mins > 0) {
       initSession(PKG_PARAM);
       if (packSec) packSec.style.display = "none";
-      if (offSec)  offSec.style.display  = "none";
+      /* Keep offline section visible for top-up context */
       dot.classList.add("live");
       txt.classList.add("live");
       txt.textContent    = "Payment confirmed";
       preamble.innerHTML = "Your session is ready.<br><strong>Press Start Session when Belle is ready for you.</strong>";
       avail.innerHTML    = "Your live session begins the moment you click Start Session.";
+      return;
+    }
+
+    /* ── Offline payment return ── */
+    if (SUCCESS && PKG_PARAM === "offline") {
+      if (packSec) packSec.style.display = "none";
+      var promoWrap = $("promoWrapper") || document.querySelector(".promo-wrapper");
+      if (promoWrap) promoWrap.style.display = "none";
+      var offCard = document.querySelector(".offline-card");
+      var offBtnEl = $("offlineBtn");
+      var offBtnSub = offBtnEl && offBtnEl.nextElementSibling;
+      var offDivider = document.querySelector(".offline-divider");
+      if (offCard) offCard.style.display = "none";
+      if (offBtnEl) offBtnEl.style.display = "none";
+      if (offBtnSub) offBtnSub.style.display = "none";
+      if (offDivider) offDivider.style.display = "none";
+      var formPanel = $("offlineFormPanel");
+      if (formPanel) formPanel.style.display = "block";
+      dot.classList.add("live");
+      txt.classList.add("live");
+      txt.textContent    = "Payment confirmed";
+      preamble.innerHTML = "Submit your question below.<br><strong>Belle will respond within 24 hours.</strong>";
+      avail.innerHTML    = "Written readings are delivered by email. Check your inbox and spam folder.";
+      /* Wire form submission */
+      var form = $("offlineForm");
+      if (form) {
+        var qArea = $("oQuestion");
+        var charCount = $("oCharCount");
+        if (qArea && charCount) {
+          qArea.addEventListener("input", function() {
+            charCount.textContent = qArea.value.length + " / 600";
+          });
+        }
+        form.addEventListener("submit", async function(e) {
+          e.preventDefault();
+          var submitBtn = $("oformSubmit");
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Sending\u2026";
+          try {
+            var formData = new FormData(form);
+            await fetch("/", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: new URLSearchParams(formData).toString()
+            });
+            form.style.display = "none";
+            $("offlineSuccess").style.display = "block";
+          } catch(err) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Question to Belle";
+            alert("Something went wrong. Please email your question to support@psychicbelle.com");
+          }
+        });
+      }
       return;
     }
 
@@ -1260,16 +1466,17 @@ body.session-active{padding-top:52px}
     if (savedPkg && !isNaN(savedSecs) && savedSecs > 0 && PKG[savedPkg]) {
       initSession(savedPkg);
       if (packSec) packSec.style.display = "none";
-      if (offSec)  offSec.style.display  = "none";
       dot.classList.add("live");
       txt.classList.add("live");
       txt.textContent    = "Session in progress";
       preamble.innerHTML = "Your session is active.<br><strong>Press Start Session to resume the timer.</strong>";
       avail.innerHTML    = "Your live session is ready to continue.";
+      /* Always show offline as secondary option */
+      if (offSec) offSec.classList.add("visible");
       return;
     }
 
-    /* ── Top-up return: skip landing, show packages directly ── */
+    /* ── Top-up return ── */
     if (TOPUP) {
       dot.classList.add("live");
       txt.classList.add("live");
@@ -1277,7 +1484,7 @@ body.session-active{padding-top:52px}
       packSec.classList.add("visible");
       preamble.innerHTML = "Top up your session below.<br><strong>Your timer resumes the moment payment clears.</strong>";
       avail.innerHTML    = "Select a package to add time to your current session.";
-      /* scroll to packages smoothly */
+      if (offSec) offSec.classList.add("visible");
       setTimeout(function() {
         var el = $("packagesSection");
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1297,10 +1504,11 @@ body.session-active{padding-top:52px}
       dot.classList.add("offline");
       txt.classList.add("offline");
       txt.textContent    = "Currently offline";
-      offSec.classList.add("visible");
       preamble.innerHTML = "I am offline right now but <strong>still reading today.</strong><br>Submit your question below &mdash; delivered within 24 hours.";
       avail.innerHTML    = "Questions received after payment.<br>Full reading delivered within 24 hours by email.";
     }
+    /* Offline reading always visible */
+    if (offSec) offSec.classList.add("visible");
 
     /* ── Card selection ── */
     var cards = document.querySelectorAll(".pkg-card");
