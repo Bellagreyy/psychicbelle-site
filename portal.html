@@ -101,8 +101,8 @@ body.session-active .page{padding-top:12px}
 .chat-card-desc{font-size:15px;font-style:italic;color:var(--text-muted);line-height:1.7;margin-bottom:18px}
 .chat-open-btn{display:block;width:100%;padding:18px;background:var(--gold);color:var(--black);font-family:'Cinzel',serif;font-size:12px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;border:none;cursor:pointer;transition:background .25s;-webkit-appearance:none;text-decoration:none;text-align:center}
 .chat-open-btn:hover{background:var(--gold-pale)}
-.chat-open-btn.locked{background:rgba(255,255,255,.05);color:var(--text-dim);border:0.5px solid var(--gold-line);cursor:default}
-.chat-open-btn.locked:hover{background:rgba(255,255,255,.05)}
+.chat-open-btn.locked{background:rgba(255,255,255,.05);color:var(--text-dim);border:0.5px solid var(--gold-line);cursor:pointer}
+.chat-open-btn.locked:hover{background:rgba(212,175,55,0.08);border-color:var(--gold);color:var(--gold)}
 .chat-quick-links{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
 .chat-quick{flex:1;min-width:0;padding:10px 12px;background:transparent;border:0.5px solid var(--gold-line);color:var(--text-dim);font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s,background .2s;text-align:center}
 .chat-quick:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-faint)}
@@ -126,7 +126,7 @@ body.session-active .page{padding-top:12px}
 .claimed-message{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);text-align:center;margin-bottom:8px}
 .claimed-sub{font-size:13px;font-style:italic;color:var(--text-muted);text-align:center;line-height:1.7}
 
-/* BELIEVE15 — seasonal follow-up card */
+/* BELIEVE15 */
 .believe-card{width:100%;border:0.5px solid rgba(212,175,55,0.5);background:rgba(212,175,55,0.04);margin-bottom:24px;overflow:hidden;animation:fadeUp .6s ease both .35s;position:relative}
 .believe-card::before{content:'';position:absolute;inset:0;border:0.5px solid var(--gold);opacity:.2;pointer-events:none}
 .believe-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
@@ -282,7 +282,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     </div>
   </div>
 
-  <!-- BELIEVE15 FOLLOW-UP (shown 3 days after BELLE10 claimed) -->
+  <!-- BELIEVE15 FOLLOW-UP -->
   <div class="believe-card promo-card" id="believe15Card" style="display:none">
     <div class="promo-card-header">
       <span class="believe-eyebrow">Loyalty Reward</span>
@@ -364,7 +364,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
   var SUCCESS   = params.get("success") === "true";
   var PKG_PARAM = params.get("pkg") || "";
 
-  /* ── Tidio: hidden until explicitly opened ── */
+  /* ── Tidio: always hidden until explicitly opened ── */
   document.body.classList.add("tidio-hidden");
 
   /* ── Timer helpers ── */
@@ -396,17 +396,11 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       remaining--;
       localStorage.setItem(LS.secs, remaining);
       updateBar();
-      if(remaining <= 0){
-        clearInterval(ticker); ticker = null; remaining = 0;
-        updateBar();
-        localStorage.removeItem(LS.secs);
-        localStorage.removeItem(LS.pkg);
-        localStorage.removeItem(LS.started);
-        fireTidio("Your credits have been used. Please top up to continue.");
-      }
+
       /* Operator alerts */
       if(remaining === 180) fireTidio("\u26a0\ufe0f Client has 3 minutes remaining.");
       if(remaining === 60)  fireTidio("\u26a0\ufe0f 1 minute remaining \u2014 wrap up or offer top up.");
+
       if(remaining <= 0){
         clearInterval(ticker); ticker = null; remaining = 0;
         updateBar();
@@ -414,7 +408,6 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
         localStorage.removeItem(LS.pkg);
         localStorage.removeItem(LS.started);
         fireTidio("Your credits have been used. Please top up to continue.");
-        /* Mark first session completed — unlocks BELIEVE15 */
         completeSession();
       }
     }, 1000);
@@ -430,7 +423,6 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
         headers:{ "Content-Type":"application/json", "Authorization":"Bearer "+token },
         body: JSON.stringify({ userId: window.Clerk.user.id })
       });
-      /* Reload metadata so BELIEVE15 card updates immediately */
       await window.Clerk.user.reload();
       renderBelieve15(window.Clerk.user);
     }catch(e){}
@@ -449,20 +441,36 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     }catch(e){}
   }
 
+  /* ── Open Tidio chat robustly ──
+     Removes the CSS gate, force-shows the iframe if the API
+     isn't ready yet, then calls open() once it is.
+  ── */
   function openTidio(msg){
+    /* 1. Remove CSS hide gate immediately */
     document.body.classList.remove("tidio-hidden");
-    try{
-      if(window.tidioChatApi && window.tidioChatApi.open){
-        window.tidioChatApi.open();
-        if(msg && window.tidioChatApi.setVisitorData){
-          window.tidioChatApi.setVisitorData({ tags:[msg] });
+
+    /* 2. Force-show iframe directly — works even before API fires */
+    var iframe = document.getElementById("tidio-chat-iframe");
+    if(iframe) iframe.style.cssText = "";
+
+    /* 3. Call the API */
+    function doOpen(){
+      try{
+        if(window.tidioChatApi){
+          if(window.tidioChatApi.show) window.tidioChatApi.show();
+          if(window.tidioChatApi.open) window.tidioChatApi.open();
+          if(msg && window.tidioChatApi.setVisitorData){
+            window.tidioChatApi.setVisitorData({ tags:[msg] });
+          }
         }
-      } else {
-        document.addEventListener("tidioChat-ready", function(){
-          window.tidioChatApi && window.tidioChatApi.open && window.tidioChatApi.open();
-        });
-      }
-    }catch(e){}
+      }catch(e){}
+    }
+
+    if(window.tidioChatApi && window.tidioChatApi.open){
+      doOpen();
+    } else {
+      document.addEventListener("tidioChat-ready", doOpen, { once: true });
+    }
   }
 
   /* ── Session panel init ── */
@@ -492,7 +500,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     if(spPkg) spPkg.textContent = p.label + " Package";
     if(spMin) spMin.textContent = toTime(remaining);
 
-    /* Lock chat button until session starts */
+    /* Lock chat until Start Session is clicked */
     setChatLocked(true);
 
     if(alreadyGo && remaining > 0){
@@ -521,26 +529,24 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     var quick = document.getElementById("chatQuickLinks");
     if(!btn) return;
     if(locked){
-      btn.textContent  = "Buy Session to Chat";
-      btn.className    = "chat-open-btn locked";
-      btn.onclick      = function(){ window.location.href="/"; };
-      if(desc) desc.textContent = "Purchase a credit package below to start your live session with Belle.";
-      if(quick){ var qs = quick.querySelectorAll(".chat-quick"); qs.forEach(function(q){ q.disabled=true; }); }
+      btn.textContent = "Buy Session to Chat";
+      btn.className   = "chat-open-btn locked";
+      btn.onclick     = function(){ window.location.href="/"; };
+      if(desc) desc.textContent = "Purchase a credit package to start your live session with Belle.";
+      if(quick){ quick.querySelectorAll(".chat-quick").forEach(function(q){ q.disabled=true; }); }
     } else {
-      btn.textContent  = "Open Live Chat";
-      btn.className    = "chat-open-btn";
-      btn.onclick      = function(){ openTidio(); };
+      btn.textContent = "Open Live Chat";
+      btn.className   = "chat-open-btn";
+      btn.onclick     = function(){ openTidio(); };
       if(desc) desc.textContent = "Open the live chat to connect directly with Belle. Your session begins the moment you send your first message.";
-      if(quick){ var qs2 = quick.querySelectorAll(".chat-quick"); qs2.forEach(function(q){ q.disabled=false; }); }
+      if(quick){ quick.querySelectorAll(".chat-quick").forEach(function(q){ q.disabled=false; }); }
     }
   }
 
-  /* ── Top up ── */
+  /* ── Top-up: preserve session state, redirect to package select ── */
   document.getElementById("sbTopup").addEventListener("click", function(){
-    localStorage.removeItem(LS.secs);
-    localStorage.removeItem(LS.pkg);
-    localStorage.removeItem(LS.started);
-    window.location.href = "/";
+    /* Do NOT clear localStorage — session state is needed to resume after payment */
+    window.location.href = "/?topup=true";
   });
 
   /* ── Quick chat buttons ── */
@@ -560,29 +566,28 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
   function renderBelieve15Countdown(claimedAtMs){
     var unlockAt = claimedAtMs + THREE_DAYS_MS;
     var now      = Date.now();
-    if(now >= unlockAt) return null; /* already unlocked */
-    var diff   = unlockAt - now;
-    var days   = Math.floor(diff / (1000*60*60*24));
-    var hours  = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-    var mins   = Math.floor((diff % (1000*60*60)) / (1000*60));
-    if(days > 0) return days + " day" + (days>1?"s":"");
-    if(hours > 0) return hours + " hour" + (hours>1?"s":"");
-    return mins + " minute" + (mins>1?"s":"");
+    if(now >= unlockAt) return null;
+    var diff  = unlockAt - now;
+    var days  = Math.floor(diff / (1000*60*60*24));
+    var hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    var mins  = Math.floor((diff % (1000*60*60)) / (1000*60));
+    if(days > 0)  return days  + " day"  + (days  > 1 ? "s" : "");
+    if(hours > 0) return hours + " hour" + (hours > 1 ? "s" : "");
+    return mins + " minute" + (mins > 1 ? "s" : "");
   }
 
   /* ── BELIEVE15 logic ── */
   function renderBelieve15(user){
-    var meta            = user.publicMetadata || {};
-    var b10claimed      = meta.belle10_claimed === true;
-    var sessionDone     = meta.first_session_completed === true;
-    var b15claimed      = meta.believe15_claimed === true;
-    var card            = document.getElementById("believe15Card");
-    var unclaimed       = document.getElementById("believe15Unclaimed");
-    var claimed         = document.getElementById("believe15Claimed");
-    var lockedMsg       = document.getElementById("believe15Countdown");
-    var claimBtn        = document.getElementById("believe15ClaimBtn");
+    var meta        = user.publicMetadata || {};
+    var b10claimed  = meta.belle10_claimed === true;
+    var sessionDone = meta.first_session_completed === true;
+    var b15claimed  = meta.believe15_claimed === true;
+    var card        = document.getElementById("believe15Card");
+    var unclaimed   = document.getElementById("believe15Unclaimed");
+    var claimed     = document.getElementById("believe15Claimed");
+    var lockedMsg   = document.getElementById("believe15Countdown");
+    var claimBtn    = document.getElementById("believe15ClaimBtn");
 
-    /* Only show card if BELLE10 has been redeemed */
     if(!b10claimed){ card.style.display="none"; return; }
     card.style.display = "block";
 
@@ -590,14 +595,12 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       claimed.style.display = "block"; return;
     }
 
-    /* Session not yet completed — show locked message */
     if(!sessionDone){
       lockedMsg.style.display = "block";
       document.getElementById("countdownText").textContent = "after your first session completes";
       return;
     }
 
-    /* Session completed — show claim button */
     unclaimed.style.display = "block";
 
     claimBtn.addEventListener("click", async function(){
@@ -652,7 +655,6 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
           await window.Clerk.user.reload();
           unclaimed.style.display = "none";
           claimed.style.display   = "block";
-          /* Re-render BELIEVE15 section after BELLE10 claimed */
           renderBelieve15(window.Clerk.user);
         } else {
           claimBtn.disabled = false;
@@ -699,30 +701,22 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     var name = user.firstName || user.emailAddresses[0].emailAddress.split("@")[0] || "Member";
     document.getElementById("welcomeName").textContent = name;
 
-    /* Check for active session in localStorage */
     var savedPkg  = localStorage.getItem(LS.pkg);
     var savedSecs = parseInt(localStorage.getItem(LS.secs), 10);
     var hasActive = savedPkg && !isNaN(savedSecs) && savedSecs > 0 && PACKAGES[savedPkg];
 
-    /* Post-payment return */
     if(SUCCESS && PKG_PARAM && PACKAGES[PKG_PARAM]){
       initSession(PKG_PARAM);
     } else if(hasActive){
-      /* Restore in-progress session */
       initSession(savedPkg);
     } else {
-      /* No active session — lock chat */
       setChatLocked(true);
     }
 
-    /* Promo codes */
     renderBelle10(user);
     renderBelieve15(user);
-
-    /* Saved articles */
     renderSaved(user);
 
-    /* Show page */
     document.getElementById("loadingScreen").style.display = "none";
     document.getElementById("mainContent").style.display   = "block";
   });
