@@ -661,13 +661,11 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     if(spPkg) spPkg.textContent = p.label + " Package";
     if(spMin) spMin.textContent = toTime(remaining);
 
-    /* Lock chat until Start Session is clicked */
+    /* Lock chat until session starts */
     setChatLocked(true);
 
     if(alreadyGo && remaining > 0){
-      /* Session was previously started — restore in paused state.
-         Client must click Resume. Timer never auto-starts on load. */
-      if(startBtn){ startBtn.disabled=true; startBtn.textContent="Resume Session"; }
+      /* Restore in paused state — wire button to resume, not start */
       paused = true;
       var bar = document.getElementById("sessionBar");
       if(bar) bar.classList.add("active");
@@ -675,8 +673,23 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       updateBar();
       updatePauseBtn();
       setChatLocked(false);
+
+      if(startBtn){
+        startBtn.disabled = false;
+        startBtn.textContent = "Resume Session";
+        startBtn.addEventListener("click", function(){
+          if(ticker) return;
+          startBtn.disabled = true;
+          startBtn.textContent = "Session Active";
+          paused = false;
+          openTidio();
+          startTimer();
+        });
+      }
+      return;
     }
 
+    /* First time starting — normal Start Session flow */
     if(startBtn){
       startBtn.addEventListener("click", function(){
         if(ticker) return;
