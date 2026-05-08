@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reader Portal — Psychic Belle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#D4AF37;
+  --gold-pale:#e8d27a;
+  --gold-dim:rgba(212,175,55,0.15);
+  --gold-line:rgba(212,175,55,0.35);
+  --gold-faint:rgba(212,175,55,0.07);
+  --black:#0a0a0a;
+  --text-primary:#f0ead8;
+  --text-muted:rgba(240,234,216,0.55);
+  --text-dim:rgba(240,234,216,0.32);
+  --green:#4ade80;
+  --amber:#f59e0b;
+  --red:#ef4444;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--black);
+  color:var(--text-primary);
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:300;
+  min-height:100vh;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.35;
+}
+/* Nav */
+.site-nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(10,10,10,0.97);
+  border-bottom:0.5px solid var(--gold-line);
+  backdrop-filter:blur(12px);
+}
+.site-nav-inner{
+  max-width:800px;margin:0 auto;
+  padding:0 24px;height:52px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+}
+.nav-brand{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);text-decoration:none}
+.nav-right{display:flex;align-items:center;gap:20px}
+.nav-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-dim)}
+.nav-signout{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);background:none;border:0.5px solid var(--gold-line);padding:6px 12px;cursor:pointer;transition:color .2s,border-color .2s}
+.nav-signout:hover{color:var(--gold);border-color:var(--gold)}
+/* Page */
+.page{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:40px 24px 80px}
+/* Header */
+.page-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:10px}
+.page-title{font-family:'Cinzel',serif;font-size:clamp(20px,5vw,28px);font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-primary);margin-bottom:6px}
+.page-sub{font-size:15px;font-style:italic;color:var(--text-muted);margin-bottom:40px}
+/* Status row */
+.status-row{display:flex;align-items:center;gap:12px;margin-bottom:32px;padding:14px 18px;border:0.5px solid var(--gold-line);background:var(--gold-faint)}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.status-dot.polling{background:var(--green);animation:pulse 2s ease-in-out infinite}
+.status-dot.error{background:var(--red)}
+.status-dot.idle{background:#444}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,0.7)}65%{box-shadow:0 0 0 7px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.status-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;text-transform:uppercase}
+.status-label.polling{color:var(--green)}
+.status-label.error{color:var(--red)}
+.status-label.idle{color:#555}
+.status-time{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-left:auto}
+/* No sessions */
+.no-sessions{padding:60px 24px;text-align:center;border:0.5px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.01)}
+.no-sessions-icon{font-size:28px;color:var(--gold);opacity:0.4;margin-bottom:16px}
+.no-sessions-title{font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.no-sessions-sub{font-size:14px;font-style:italic;color:var(--text-dim)}
+/* Session card */
+.sessions-grid{display:flex;flex-direction:column;gap:16px}
+.session-card{
+  padding:28px 28px 24px;
+  border:0.5px solid var(--gold-line);
+  background:rgba(212,175,55,0.04);
+  position:relative;overflow:hidden;
+}
+.session-card.alert-3min{border-color:var(--amber);background:rgba(245,158,11,0.06)}
+.session-card.alert-1min{border-color:var(--red);background:rgba(239,68,68,0.06);animation:flashBorder 1s ease-in-out infinite}
+.session-card.paused{border-color:rgba(255,255,255,0.15);opacity:0.7}
+.session-card.ended{border-color:rgba(255,255,255,0.08);opacity:0.45}
+@keyframes flashBorder{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 1px var(--red)}}
+.sc-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}
+.sc-client{font-family:'Cinzel',serif;font-size:15px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-primary);margin-bottom:4px}
+.sc-pkg{font-size:13px;font-style:italic;color:var(--text-muted)}
+.sc-status-pill{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;
+  padding:4px 12px;border:0.5px solid;flex-shrink:0;
+}
+.sc-status-pill.active{color:var(--green);border-color:rgba(74,222,128,0.35)}
+.sc-status-pill.paused{color:var(--amber);border-color:rgba(245,158,11,0.35)}
+.sc-status-pill.ended{color:var(--text-dim);border-color:rgba(255,255,255,0.1)}
+/* Timer display */
+.sc-timer-row{display:flex;align-items:flex-end;gap:20px;margin-bottom:18px}
+.sc-time-big{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,52px);font-weight:400;letter-spacing:0.06em;line-height:1;transition:color .5s}
+.sc-time-big.ok{color:var(--gold)}
+.sc-time-big.warning{color:var(--amber)}
+.sc-time-big.critical{color:var(--red);animation:flashRed 1s ease-in-out infinite}
+@keyframes flashRed{0%,100%{opacity:1}50%{opacity:0.4}}
+.sc-time-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);padding-bottom:8px}
+/* Progress bar */
+.sc-bar{width:100%;height:3px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;margin-bottom:16px}
+.sc-bar-fill{height:100%;border-radius:2px;transform-origin:left;transition:transform 1s linear,background .5s}
+.sc-bar-fill.ok{background:var(--gold)}
+.sc-bar-fill.warning{background:var(--amber)}
+.sc-bar-fill.critical{background:var(--red)}
+/* Alert banner */
+.sc-alert{
+  padding:10px 16px;margin-bottom:16px;
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+  display:none;align-items:center;gap:10px;
+}
+.sc-alert.show{display:flex}
+.sc-alert.warning{background:rgba(245,158,11,0.12);border:0.5px solid rgba(245,158,11,0.4);color:var(--amber)}
+.sc-alert.critical{background:rgba(239,68,68,0.12);border:0.5px solid rgba(239,68,68,0.4);color:var(--red)}
+.sc-alert-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;animation:pulse 1.2s ease-in-out infinite}
+/* Meta row */
+.sc-meta{display:flex;gap:24px;flex-wrap:wrap}
+.sc-meta-item{font-size:12px;letter-spacing:0.1em;color:var(--text-dim)}
+.sc-meta-item span{color:var(--text-muted);font-style:italic}
+/* Tidio link */
+.sc-tidio-link{
+  display:inline-block;margin-top:18px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--gold);text-decoration:none;
+  border:0.5px solid var(--gold-line);padding:8px 18px;
+  transition:background .2s,color .2s;
+}
+.sc-tidio-link:hover{background:var(--gold);color:var(--black)}
+/* Alert log */
+.alert-log{margin-top:40px}
+.alert-log-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px}
+.alert-log-list{display:flex;flex-direction:column;gap:8px}
+.alert-entry{
+  display:flex;align-items:center;gap:14px;
+  padding:10px 16px;
+  border:0.5px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.01);
+  font-size:13px;
+}
+.alert-entry-time{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.15em;color:var(--text-dim);flex-shrink:0;min-width:48px}
+.alert-entry-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.alert-entry-dot.start{background:var(--green)}
+.alert-entry-dot.warning{background:var(--amber)}
+.alert-entry-dot.critical{background:var(--red)}
+.alert-entry-dot.ended{background:var(--text-dim)}
+.alert-entry-dot.paused{background:var(--amber);opacity:0.6}
+.alert-entry-dot.topup{background:var(--gold)}
+.alert-entry-text{color:var(--text-muted);font-style:italic;flex:1}
+/* Gate */
+#gateView{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center;gap:20px}
+.gate-title{font-family:'Cinzel',serif;font-size:clamp(18px,5vw,24px);font-weight:400;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-primary)}
+.gate-sub{font-size:15px;font-style:italic;color:var(--text-muted)}
+#dashView{display:none}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="/" class="nav-brand">Belle</a>
+    <div class="nav-right">
+      <span class="nav-label" id="navUser"></span>
+      <button class="nav-signout" id="navSignout">Sign Out</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- Gate view while Clerk loads -->
+  <div id="gateView">
+    <div class="gate-title">Verifying access&hellip;</div>
+    <div class="gate-sub">Please wait</div>
+  </div>
+
+  <!-- Dashboard — shown after auth -->
+  <div id="dashView">
+    <span class="page-eyebrow">Reader Portal</span>
+    <h1 class="page-title">Live Sessions</h1>
+    <p class="page-sub">Active client sessions update every 5 seconds. Audio alert fires at 3 min and 1 min remaining.</p>
+
+    <div class="status-row">
+      <div class="status-dot idle" id="pollDot"></div>
+      <span class="status-label idle" id="pollLabel">Connecting&hellip;</span>
+      <span class="status-time" id="pollTime"></span>
+    </div>
+
+    <div id="sessionsContainer">
+      <div class="no-sessions">
+        <div class="no-sessions-icon">◈</div>
+        <div class="no-sessions-title">No active sessions</div>
+        <div class="no-sessions-sub">Sessions will appear here when a client starts a reading.</div>
+      </div>
+    </div>
+
+    <div class="alert-log" id="alertLog" style="display:none">
+      <div class="alert-log-title">Session Log</div>
+      <div class="alert-log-list" id="alertLogList"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Audio context for alerts -->
+<script>
+(function() {
+  "use strict";
+
+  /* ── CONFIG ── */
+  /* Set READER_SECRET to match your Netlify env var */
+  var READER_SECRET = "belle_r3ader_2026";
+  var POLL_INTERVAL = 5000; /* ms */
+
+  /* ── STATE ── */
+  var alertsFired = {}; /* sessionId_event: true */
+  var logEntries  = [];
+  var pollTimer   = null;
+  var audioCtx    = null;
+
+  /* ── HELPERS ── */
+  function pad(n) { return n < 10 ? "0"+n : ""+n; }
+  function fmtTime(s) { return pad(Math.floor(s/60))+":"+pad(s%60); }
+  function nowHHMM() {
+    var d = new Date();
+    return pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());
+  }
+
+  /* ── AUDIO ALERTS ── */
+  function ensureAudio() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+  }
+
+  function playAlert(type) {
+    ensureAudio();
+    var ctx = audioCtx;
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    if (type === "warning") {
+      /* Two-tone warning — amber */
+      osc.frequency.setValueAtTime(880, ctx.currentTime);
+      osc.frequency.setValueAtTime(660, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.5);
+    } else if (type === "critical") {
+      /* Triple urgent tone — red */
+      [0, 0.2, 0.4].forEach(function(offset) {
+        var o = ctx.createOscillator();
+        var g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.value = 1100;
+        g.gain.setValueAtTime(0.35, ctx.currentTime + offset);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + offset + 0.15);
+        o.start(ctx.currentTime + offset);
+        o.stop(ctx.currentTime + offset + 0.15);
+      });
+    }
+  }
+
+  /* ── LOG ── */
+  function addLog(type, text, clientName) {
+    logEntries.unshift({ type: type, text: text, time: nowHHMM(), client: clientName });
+    renderLog();
+  }
+
+  function renderLog() {
+    var log = document.getElementById("alertLog");
+    var list = document.getElementById("alertLogList");
+    if (!log || !list) return;
+    if (logEntries.length === 0) { log.style.display = "none"; return; }
+    log.style.display = "block";
+    list.innerHTML = logEntries.slice(0, 20).map(function(e) {
+      return '<div class="alert-entry">'
+        + '<span class="alert-entry-time">'+e.time+'</span>'
+        + '<div class="alert-entry-dot '+e.type+'"></div>'
+        + '<span class="alert-entry-text">'+e.text+'</span>'
+        + '</div>';
+    }).join("");
+  }
+
+  /* ── RENDER SESSIONS ── */
+  function renderSessions(sessions) {
+    var container = document.getElementById("sessionsContainer");
+    if (!container) return;
+
+    if (!sessions || sessions.length === 0) {
+      container.innerHTML = '<div class="no-sessions">'
+        + '<div class="no-sessions-icon">◈</div>'
+        + '<div class="no-sessions-title">No active sessions</div>'
+        + '<div class="no-sessions-sub">Sessions appear here when a client starts a reading.</div>'
+        + '</div>';
+      return;
+    }
+
+    var html = '<div class="sessions-grid">';
+    sessions.forEach(function(s) {
+      var secsR = s.secsRemaining || 0;
+      var total = s.totalSecs || 1;
+      var pct   = Math.max(0, Math.min(1, secsR / total));
+
+      var warn  = secsR <= 180 && secsR > 60;
+      var crit  = secsR <= 60;
+      var timeClass = crit ? "critical" : warn ? "warning" : "ok";
+      var barClass  = timeClass;
+
+      var cardClass = "session-card";
+      if (s.status === "paused")  cardClass += " paused";
+      if (s.status === "ended")   cardClass += " ended";
+      else if (crit)              cardClass += " alert-1min";
+      else if (warn)              cardClass += " alert-3min";
+
+      var pillClass = s.status === "paused" ? "paused" : s.status === "ended" ? "ended" : "active";
+      var pillText  = s.status === "paused" ? "Paused" : s.status === "ended" ? "Ended" : "Live";
+
+      var alertHTML = "";
+      if (s.status !== "ended") {
+        if (crit) {
+          alertHTML = '<div class="sc-alert critical show"><div class="sc-alert-dot"></div>Under 1 minute remaining — wrap up now</div>';
+        } else if (warn) {
+          alertHTML = '<div class="sc-alert warning show"><div class="sc-alert-dot"></div>3 minutes remaining</div>';
+        }
+      }
+
+      html += '<div class="'+cardClass+'" data-session="'+s.sessionId+'">'
+        + '<div class="sc-header">'
+          + '<div>'
+            + '<div class="sc-client">'+escHtml(s.clientName)+'</div>'
+            + '<div class="sc-pkg">'+escHtml(s.pkg.charAt(0).toUpperCase()+s.pkg.slice(1))+' package</div>'
+          + '</div>'
+          + '<div class="sc-status-pill '+pillClass+'">'+pillText+'</div>'
+        + '</div>'
+        + alertHTML
+        + '<div class="sc-timer-row">'
+          + '<div class="sc-time-big '+timeClass+'">'+fmtTime(secsR)+'</div>'
+          + '<div class="sc-time-label">remaining</div>'
+        + '</div>'
+        + '<div class="sc-bar"><div class="sc-bar-fill '+barClass+'" style="transform:scaleX('+pct+')"></div></div>'
+        + '<div class="sc-meta">'
+          + '<div class="sc-meta-item">Total <span>'+fmtTime(total)+'</span></div>'
+          + '<div class="sc-meta-item">Used <span>'+fmtTime(Math.max(0,total-secsR))+'</span></div>'
+          + '<div class="sc-meta-item">Last event <span>'+escHtml(s.lastEvent||"—")+'</span></div>'
+        + '</div>'
+        + '<a href="https://www.tidio.com/panel/conversations" target="_blank" rel="noopener" class="sc-tidio-link">Open Tidio Operator Panel ↗</a>'
+        + '</div>';
+
+      /* ── Fire alerts ── */
+      if (s.status === "active") {
+        if (warn && !alertsFired[s.sessionId+"_3min"]) {
+          alertsFired[s.sessionId+"_3min"] = true;
+          playAlert("warning");
+          addLog("warning", escHtml(s.clientName)+" — 3 minutes remaining", s.clientName);
+        }
+        if (crit && !alertsFired[s.sessionId+"_1min"]) {
+          alertsFired[s.sessionId+"_1min"] = true;
+          playAlert("critical");
+          addLog("critical", escHtml(s.clientName)+" — under 1 minute remaining", s.clientName);
+        }
+      }
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  function escHtml(str) {
+    return String(str||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  /* ── POLL ── */
+  function poll() {
+    var dot   = document.getElementById("pollDot");
+    var label = document.getElementById("pollLabel");
+    var time  = document.getElementById("pollTime");
+
+    fetch("/.netlify/functions/session-state?secret="+encodeURIComponent(READER_SECRET))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (dot)   { dot.className   = "status-dot polling"; }
+        if (label) { label.className = "status-label polling"; label.textContent = "Live — polling every 5s"; }
+        if (time)  { time.textContent = "Last updated "+nowHHMM(); }
+
+        /* Log new session starts */
+        (data.sessions||[]).forEach(function(s) {
+          if (s.lastEvent === "start" && !alertsFired[s.sessionId+"_start"]) {
+            alertsFired[s.sessionId+"_start"] = true;
+            addLog("start", escHtml(s.clientName)+" started a "+escHtml(s.pkg)+" session", s.clientName);
+            playAlert("warning"); /* gentle notify on start */
+          }
+          if (s.lastEvent === "end" && !alertsFired[s.sessionId+"_end"]) {
+            alertsFired[s.sessionId+"_end"] = true;
+            addLog("ended", escHtml(s.clientName)+"'s session ended", s.clientName);
+          }
+          if (s.lastEvent === "topup" && !alertsFired[s.sessionId+"_topup_"+s.totalSecs]) {
+            alertsFired[s.sessionId+"_topup_"+s.totalSecs] = true;
+            addLog("topup", escHtml(s.clientName)+" topped up — "+fmtTime(s.secsRemaining)+" now remaining", s.clientName);
+          }
+        });
+
+        renderSessions(data.sessions);
+      })
+      .catch(function() {
+        if (dot)   { dot.className   = "status-dot error"; }
+        if (label) { label.className = "status-label error"; label.textContent = "Connection error — retrying"; }
+      });
+  }
+
+  /* ── AUTH & INIT ── */
+  function initDash() {
+    document.getElementById("gateView").style.display = "none";
+    document.getElementById("dashView").style.display = "block";
+
+    /* Unlock audio on first interaction */
+    document.addEventListener("click", function() {
+      ensureAudio();
+      if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+    }, { once: true });
+
+    poll();
+    pollTimer = setInterval(poll, POLL_INTERVAL);
+  }
+
+  window.addEventListener("load", function() {
+    if (!window.Clerk) {
+      document.querySelector(".gate-sub").textContent = "Clerk failed to load. Please refresh.";
+      return;
+    }
+    window.Clerk.load().then(function() {
+      var user = window.Clerk.user;
+
+      if (!user) {
+        /* Redirect to login */
+        window.location.href = "/login.html?redirect_url=" + encodeURIComponent(window.location.href);
+        return;
+      }
+
+      /* Show user in nav */
+      var navUser = document.getElementById("navUser");
+      if (navUser) navUser.textContent = user.firstName || user.emailAddresses[0]?.emailAddress || "Belle";
+
+      /* Sign out */
+      var signout = document.getElementById("navSignout");
+      if (signout) {
+        signout.addEventListener("click", function() {
+          window.Clerk.signOut().then(function() {
+            window.location.href = "/";
+          });
+        });
+      }
+
+      initDash();
+    }).catch(function() {
+      document.querySelector(".gate-sub").textContent = "Auth error. Please refresh.";
+    });
+  });
+
+})();
+</script>
+
+<!-- Clerk -->
+<script async crossorigin="anonymous" data-clerk-publishable-key="YOUR_CLERK_PUBLISHABLE_KEY" src="https://YOUR_CLERK_FRONTEND_API/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
+
+</body>
+</html>
