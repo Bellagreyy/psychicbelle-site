@@ -1,59 +1,96 @@
 // netlify/functions/session-ping.js
-exports.handler = async function(event) {
+// Uses Netlify Blobs REST API directly — no npm package needed
 
-  // Open CORS — allow any origin so reader.html can poll
-  const cors = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Content-Type": "application/json"
-  };
+const cors = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Content-Type": "application/json"
+};
+
+// Netlify Blobs REST API helpers
+// These env vars are automatically available in Netlify functions
+function getBlobUrl(key) {
+  const siteId  = process.env.SITE_ID || process.env.NETLIFY_SITE_ID;
+  const token   = process.env.NETLIFY_BLOBS_TOKEN || process.env.TOKEN;
+  return { siteId, token };
+}
+
+async function blobGet(key) {
+  try {
+    const siteId = process.env.NETLIFY_SITE_ID || process.env.SITE_ID;
+    const token  = process.env.NETLIFY_BLOBS_TOKEN || process.env.TOKEN;
+    if (!siteId || !token) return null;
+    const url = `https://api.netlify.com/api/v1/sites/${siteId}/blobs/${encodeURIComponent(key)}?context=production`;
+    const res = await fetch(url, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    if (!res.ok) return null;
+    const text = await res.text();
+    return JSON.parse(text);
+  } catch(e) { return null; }
+}
+
+async function blobSet(key, data) {
+  try {
+    const siteId = process.env.NETLIFY_SITE_ID || process.env.SITE_ID;
+    const token  = process.env.NETLIFY_BLOBS_TOKEN || process.env.TOKEN;
+    if (!siteId || !token) return false;
+    const url = `https://api.netlify.com/api/v1/sites/${siteId}/blobs/${encodeURIComponent(key)}?context=production`;
+    await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+    return true;
+  } catch(e) { return false; }
+}
+
+exports.handler = async function(event) {
 
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 200, headers: cors, body: "" };
   }
 
-  try {
-    const { getStore } = require("@netlify/blobs");
-    const store = getStore({ name: "psych-sessions", consistency: "strong" });
-
-    // GET — reader.html polling for active sessions
-    if (event.httpMethod === "GET") {
+  // GET — reader.html polling for active sessions
+  if (event.httpMethod === "GET") {
+    try {
+      const raw = await blobGet("psych-active-sessions");
       let sessions = [];
-      try {
-        const raw = await store.get("active", { type: "json" });
-        if (raw && Array.isArray(raw.sessions)) {
-          const cutoff = Date.now() - 30000; // 30s stale threshold
-          sessions = raw.sessions.filter(s => s.updatedAt > cutoff);
-          // Clean up stale sessions if any removed
-          if (sessions.length !== raw.sessions.length) {
-            await store.set("active", JSON.stringify({ sessions }));
-          }
-        }
-      } catch(e) {
-        sessions = [];
+      if (raw && Array.isArray(raw.sessions)) {
+        const cutoff = Date.now() - 30000;
+        sessions = raw.sessions.filter(s => s.updatedAt > cutoff);
       }
       return {
         statusCode: 200,
         headers: cors,
         body: JSON.stringify({ sessions, ok: true })
       };
+    } catch(e) {
+      return {
+        statusCode: 200,
+        headers: cors,
+        body: JSON.stringify({ sessions: [], ok: true })
+      };
     }
+  }
 
-    // POST — client browser posting session state
-    if (event.httpMethod === "POST") {
+  // POST — client browser posting session state
+  if (event.httpMethod === "POST") {
+    try {
       let body = {};
       try { body = JSON.parse(event.body || "{}"); } catch(e) {}
 
-      const {
-        sessionId,
-        clientName   = "Client",
-        pkg          = "unknown",
-        secsRemaining = 0,
-        totalSecs    = 0,
-        status       = "active",
-        event: evt   = "ping"
-      } = body;
+      const sessionId     = body.sessionId;
+      const clientName    = body.clientName || "Client";
+      const pkg           = body.pkg || "unknown";
+      const secsRemaining = body.secsRemaining || 0;
+      const totalSecs     = body.totalSecs || 0;
+      const status        = body.status || "active";
+      const evt           = body.event || "ping";
 
       if (!sessionId) {
         return {
@@ -64,18 +101,15 @@ exports.handler = async function(event) {
       }
 
       // Load existing sessions
-      let sessions = [];
-      try {
-        const raw = await store.get("active", { type: "json" });
-        if (raw && Array.isArray(raw.sessions)) sessions = raw.sessions;
-      } catch(e) {}
+      const raw = await blobGet("psych-active-sessions");
+      let sessions = (raw && Array.isArray(raw.sessions)) ? raw.sessions : [];
 
-      // Remove this session from list (will re-add if still active)
+      // Remove this session
       sessions = sessions.filter(s => s.sessionId !== sessionId);
 
-      // If ended — just remove, don't re-add
+      // If ended — just remove
       if (status === "ended" || secsRemaining <= 0) {
-        await store.set("active", JSON.stringify({ sessions }));
+        await blobSet("psych-active-sessions", { sessions });
         return {
           statusCode: 200,
           headers: cors,
@@ -83,7 +117,7 @@ exports.handler = async function(event) {
         };
       }
 
-      // Add updated session state
+      // Add updated session
       sessions.push({
         sessionId,
         clientName,
@@ -95,30 +129,27 @@ exports.handler = async function(event) {
         updatedAt: Date.now()
       });
 
-      await store.set("active", JSON.stringify({ sessions }));
+      await blobSet("psych-active-sessions", { sessions });
 
       return {
         statusCode: 200,
         headers: cors,
         body: JSON.stringify({ ok: true })
       };
+
+    } catch(err) {
+      console.error("session-ping POST error:", err.message);
+      return {
+        statusCode: 500,
+        headers: cors,
+        body: JSON.stringify({ error: err.message })
+      };
     }
-
-    return {
-      statusCode: 405,
-      headers: cors,
-      body: JSON.stringify({ error: "Method not allowed" })
-    };
-
-  } catch(err) {
-    console.error("session-ping error:", err.message);
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ error: err.message, sessions: [] })
-    };
   }
+
+  return {
+    statusCode: 405,
+    headers: cors,
+    body: JSON.stringify({ error: "Method not allowed" })
+  };
 };
