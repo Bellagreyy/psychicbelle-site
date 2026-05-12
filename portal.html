@@ -41,7 +41,6 @@ body.session-active .page{padding-top:12px}
 .sb-pause{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);background:transparent;border:0.5px solid var(--gold-line);padding:6px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:color .2s,border-color .2s,background .2s}
 .sb-pause:hover{color:var(--gold-pale);border-color:var(--gold)}
 .sb-pause.paused{color:var(--black);background:var(--gold);border-color:var(--gold)}
-/* Credit expiry note */
 .sp-expiry{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-top:10px;display:block}
 
 /* NAV */
@@ -80,7 +79,7 @@ body.session-active .page{padding-top:12px}
 .stat-value{font-family:'Cinzel',serif;font-size:clamp(20px,6vw,26px);font-weight:400;color:var(--gold);display:block;letter-spacing:.05em;margin-bottom:6px}
 .stat-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);line-height:1.4}
 
-/* SESSION PANEL (post-payment) */
+/* SESSION PANEL */
 #sessionPanel{display:none;width:100%;padding:28px 28px 26px;border:0.5px solid var(--gold-line);background:rgba(212,175,55,0.05);text-align:center;margin-bottom:24px;animation:fadeUp .6s ease both}
 #sessionPanel.visible{display:block}
 .sp-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:14px;display:block}
@@ -171,82 +170,29 @@ body.session-active .page{padding-top:12px}
 body.tidio-hidden #tidio-chat,
 body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !important}
 
-/* ── TOP-UP MODAL ── */
-.topup-overlay{
-  display:none;position:fixed;inset:0;z-index:10000;
-  background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  align-items:flex-end;justify-content:center;
-}
+/* TOP-UP MODAL */
+.topup-overlay{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
 .topup-overlay.open{display:flex}
-.topup-sheet{
-  width:100%;max-width:600px;
-  background:#0d0d0d;
-  border-top:0.5px solid var(--gold-line);
-  border-left:0.5px solid var(--gold-line);
-  border-right:0.5px solid var(--gold-line);
-  padding:28px 24px 40px;
-  transform:translateY(100%);
-  transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);
-}
+.topup-sheet{width:100%;max-width:600px;background:#0d0d0d;border-top:0.5px solid var(--gold-line);border-left:0.5px solid var(--gold-line);border-right:0.5px solid var(--gold-line);padding:28px 24px 40px;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.32,0.72,0,1)}
 .topup-overlay.open .topup-sheet{transform:translateY(0)}
-.topup-sheet-handle{
-  width:36px;height:3px;background:var(--gold-line);
-  border-radius:2px;margin:0 auto 24px;
-}
-.topup-sheet-eyebrow{
-  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.35em;
-  text-transform:uppercase;color:var(--gold);opacity:0.7;
-  display:block;margin-bottom:6px;text-align:center;
-}
-.topup-sheet-title{
-  font-family:'Cinzel',serif;font-size:clamp(16px,5vw,20px);
-  font-weight:400;letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--text);text-align:center;margin-bottom:6px;
-}
-.topup-sheet-sub{
-  font-size:13px;font-style:italic;color:var(--text-muted);
-  text-align:center;margin-bottom:24px;line-height:1.6;
-}
-.topup-timer-remaining{
-  font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;
-  text-transform:uppercase;color:var(--text-dim);
-  text-align:center;margin-bottom:20px;
-}
+.topup-sheet-handle{width:36px;height:3px;background:var(--gold-line);border-radius:2px;margin:0 auto 24px}
+.topup-sheet-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);opacity:0.7;display:block;margin-bottom:6px;text-align:center}
+.topup-sheet-title{font-family:'Cinzel',serif;font-size:clamp(16px,5vw,20px);font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);text-align:center;margin-bottom:6px}
+.topup-sheet-sub{font-size:13px;font-style:italic;color:var(--text-muted);text-align:center;margin-bottom:24px;line-height:1.6}
+.topup-timer-remaining{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:20px}
 .topup-timer-remaining span{color:var(--gold)}
 .topup-pkgs{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-.topup-pkg{
-  width:100%;padding:16px 20px;
-  border:0.5px solid var(--gold-line);background:var(--gold-faint);
-  display:flex;align-items:center;justify-content:space-between;
-  cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s;
-}
+.topup-pkg{width:100%;padding:16px 20px;border:0.5px solid var(--gold-line);background:var(--gold-faint);display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s}
 .topup-pkg:hover{border-color:var(--gold);background:rgba(212,175,55,0.11)}
-.topup-pkg.selected{
-  border-color:var(--gold);background:rgba(212,175,55,0.13);
-  box-shadow:0 0 0 1px var(--gold);
-}
+.topup-pkg.selected{border-color:var(--gold);background:rgba(212,175,55,0.13);box-shadow:0 0 0 1px var(--gold)}
 .topup-pkg-name{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text)}
 .topup-pkg-detail{font-size:12px;font-style:italic;color:var(--text-muted);margin-top:3px}
 .topup-pkg-price{font-family:'Cinzel',serif;font-size:clamp(18px,5vw,22px);font-weight:400;color:var(--gold);letter-spacing:0.04em}
 .topup-pkg-price.discounted{color:var(--green)}
-.topup-go-btn{
-  display:block;width:100%;padding:18px;
-  background:var(--gold);color:var(--black);
-  font-family:'Cinzel',serif;font-size:12px;font-weight:500;
-  letter-spacing:0.3em;text-transform:uppercase;
-  border:none;cursor:pointer;
-  transition:background .25s,opacity .2s;-webkit-appearance:none;
-}
+.topup-go-btn{display:block;width:100%;padding:18px;background:var(--gold);color:var(--black);font-family:'Cinzel',serif;font-size:12px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;border:none;cursor:pointer;transition:background .25s,opacity .2s;-webkit-appearance:none}
 .topup-go-btn:hover{background:var(--gold-pale)}
 .topup-go-btn:disabled{opacity:.35;cursor:not-allowed;background:var(--gold)}
-.topup-cancel{
-  display:block;width:100%;margin-top:12px;padding:12px;
-  background:transparent;border:0.5px solid rgba(255,255,255,0.08);
-  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;
-  text-transform:uppercase;color:var(--text-dim);cursor:pointer;
-  transition:color .2s,border-color .2s;
-}
+.topup-cancel{display:block;width:100%;margin-top:12px;padding:12px;background:transparent;border:0.5px solid rgba(255,255,255,0.08);font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;transition:color .2s,border-color .2s}
 .topup-cancel:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -264,7 +210,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
   <button class="sb-topup" id="sbTopup">Top Up</button>
 </div>
 
-<!-- ── TOP-UP MODAL ── -->
+<!-- TOP-UP MODAL -->
 <div class="topup-overlay" id="topupOverlay">
   <div class="topup-sheet">
     <div class="topup-sheet-handle"></div>
@@ -274,24 +220,15 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     <p class="topup-timer-remaining">Time remaining: <span id="topupTimeRemaining">--:--</span></p>
     <div class="topup-pkgs">
       <div class="topup-pkg" data-pkg="starter">
-        <div>
-          <div class="topup-pkg-name">Starter</div>
-          <div class="topup-pkg-detail">Approx. 4 minutes</div>
-        </div>
+        <div><div class="topup-pkg-name">Starter</div><div class="topup-pkg-detail">Approx. 4 minutes</div></div>
         <div class="topup-pkg-price" id="topupPriceStarter">$25</div>
       </div>
       <div class="topup-pkg" data-pkg="standard">
-        <div>
-          <div class="topup-pkg-name">Standard</div>
-          <div class="topup-pkg-detail">Approx. 8 minutes</div>
-        </div>
+        <div><div class="topup-pkg-name">Standard</div><div class="topup-pkg-detail">Approx. 8 minutes</div></div>
         <div class="topup-pkg-price" id="topupPriceStandard">$50</div>
       </div>
       <div class="topup-pkg" data-pkg="premium">
-        <div>
-          <div class="topup-pkg-name">Premium</div>
-          <div class="topup-pkg-detail">Approx. 17 minutes</div>
-        </div>
+        <div><div class="topup-pkg-name">Premium</div><div class="topup-pkg-detail">Approx. 17 minutes</div></div>
         <div class="topup-pkg-price" id="topupPricePremium">$100</div>
       </div>
     </div>
@@ -403,7 +340,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     </div>
   </div>
 
-  <!-- BELIEVE15 FOLLOW-UP -->
+  <!-- BELIEVE15 -->
   <div class="believe-card promo-card" id="believe15Card" style="display:none">
     <div class="promo-card-header">
       <span class="believe-eyebrow">Loyalty Reward</span>
@@ -449,7 +386,11 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
 
   <div class="portal-footer">
     <div class="footer-rule"></div>
-    <p class="footer-text">&copy; Psychic Belle &middot; The Sanctuary<br>Member sessions are private &amp; confidential<br><a href="/terms.html" style="color:var(--text-dim);text-decoration:none;letter-spacing:0.15em;font-size:9px;font-family:'Cinzel',serif;text-transform:uppercase" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-dim)'">Terms &amp; Session Agreement</a></p>
+    <p class="footer-text">&copy; Psychic Belle &middot; The Sanctuary<br>Member sessions are private &amp; confidential<br>
+    <a href="/terms.html" style="color:var(--text-dim);text-decoration:none;letter-spacing:0.15em;font-size:9px;font-family:'Cinzel',serif;text-transform:uppercase" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-dim)'">Terms &amp; Session Agreement</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/privacy.html" style="color:var(--text-dim);text-decoration:none;letter-spacing:0.15em;font-size:9px;font-family:'Cinzel',serif;text-transform:uppercase" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-dim)'">Privacy Policy</a>
+    </p>
   </div>
 
 </div>
@@ -472,17 +413,25 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     standard: { label:"Standard", mins:8,  price:50   },
     premium:  { label:"Premium",  mins:17, price:100  }
   };
-  var LS = {
-    secs:    "b_secs",
-    pkg:     "b_pkg",
-    started: "b_started",
-    expiry:  "b_expiry",
-    terms:   "b_terms_ok"
+  var STRIPE_PORTAL = {
+    starter:      "https://buy.stripe.com/28EbJ2b6p3z32lQbOzffy02",
+    standard:     "https://buy.stripe.com/cNi9AUdexglP8KedWHffy03",
+    premium:      "https://buy.stripe.com/eVqcN61vP3z31hMg4Pffy04",
+    starterDisc:  "https://buy.stripe.com/cNifZicat9Xr0dI2dZffy05",
+    standardDisc: "https://buy.stripe.com/9B628s6Q92uZ7Ga4m7ffy06",
+    premiumDisc:  "https://buy.stripe.com/aFadRa5M57Pj3pU8Cnffy07"
   };
-
+  var LS = {
+    secs:      "b_secs",
+    pkg:       "b_pkg",
+    started:   "b_started",
+    expiry:    "b_expiry",
+    terms:     "b_terms_ok",
+    sessionId: "b_session_id"
+  };
   var TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
+  var THREE_DAYS_MS    = 3 * 24 * 60 * 60 * 1000;
   var paused = false;
-  var THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
 
   /* ── Timer state ── */
   var ticker    = null;
@@ -497,10 +446,75 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
   /* ── Tidio: always hidden until explicitly opened ── */
   document.body.classList.add("tidio-hidden");
 
-  /* ── Timer helpers ── */
+  /* ── Helpers ── */
   function pad(n){ return n < 10 ? "0"+n : ""+n; }
-  function toTime(s){ return pad(Math.floor(s/60))+":"+pad(s%60); }
+  function toTime(s){ return pad(Math.floor(Math.max(0,s)/60))+":"+pad(Math.max(0,s)%60); }
 
+  /* ══════════════════════════════════════════════════════
+     SESSION PING SYSTEM
+     Sends real session state to Netlify function every 10s
+     so reader.html can show live data
+  ══════════════════════════════════════════════════════ */
+  var pingTimer = null;
+
+  function getOrCreateSessionId(pkgKey) {
+    var existing = localStorage.getItem(LS.sessionId);
+    if (existing) return existing;
+    var id = (pkgKey || "session") + "_" + Date.now();
+    localStorage.setItem(LS.sessionId, id);
+    return id;
+  }
+
+  function clearSessionId() {
+    localStorage.removeItem(LS.sessionId);
+  }
+
+  function getClientName() {
+    try {
+      if (window.Clerk && window.Clerk.user) {
+        return window.Clerk.user.firstName ||
+               window.Clerk.user.emailAddresses[0].emailAddress ||
+               "Client";
+      }
+    } catch(e) {}
+    return "Client";
+  }
+
+  function pingSession(evt) {
+    var pkgKey    = localStorage.getItem(LS.pkg) || PKG_PARAM || "unknown";
+    var sessionId = getOrCreateSessionId(pkgKey);
+    var p         = PACKAGES[pkgKey];
+    var totalS    = p ? p.mins * 60 : 0;
+    fetch("/.netlify/functions/session-ping", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId:     sessionId,
+        clientName:    getClientName(),
+        pkg:           pkgKey,
+        secsRemaining: remaining,
+        totalSecs:     totalS,
+        status:        paused ? "paused" : (remaining <= 0 ? "ended" : "active"),
+        event:         evt || "ping"
+      }),
+      keepalive: true
+    }).catch(function() {});
+  }
+
+  function startPingTimer() {
+    if (pingTimer) return;
+    pingTimer = setInterval(function() {
+      if (!paused && remaining > 0) pingSession("ping");
+    }, 10000);
+  }
+
+  function stopPingTimer() {
+    if (pingTimer) { clearInterval(pingTimer); pingTimer = null; }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     TIMER ENGINE
+  ══════════════════════════════════════════════════════ */
   function updateBar(){
     var sbTime = document.getElementById("sbTime");
     var sbFill = document.getElementById("sbFill");
@@ -524,13 +538,15 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     document.body.classList.add("session-active");
     updateBar();
     updatePauseBtn();
+    startPingTimer();
+
     ticker = setInterval(function(){
       remaining--;
       localStorage.setItem(LS.secs, remaining);
       updateBar();
 
-      if(remaining === 180) fireTidio("\u26a0\ufe0f Client has 3 minutes remaining.");
-      if(remaining === 60)  fireTidio("\u26a0\ufe0f 1 minute remaining \u2014 wrap up or offer top up.");
+      if(remaining === 180){ fireTidio("\u26a0\ufe0f Client has 3 minutes remaining."); pingSession("alert_3min"); }
+      if(remaining === 60) { fireTidio("\u26a0\ufe0f 1 minute remaining \u2014 offer top up."); pingSession("alert_1min"); }
 
       if(remaining <= 0){
         clearInterval(ticker); ticker = null; remaining = 0;
@@ -540,6 +556,9 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
         localStorage.removeItem(LS.started);
         localStorage.removeItem(LS.expiry);
         fireTidio("Your credits have been used. Please top up to continue.");
+        pingSession("end");
+        stopPingTimer();
+        clearSessionId();
         completeSession();
       }
     }, 1000);
@@ -551,11 +570,13 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     paused = true;
     localStorage.setItem(LS.secs, remaining);
     updatePauseBtn();
+    pingSession("pause");
   }
 
   function resumeTimer(){
     if(ticker || remaining <= 0) return;
     paused = false;
+    pingSession("resume");
     startTimer();
   }
 
@@ -599,19 +620,10 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     }catch(e){}
   }
 
-  /* ── Open Tidio chat robustly ──
-     Removes the CSS gate, force-shows the iframe if the API
-     isn't ready yet, then calls open() once it is.
-  ── */
   function openTidio(msg){
-    /* 1. Remove CSS hide gate immediately */
     document.body.classList.remove("tidio-hidden");
-
-    /* 2. Force-show iframe directly — works even before API fires */
     var iframe = document.getElementById("tidio-chat-iframe");
     if(iframe) iframe.style.cssText = "";
-
-    /* 3. Call the API */
     function doOpen(){
       try{
         if(window.tidioChatApi){
@@ -623,15 +635,13 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
         }
       }catch(e){}
     }
-
-    if(window.tidioChatApi && window.tidioChatApi.open){
-      doOpen();
-    } else {
-      document.addEventListener("tidioChat-ready", doOpen, { once: true });
-    }
+    if(window.tidioChatApi && window.tidioChatApi.open){ doOpen(); }
+    else { document.addEventListener("tidioChat-ready", doOpen, { once: true }); }
   }
 
-  /* ── Session panel init ── */
+  /* ══════════════════════════════════════════════════════
+     SESSION PANEL
+  ══════════════════════════════════════════════════════ */
   function initSession(pkgKey){
     var p = PACKAGES[pkgKey];
     if(!p) return;
@@ -646,7 +656,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       localStorage.setItem(LS.secs, remaining);
       localStorage.setItem(LS.pkg, pkgKey);
       localStorage.removeItem(LS.started);
-      /* Always reset expiry to 12 months from latest purchase */
+      localStorage.removeItem(LS.sessionId);
       var expDate = new Date(Date.now() + TWELVE_MONTHS_MS);
       localStorage.setItem(LS.expiry, expDate.toISOString());
       alreadyGo = false;
@@ -661,11 +671,18 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     if(spPkg) spPkg.textContent = p.label + " Package";
     if(spMin) spMin.textContent = toTime(remaining);
 
-    /* Lock chat until session starts */
     setChatLocked(true);
 
+    /* Show expiry */
+    var expiryStored = localStorage.getItem(LS.expiry);
+    var spExpiry = document.getElementById("spExpiry");
+    if(spExpiry && expiryStored){
+      var expDate2 = new Date(expiryStored);
+      var expStr   = expDate2.toLocaleDateString("en-GB",{ day:"numeric",month:"long",year:"numeric" });
+      spExpiry.textContent = "Credits expire: " + expStr;
+    }
+
     if(alreadyGo && remaining > 0){
-      /* Restore in paused state — wire button to resume, not start */
       paused = true;
       var bar = document.getElementById("sessionBar");
       if(bar) bar.classList.add("active");
@@ -673,7 +690,6 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       updateBar();
       updatePauseBtn();
       setChatLocked(false);
-
       if(startBtn){
         startBtn.disabled = false;
         startBtn.textContent = "Resume Session";
@@ -683,21 +699,25 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
           startBtn.textContent = "Session Active";
           paused = false;
           openTidio();
+          pingSession("resume");
+          startPingTimer();
           startTimer();
         });
       }
       return;
     }
 
-    /* First time starting — normal Start Session flow */
     if(startBtn){
       startBtn.addEventListener("click", function(){
         if(ticker) return;
         startBtn.disabled = true;
         startBtn.textContent = "Session Active";
         localStorage.setItem(LS.started,"1");
+        getOrCreateSessionId(pkgKey);
         setChatLocked(false);
         openTidio();
+        pingSession("start");
+        startPingTimer();
         paused = false;
         startTimer();
       });
@@ -725,32 +745,20 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     }
   }
 
-  /* ── Stripe links for top-up modal ── */
-  var STRIPE_PORTAL = {
-    starter:      "https://buy.stripe.com/28EbJ2b6p3z32lQbOzffy02",
-    standard:     "https://buy.stripe.com/cNi9AUdexglP8KedWHffy03",
-    premium:      "https://buy.stripe.com/eVqcN61vP3z31hMg4Pffy04",
-    starterDisc:  "https://buy.stripe.com/cNifZicat9Xr0dI2dZffy05",
-    standardDisc: "https://buy.stripe.com/9B628s6Q92uZ7Ga4m7ffy06",
-    premiumDisc:  "https://buy.stripe.com/aFadRa5M57Pj3pU8Cnffy07"
-  };
-
-  /* ── Top-up modal state ── */
-  var topupSelPkg  = null;
-  var promoActive  = false; /* set true if user has unclaimed BELLE10 */
+  /* ── Top-up modal ── */
+  var topupSelPkg = null;
+  var promoActive = false;
 
   function openTopupModal(){
     if(ticker){ clearInterval(ticker); ticker = null; }
     var el = document.getElementById("topupTimeRemaining");
     if(el) el.textContent = toTime(remaining);
-    /* If user has active promo (BELLE10 claimed but not yet used on a purchase),
-       show discounted prices */
     if(promoActive){
-      var map = { starter:25, standard:50, premium:100 };
+      var map  = { starter:25, standard:50, premium:100 };
       var caps = ["Starter","Standard","Premium"];
-      var keys2 = ["starter","standard","premium"];
-      for(var k=0;k<keys2.length;k++){
-        var disc = parseFloat((map[keys2[k]] * 0.90).toFixed(2));
+      var keys = ["starter","standard","premium"];
+      for(var k=0;k<keys.length;k++){
+        var disc = parseFloat((map[keys[k]] * 0.90).toFixed(2));
         var pel  = document.getElementById("topupPrice"+caps[k]);
         if(pel){ pel.textContent = "$"+disc; pel.classList.add("discounted"); }
       }
@@ -760,27 +768,19 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
 
   function closeTopupModal(){
     document.getElementById("topupOverlay").classList.remove("open");
-    if(remaining > 0 && localStorage.getItem(LS.started) === "1"){
-      startTimer();
-    }
+    if(remaining > 0 && localStorage.getItem(LS.started) === "1"){ startTimer(); }
   }
 
   /* ── Pause button ── */
   var pauseBtn = document.getElementById("sbPause");
   if(pauseBtn){
     pauseBtn.addEventListener("click", function(){
-      if(paused){
-        resumeTimer();
-      } else {
-        pauseTimer();
-      }
+      if(paused){ resumeTimer(); } else { pauseTimer(); }
     });
   }
 
   /* ── Top-up button ── */
-  document.getElementById("sbTopup").addEventListener("click", function(){
-    openTopupModal();
-  });
+  document.getElementById("sbTopup").addEventListener("click", function(){ openTopupModal(); });
 
   /* ── Modal package selection ── */
   document.querySelectorAll(".topup-pkg").forEach(function(el){
@@ -794,14 +794,12 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     });
   });
 
-  /* ── Modal go to Stripe ── */
   document.getElementById("topupGoBtn").addEventListener("click", function(){
     if(!topupSelPkg) return;
     var url = promoActive ? STRIPE_PORTAL[topupSelPkg+"Disc"] : STRIPE_PORTAL[topupSelPkg];
     window.location.href = url;
   });
 
-  /* ── Modal cancel ── */
   document.getElementById("topupCancel").addEventListener("click", closeTopupModal);
   document.getElementById("topupOverlay").addEventListener("click", function(e){
     if(e.target === document.getElementById("topupOverlay")) closeTopupModal();
@@ -820,10 +818,10 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     window.location.href = "/login.html";
   });
 
-  /* ── BELIEVE15 countdown display ── */
+  /* ── BELIEVE15 countdown ── */
   function renderBelieve15Countdown(claimedAtMs){
     var unlockAt = claimedAtMs + THREE_DAYS_MS;
-    var now      = Date.now();
+    var now = Date.now();
     if(now >= unlockAt) return null;
     var diff  = unlockAt - now;
     var days  = Math.floor(diff / (1000*60*60*24));
@@ -845,22 +843,15 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     var claimed     = document.getElementById("believe15Claimed");
     var lockedMsg   = document.getElementById("believe15Countdown");
     var claimBtn    = document.getElementById("believe15ClaimBtn");
-
     if(!b10claimed){ card.style.display="none"; return; }
     card.style.display = "block";
-
-    if(b15claimed){
-      claimed.style.display = "block"; return;
-    }
-
+    if(b15claimed){ claimed.style.display = "block"; return; }
     if(!sessionDone){
       lockedMsg.style.display = "block";
       document.getElementById("countdownText").textContent = "after your first session completes";
       return;
     }
-
     unclaimed.style.display = "block";
-
     claimBtn.addEventListener("click", async function(){
       claimBtn.disabled = true;
       claimBtn.textContent = "Processing\u2026";
@@ -893,11 +884,8 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     var claimed   = document.getElementById("promoClaimed");
     var claimBtn  = document.getElementById("claimBtn");
     var isClaimed = user.publicMetadata && user.publicMetadata.belle10_claimed === true;
-
     loading.style.display = "none";
-    if(isClaimed){
-      claimed.style.display = "block"; return;
-    }
+    if(isClaimed){ claimed.style.display = "block"; return; }
     unclaimed.style.display = "block";
     claimBtn.addEventListener("click", async function(){
       claimBtn.disabled = true;
@@ -963,13 +951,10 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     var savedSecs = parseInt(localStorage.getItem(LS.secs), 10);
     var hasActive = savedPkg && !isNaN(savedSecs) && savedSecs > 0 && PACKAGES[savedPkg];
 
-    /* Credit expiry check — wipe if expired */
+    /* Credit expiry check */
     var expiry = localStorage.getItem(LS.expiry);
     if(expiry && Date.now() > new Date(expiry).getTime()){
-      localStorage.removeItem(LS.secs);
-      localStorage.removeItem(LS.pkg);
-      localStorage.removeItem(LS.started);
-      localStorage.removeItem(LS.expiry);
+      [LS.secs,LS.pkg,LS.started,LS.expiry,LS.sessionId].forEach(function(k){ localStorage.removeItem(k); });
       hasActive = false;
     }
 
@@ -981,19 +966,9 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       setChatLocked(true);
     }
 
-    /* Show credit expiry date in session panel */
-    var expiryStored = localStorage.getItem(LS.expiry);
-    var spExpiry = document.getElementById("spExpiry");
-    if(spExpiry && expiryStored){
-      var expDate = new Date(expiryStored);
-      var expStr  = expDate.toLocaleDateString("en-GB", { day:"numeric", month:"long", year:"numeric" });
-      spExpiry.textContent = "Credits expire: " + expStr;
-    }
-
-    /* Terms acceptance — note for returning members */
+    /* Terms note for new members */
     var termsAgreed = localStorage.getItem(LS.terms) === "1";
     if(!termsAgreed){
-      /* Show subtle reminder in booking card */
       var bookingDesc = document.querySelector(".booking-desc");
       if(bookingDesc){
         bookingDesc.innerHTML = 'Select your credit package and your live session opens the moment payment clears. By purchasing you agree to the <a href="/terms.html" style="color:var(--gold);text-decoration:none">Terms &amp; Session Agreement</a>.';
@@ -1004,7 +979,6 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     renderBelieve15(user);
     renderSaved(user);
 
-    /* Set promo flag for top-up modal — active if BELLE10 claimed but BELIEVE15 not yet used */
     var meta = user.publicMetadata || {};
     if(meta.belle10_claimed === true) promoActive = true;
 
