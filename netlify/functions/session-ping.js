@@ -1,5 +1,7 @@
 // netlify/functions/session-ping.js
-// Uses Netlify Blobs REST API directly — no npm package needed
+// Uses Upstash Redis REST API — no npm package, free tier
+// Setup: create free account at upstash.com, create Redis database,
+// add UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN to Netlify env vars
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -8,45 +10,33 @@ const cors = {
   "Content-Type": "application/json"
 };
 
-// Netlify Blobs REST API helpers
-// These env vars are automatically available in Netlify functions
-function getBlobUrl(key) {
-  const siteId  = process.env.SITE_ID || process.env.NETLIFY_SITE_ID;
-  const token   = process.env.NETLIFY_BLOBS_TOKEN || process.env.TOKEN;
-  return { siteId, token };
-}
+const REDIS_URL   = process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const KEY         = "psych:sessions";
+const TTL         = 60; // seconds — auto-expire sessions after 60s of no ping
 
-async function blobGet(key) {
+async function redisGet(key) {
   try {
-    const siteId = process.env.NETLIFY_SITE_ID || process.env.SITE_ID;
-    const token  = process.env.NETLIFY_BLOBS_TOKEN || process.env.TOKEN;
-    if (!siteId || !token) return null;
-    const url = `https://api.netlify.com/api/v1/sites/${siteId}/blobs/${encodeURIComponent(key)}?context=production`;
-    const res = await fetch(url, {
-      headers: { "Authorization": `Bearer ${token}` }
+    const res = await fetch(`${REDIS_URL}/get/${key}`, {
+      headers: { Authorization: `Bearer ${REDIS_TOKEN}` }
     });
-    if (!res.ok) return null;
-    const text = await res.text();
-    return JSON.parse(text);
+    const data = await res.json();
+    if (!data.result) return null;
+    return JSON.parse(data.result);
   } catch(e) { return null; }
 }
 
-async function blobSet(key, data) {
+async function redisSet(key, value) {
   try {
-    const siteId = process.env.NETLIFY_SITE_ID || process.env.SITE_ID;
-    const token  = process.env.NETLIFY_BLOBS_TOKEN || process.env.TOKEN;
-    if (!siteId || !token) return false;
-    const url = `https://api.netlify.com/api/v1/sites/${siteId}/blobs/${encodeURIComponent(key)}?context=production`;
-    await fetch(url, {
-      method: "PUT",
+    await fetch(`${REDIS_URL}/set/${key}`, {
+      method: "POST",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${REDIS_TOKEN}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({ value: JSON.stringify(value), ex: 300 })
     });
-    return true;
-  } catch(e) { return false; }
+  } catch(e) {}
 }
 
 exports.handler = async function(event) {
@@ -55,30 +45,33 @@ exports.handler = async function(event) {
     return { statusCode: 200, headers: cors, body: "" };
   }
 
-  // GET — reader.html polling for active sessions
+  // No Redis configured — return empty gracefully
+  if (!REDIS_URL || !REDIS_TOKEN) {
+    return {
+      statusCode: 200,
+      headers: cors,
+      body: JSON.stringify({ sessions: [], ok: true, note: "Redis not configured" })
+    };
+  }
+
+  // GET — reader.html polling
   if (event.httpMethod === "GET") {
     try {
-      const raw = await blobGet("psych-active-sessions");
-      let sessions = [];
-      if (raw && Array.isArray(raw.sessions)) {
-        const cutoff = Date.now() - 30000;
-        sessions = raw.sessions.filter(s => s.updatedAt > cutoff);
-      }
+      const raw = await redisGet(KEY);
+      let sessions = (raw && Array.isArray(raw.sessions)) ? raw.sessions : [];
+      const cutoff = Date.now() - 30000;
+      sessions = sessions.filter(s => s.updatedAt > cutoff);
       return {
         statusCode: 200,
         headers: cors,
         body: JSON.stringify({ sessions, ok: true })
       };
     } catch(e) {
-      return {
-        statusCode: 200,
-        headers: cors,
-        body: JSON.stringify({ sessions: [], ok: true })
-      };
+      return { statusCode: 200, headers: cors, body: JSON.stringify({ sessions: [], ok: true }) };
     }
   }
 
-  // POST — client browser posting session state
+  // POST — client posting session state
   if (event.httpMethod === "POST") {
     try {
       let body = {};
@@ -93,31 +86,18 @@ exports.handler = async function(event) {
       const evt           = body.event || "ping";
 
       if (!sessionId) {
-        return {
-          statusCode: 400,
-          headers: cors,
-          body: JSON.stringify({ error: "Missing sessionId" })
-        };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: "Missing sessionId" }) };
       }
 
-      // Load existing sessions
-      const raw = await blobGet("psych-active-sessions");
+      const raw = await redisGet(KEY);
       let sessions = (raw && Array.isArray(raw.sessions)) ? raw.sessions : [];
-
-      // Remove this session
       sessions = sessions.filter(s => s.sessionId !== sessionId);
 
-      // If ended — just remove
       if (status === "ended" || secsRemaining <= 0) {
-        await blobSet("psych-active-sessions", { sessions });
-        return {
-          statusCode: 200,
-          headers: cors,
-          body: JSON.stringify({ ok: true, removed: true })
-        };
+        await redisSet(KEY, { sessions });
+        return { statusCode: 200, headers: cors, body: JSON.stringify({ ok: true, removed: true }) };
       }
 
-      // Add updated session
       sessions.push({
         sessionId,
         clientName,
@@ -129,27 +109,14 @@ exports.handler = async function(event) {
         updatedAt: Date.now()
       });
 
-      await blobSet("psych-active-sessions", { sessions });
+      await redisSet(KEY, { sessions });
 
-      return {
-        statusCode: 200,
-        headers: cors,
-        body: JSON.stringify({ ok: true })
-      };
+      return { statusCode: 200, headers: cors, body: JSON.stringify({ ok: true }) };
 
     } catch(err) {
-      console.error("session-ping POST error:", err.message);
-      return {
-        statusCode: 500,
-        headers: cors,
-        body: JSON.stringify({ error: err.message })
-      };
+      return { statusCode: 500, headers: cors, body: JSON.stringify({ error: err.message }) };
     }
   }
 
-  return {
-    statusCode: 405,
-    headers: cors,
-    body: JSON.stringify({ error: "Method not allowed" })
-  };
+  return { statusCode: 405, headers: cors, body: JSON.stringify({ error: "Method not allowed" }) };
 };
