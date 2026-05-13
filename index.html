@@ -1,4 +1,4 @@
-<!-- deploy:1777465103 -->
+<!-- deploy:1778679200 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -642,6 +642,9 @@ body.session-active{padding-top:52px}
   var PKG_PARAM = params.get("pkg") || "";
   var TOPUP     = params.get("topup") === "true";
 
+  /* ── Auto-apply promo from URL param ── */
+  var PROMO_PARAM = params.get("promo") || "";
+
   /* Stale cleanup */
   (function cleanStale() {
     var savedSecs = parseInt(localStorage.getItem(LS.secs), 10);
@@ -759,14 +762,13 @@ body.session-active{padding-top:52px}
     document.body.classList.add("session-active");
     updateBar();
     updatePauseBtn();
-    startPingTimer(); /* PING: start heartbeat */
+    startPingTimer();
 
     ticker = setInterval(function () {
       remaining--;
       localStorage.setItem(LS.secs, remaining);
       updateBar();
 
-      /* PING: Tidio alerts + reader alerts at 3min and 1min */
       if (remaining === 180 && !alertSent3min) {
         alertSent3min = true;
         sendTidio("\u23f3 Approximately 3 minutes remaining in your session.");
@@ -788,7 +790,7 @@ body.session-active{padding-top:52px}
         localStorage.removeItem(LS.started);
         localStorage.removeItem(LS.expiry);
         sendTidio("Your credits have been used. Please top up to continue.");
-        pingSession("end");  /* PING: session ended */
+        pingSession("end");
         stopPingTimer();
         clearSessionId();
       }
@@ -802,13 +804,13 @@ body.session-active{padding-top:52px}
     paused = true;
     localStorage.setItem(LS.secs, remaining);
     updatePauseBtn();
-    pingSession("pause"); /* PING */
+    pingSession("pause");
   }
 
   function resumeTimer() {
     if (ticker || remaining <= 0) return;
     paused = false;
-    pingSession("resume"); /* PING */
+    pingSession("resume");
     startTimer();
   }
 
@@ -870,7 +872,7 @@ body.session-active{padding-top:52px}
       localStorage.setItem(LS.secs, remaining);
       localStorage.setItem(LS.pkg, pkgKey);
       localStorage.removeItem(LS.started);
-      localStorage.removeItem(LS.sessionId); /* fresh session */
+      localStorage.removeItem(LS.sessionId);
       var expDate = new Date(Date.now() + TWELVE_MONTHS_MS);
       localStorage.setItem(LS.expiry, expDate.toISOString());
       alreadyGo = false;
@@ -901,7 +903,7 @@ body.session-active{padding-top:52px}
           btn.textContent = "Session Active";
           paused = false;
           openTidio();
-          pingSession("resume"); /* PING */
+          pingSession("resume");
           startPingTimer();
           startTimer();
         });
@@ -915,8 +917,8 @@ body.session-active{padding-top:52px}
         btn.disabled = true;
         btn.textContent = "Session Active";
         localStorage.setItem(LS.started, "1");
-        getOrCreateSessionId(pkgKey); /* ensure ID exists */
-        pingSession("start"); /* PING */
+        getOrCreateSessionId(pkgKey);
+        pingSession("start");
         startPingTimer();
         openTidio();
         paused = false;
@@ -1116,7 +1118,7 @@ body.session-active{padding-top:52px}
       preamble.innerHTML = "Top up your session below.<br><strong>Your timer resumes the moment payment clears.</strong>";
       avail.innerHTML    = "Select a package to add time to your current session.";
       if (offSec) offSec.classList.add("visible");
-      pingSession("topup"); /* PING */
+      pingSession("topup");
       setTimeout(function() {
         var el = $("packagesSection");
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1167,11 +1169,18 @@ body.session-active{padding-top:52px}
       window.location.href = STRIPE.offline;
     });
 
+    /* ============================================================
+       PROMO CODE — KEY FIX: removed userId gate
+       Public codes (BELLE5) work without login
+       Server handles auth requirements per code type
+       ============================================================ */
     async function applyPromo() {
       var val = pinput.value.trim().toUpperCase();
       if (!val) return;
       papply.disabled = true; papply.textContent = "\u2026";
       pstatus.textContent = ""; pstatus.className = "promo-status";
+
+      /* Get Clerk user if signed in — optional for public codes */
       var userId = null; var token = null;
       try {
         if (window.Clerk && window.Clerk.user) {
@@ -1179,18 +1188,14 @@ body.session-active{padding-top:52px}
           token  = await window.Clerk.session.getToken();
         }
       } catch(e) {}
-      if (!userId) {
-        papply.disabled = false; papply.textContent = "Apply";
-        pstatus.textContent = "Sign in to The Sanctuary to use your code.";
-        pstatus.className = "promo-status err";
-        pwrap.classList.add("invalid");
-        setTimeout(function(){ pwrap.classList.remove("invalid"); }, 400);
-        return;
-      }
+
       try {
         var res  = await fetch("/.netlify/functions/validate-promo", {
           method: "POST",
-          headers: { "Content-Type":"application/json", "Authorization":"Bearer "+token },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": token ? "Bearer " + token : ""
+          },
           body: JSON.stringify({ userId: userId, code: val })
         });
         var data = await res.json();
@@ -1214,6 +1219,12 @@ body.session-active{padding-top:52px}
         pstatus.textContent = "Could not validate. Please try again.";
         pstatus.className = "promo-status err";
       }
+    }
+
+    /* Auto-apply promo from URL param e.g. ?promo=BELLE10 */
+    if (PROMO_PARAM) {
+      pinput.value = PROMO_PARAM;
+      setTimeout(applyPromo, 800);
     }
 
     function applyDiscountToUI(discountPct) {
