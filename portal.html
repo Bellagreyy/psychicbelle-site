@@ -975,6 +975,19 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
       }
     }
 
+    /* ── Tidio Visitor Recognition ── */
+    document.addEventListener("tidioChat-ready", function() {
+      try {
+        if (window.tidioChatApi && window.Clerk && window.Clerk.user) {
+          window.tidioChatApi.setVisitorData({
+            distinct_id: window.Clerk.user.id,
+            email: window.Clerk.user.emailAddresses[0].emailAddress,
+            name: window.Clerk.user.firstName || "Member"
+          });
+        }
+      } catch(e) {}
+    });
+
     renderBelle10(user);
     renderBelieve15(user);
     renderSaved(user);
