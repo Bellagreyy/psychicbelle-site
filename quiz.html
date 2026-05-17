@@ -570,13 +570,54 @@ function renderQuestion(){
 
   $("nextBtn").disabled = true;
 
-  /* animate in */
   var card = $("questionCard");
   card.style.animation = "none";
   card.offsetHeight;
   card.style.animation = "fadeUp .5s ease both";
 
   updateProgress();
+}
+
+/* ── KLAVIYO SUBMIT ── */
+function klaviyoSubmit(email, firstName, answers) {
+  fetch("https://a.klaviyo.com/client/subscriptions/?company_id=TErGAh", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "revision": "2023-12-15"
+    },
+    body: JSON.stringify({
+      data: {
+        type: "subscription",
+        attributes: {
+          profile: {
+            data: {
+              type: "profile",
+              attributes: {
+                email: email,
+                first_name: firstName,
+                properties: {
+                  situation: answers[0] || "",
+                  energy_felt: answers[1] || "",
+                  fear: answers[2] || "",
+                  intuition: answers[3] || "",
+                  need: answers[4] || ""
+                }
+              }
+            }
+          }
+        },
+        relationships: {
+          list: {
+            data: {
+              type: "list",
+              id: "T9vepx"
+            }
+          }
+        }
+      }
+    })
+  }).catch(function(){});
 }
 
 /* ── START ── */
@@ -597,7 +638,6 @@ $("nextBtn").addEventListener("click", function(){
   if(currentQ < QUESTIONS.length){
     renderQuestion();
   } else {
-    /* Show email gate */
     questionSection.style.display = "none";
     progressWrap.style.display    = "none";
     emailGate.style.display       = "block";
@@ -636,8 +676,8 @@ $("gateBtn").addEventListener("click", function(){
     body: formData.toString()
   }).catch(function(){});
 
-  /* Submit to Klaviyo if key available */
-  /* klaviyoSubmit(email, firstName, answers); */
+  /* Submit to Klaviyo */
+  klaviyoSubmit(email, firstName, answers);
 
   $("gateBtn").disabled = true;
   $("gateBtn").textContent = "Reading the energy\u2026";
@@ -656,7 +696,6 @@ function renderResult(){
   var energy    = answers[1] || "default";
   var need      = answers[4] || "clarity_feelings";
 
-  /* Look up result */
   var pool   = RESULTS[situation] || RESULTS.separation;
   var result = pool[energy] || pool["default"] || RESULTS.separation.default;
 
@@ -665,11 +704,9 @@ function renderResult(){
   $("resultBody").innerHTML       = result.body;
   $("resultBelleMessage").textContent = result.belle;
 
-  /* Personalise next step with name */
   var nextText = result.next;
   $("resultNextStep").textContent = nextText;
 
-  /* Personalise CTA with name */
   var cta = document.querySelector(".result-cta-section");
   if(cta && userName){
     var label = cta.querySelector(".result-cta-label");
