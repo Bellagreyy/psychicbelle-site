@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /portal.html
+Disallow: /login.html
+Disallow: /.netlify/
+
+Sitemap: https://psychicbelle.com/sitemap.xml
