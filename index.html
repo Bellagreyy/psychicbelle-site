@@ -360,8 +360,8 @@ body.session-active{padding-top:52px}
 
   <div class="video-wrap fade-3">
     <iframe
-      src="https://www.youtube.com/embed/HgZioROcPmI?rel=0&modestbranding=1"
-      title="The Message He Never Sent | Psychic Belle"
+      src="https://www.youtube.com/embed/PASTE_YOUR_YOUTUBE_ID_HERE?rel=0&modestbranding=1"
+      title="Psychic Belle — Divine Union Strategy &amp; Twin Flame Readings Introduction"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen>
     </iframe>
@@ -463,7 +463,7 @@ body.session-active{padding-top:52px}
     </div>
 
     <div class="promo-wrapper">
-      <span class="promo-label">Promo Code</span>
+      <span class="promo-label">Promo Code &nbsp;&middot;&nbsp; <a href="/quiz.html" style="color:var(--gold);text-decoration:none;font-style:italic;letter-spacing:0.1em;text-transform:none;font-family:'Cormorant Garamond',serif;font-size:12px">New here? Take the quiz to unlock yours</a></span>
       <div class="promo-field-wrap" id="promoFieldWrap">
         <input class="promo-input" id="promoInput" type="text" placeholder="Enter code" maxlength="16" autocomplete="off" autocorrect="off" spellcheck="false">
         <button class="promo-apply" id="promoApply" type="button">Apply</button>
@@ -642,8 +642,10 @@ body.session-active{padding-top:52px}
   var PKG_PARAM = params.get("pkg") || "";
   var TOPUP     = params.get("topup") === "true";
 
+  /* ── Auto-apply promo from URL param ── */
   var PROMO_PARAM = params.get("promo") || "";
 
+  /* Stale cleanup */
   (function cleanStale() {
     var savedSecs = parseInt(localStorage.getItem(LS.secs), 10);
     if (!isNaN(savedSecs) && savedSecs <= 0) {
@@ -655,6 +657,7 @@ body.session-active{padding-top:52px}
     }
   })();
 
+  /* Tidio gate */
   if (!SUCCESS) {
     document.body.classList.add("tidio-hidden");
     window.tidioChatApi = window.tidioChatApi || {};
@@ -665,6 +668,9 @@ body.session-active{padding-top:52px}
     });
   }
 
+  /* ============================================================
+     SESSION PING SYSTEM
+     ============================================================ */
   var pingTimer     = null;
   var alertSent3min = false;
   var alertSent1min = false;
@@ -726,6 +732,9 @@ body.session-active{padding-top:52px}
     if (pingTimer) { clearInterval(pingTimer); pingTimer = null; }
   }
 
+  /* ============================================================
+     TIMER ENGINE
+     ============================================================ */
   var ticker    = null;
   var total     = 0;
   var remaining = 0;
@@ -845,6 +854,9 @@ body.session-active{padding-top:52px}
     }
   }
 
+  /* ============================================================
+     SESSION PANEL
+     ============================================================ */
   function initSession(pkgKey) {
     var p = PKG[pkgKey];
     if (!p || p.mins === 0) return;
@@ -915,6 +927,9 @@ body.session-active{padding-top:52px}
     }
   }
 
+  /* ============================================================
+     DOM READY
+     ============================================================ */
   document.addEventListener("DOMContentLoaded", function () {
 
     var dot      = $("statusDot");
@@ -1020,6 +1035,7 @@ body.session-active{padding-top:52px}
       if (e.target === topupOverlay) closeTopupModal();
     });
 
+    /* Post-payment live session return */
     if (SUCCESS && PKG_PARAM && PKG[PKG_PARAM] && PKG[PKG_PARAM].mins > 0) {
       initSession(PKG_PARAM);
       if (packSec) packSec.style.display = "none";
@@ -1030,6 +1046,7 @@ body.session-active{padding-top:52px}
       return;
     }
 
+    /* Post-payment offline return */
     if (SUCCESS && PKG_PARAM === "offline") {
       if (packSec) packSec.style.display = "none";
       var promoWrap = document.querySelector(".promo-wrapper");
@@ -1079,6 +1096,7 @@ body.session-active{padding-top:52px}
       return;
     }
 
+    /* localStorage restore: mid-session refresh */
     var savedPkg  = localStorage.getItem(LS.pkg);
     var savedSecs = parseInt(localStorage.getItem(LS.secs), 10);
     if (savedPkg && !isNaN(savedSecs) && savedSecs > 0 && PKG[savedPkg]) {
@@ -1092,6 +1110,7 @@ body.session-active{padding-top:52px}
       return;
     }
 
+    /* Top-up return */
     if (TOPUP) {
       dot.classList.add("live"); txt.classList.add("live");
       txt.textContent    = "Belle is live now";
@@ -1107,6 +1126,7 @@ body.session-active{padding-top:52px}
       return;
     }
 
+    /* Normal page load */
     if (LIVE) {
       dot.classList.add("live"); txt.classList.add("live");
       txt.textContent    = "Belle is live now";
@@ -1149,12 +1169,18 @@ body.session-active{padding-top:52px}
       window.location.href = STRIPE.offline;
     });
 
+    /* ============================================================
+       PROMO CODE — KEY FIX: removed userId gate
+       Public codes (BELLE5) work without login
+       Server handles auth requirements per code type
+       ============================================================ */
     async function applyPromo() {
       var val = pinput.value.trim().toUpperCase();
       if (!val) return;
       papply.disabled = true; papply.textContent = "\u2026";
       pstatus.textContent = ""; pstatus.className = "promo-status";
 
+      /* Get Clerk user if signed in — optional for public codes */
       var userId = null; var token = null;
       try {
         if (window.Clerk && window.Clerk.user) {
@@ -1195,6 +1221,7 @@ body.session-active{padding-top:52px}
       }
     }
 
+    /* Auto-apply promo from URL param e.g. ?promo=BELLE10 */
     if (PROMO_PARAM) {
       pinput.value = PROMO_PARAM;
       setTimeout(applyPromo, 800);
