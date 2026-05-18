@@ -28,15 +28,9 @@
   "@context": "https://schema.org",
   "@type": "Quiz",
   "name": "Twin Flame & Person of Interest Reading Quiz",
-  "description": "A free personalised quiz revealing what your twin flame or person of interest is energetically communicating right now. Covers twin flame separation, no contact, runner phase, and divine union alignment.",
+  "description": "A free personalised quiz revealing what your twin flame or person of interest is energetically communicating right now.",
   "url": "https://psychicbelle.com/quiz.html",
-  "author": {
-    "@type": "Person",
-    "name": "Psychic Belle",
-    "url": "https://psychicbelle.com"
-  },
-  "educationalLevel": "general",
-  "about": ["Twin Flame", "Person of Interest", "No Contact", "Divine Union", "Psychic Reading"]
+  "author": { "@type": "Person", "name": "Psychic Belle", "url": "https://psychicbelle.com" }
 }
 </script>
 
@@ -56,25 +50,10 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  background:var(--black);color:var(--text);
-  font-family:'Cormorant Garamond',Georgia,serif;
-  font-weight:300;min-height:100vh;overflow-x:hidden;
-}
-body::before{
-  content:'';position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% -10%,rgba(212,175,55,0.08) 0%,transparent 70%),
-    radial-gradient(ellipse 40% 30% at 80% 80%,rgba(212,175,55,0.04) 0%,transparent 60%);
-  pointer-events:none;z-index:0;
-}
-body::after{
-  content:'';position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;opacity:0.4;
-}
+body{background:var(--black);color:var(--text);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 50% -10%,rgba(212,175,55,0.08) 0%,transparent 70%),radial-gradient(ellipse 40% 30% at 80% 80%,rgba(212,175,55,0.04) 0%,transparent 60%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4}
 
-/* NAV */
 .site-nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:0.5px solid var(--gold-line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .site-nav-inner{max-width:560px;margin:0 auto;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .nav-brand{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);text-decoration:none;white-space:nowrap;flex-shrink:0}
@@ -86,10 +65,8 @@ body::after{
 .nav-member:hover{color:var(--gold)}
 @media(max-width:440px){.nav-links a{padding:8px 10px;font-size:7px}.nav-brand{font-size:10px}}
 
-/* LAYOUT */
 .page{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:0 24px 80px}
 
-/* HERO */
 .quiz-hero{text-align:center;padding:52px 0 44px}
 .hero-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);opacity:.7;display:block;margin-bottom:20px}
 .hero-rule{width:1px;height:36px;background:linear-gradient(to bottom,transparent,var(--gold-line));margin:0 auto 20px}
@@ -99,7 +76,6 @@ body::after{
 .hero-desc{font-size:clamp(15px,4vw,17px);line-height:1.85;color:var(--text-muted);font-style:italic;max-width:400px;margin:0 auto 0}
 .hero-desc strong{font-style:normal;color:var(--text);font-weight:400}
 
-/* PROGRESS */
 .progress-wrap{width:100%;margin:36px 0 32px}
 .progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .progress-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--text-dim)}
@@ -107,113 +83,43 @@ body::after{
 .progress-track{width:100%;height:var(--progress-h);background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden}
 .progress-fill{height:100%;background:linear-gradient(to right,var(--gold),var(--gold-pale));border-radius:2px;transition:width .5s cubic-bezier(0.4,0,0.2,1);width:0%}
 
-/* QUESTION CARD */
-.question-card{
-  width:100%;border:0.5px solid var(--gold-line);
-  background:rgba(212,175,55,0.04);
-  padding:36px 32px 32px;
-  margin-bottom:24px;
-  position:relative;
-  overflow:hidden;
-}
-.question-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(to right,transparent,var(--gold),transparent);
-  opacity:.6;
-}
+.question-card{width:100%;border:0.5px solid var(--gold-line);background:rgba(212,175,55,0.04);padding:36px 32px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.question-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.6}
 .question-number{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);opacity:.6;display:block;margin-bottom:14px}
 .question-text{font-family:'Cinzel',serif;font-size:clamp(15px,4vw,18px);font-weight:400;letter-spacing:.08em;color:var(--text);line-height:1.5;margin-bottom:28px}
 .question-sub{font-size:13px;font-style:italic;color:var(--text-muted);margin-top:-18px;margin-bottom:24px;line-height:1.6}
 
-/* ANSWER OPTIONS */
 .options{display:flex;flex-direction:column;gap:10px}
-.option{
-  width:100%;padding:16px 20px;
-  border:0.5px solid var(--gold-line);
-  background:transparent;
-  display:flex;align-items:flex-start;gap:14px;
-  cursor:pointer;text-align:left;
-  transition:border-color .2s,background .2s,box-shadow .2s;
-  position:relative;
-}
+.option{width:100%;padding:16px 20px;border:0.5px solid var(--gold-line);background:transparent;display:flex;align-items:flex-start;gap:14px;cursor:pointer;text-align:left;transition:border-color .2s,background .2s,box-shadow .2s;position:relative}
 .option:hover{border-color:var(--gold);background:rgba(212,175,55,0.07)}
-.option.selected{
-  border-color:var(--gold);
-  background:rgba(212,175,55,0.12);
-  box-shadow:0 0 0 1px var(--gold),inset 0 0 20px rgba(212,175,55,0.06);
-}
-.option-indicator{
-  width:16px;height:16px;min-width:16px;
-  border:0.5px solid var(--gold-line);
-  border-radius:50%;margin-top:2px;
-  display:flex;align-items:center;justify-content:center;
-  transition:border-color .2s,background .2s;
-  flex-shrink:0;
-}
-.option.selected .option-indicator{
-  background:var(--gold);border-color:var(--gold);
-}
-.option.selected .option-indicator::after{
-  content:'';width:6px;height:6px;border-radius:50%;background:var(--black);display:block;
-}
+.option.selected{border-color:var(--gold);background:rgba(212,175,55,0.12);box-shadow:0 0 0 1px var(--gold),inset 0 0 20px rgba(212,175,55,0.06)}
+.option-indicator{width:16px;height:16px;min-width:16px;border:0.5px solid var(--gold-line);border-radius:50%;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:border-color .2s,background .2s;flex-shrink:0}
+.option.selected .option-indicator{background:var(--gold);border-color:var(--gold)}
+.option.selected .option-indicator::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--black);display:block}
 .option-text{font-size:clamp(14px,3.8vw,16px);line-height:1.6;color:var(--text-muted);font-style:italic}
 .option.selected .option-text{color:var(--text)}
 
-/* NEXT BUTTON */
-.next-btn{
-  display:block;width:100%;padding:20px 32px;
-  background:var(--gold);color:var(--black);
-  font-family:'Cinzel',serif;font-size:12px;font-weight:500;
-  letter-spacing:.32em;text-transform:uppercase;
-  border:none;cursor:pointer;
-  transition:background .25s,opacity .2s,transform .15s;
-  -webkit-appearance:none;margin-top:8px;
-}
+.next-btn{display:block;width:100%;padding:20px 32px;background:var(--gold);color:var(--black);font-family:'Cinzel',serif;font-size:12px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;border:none;cursor:pointer;transition:background .25s,opacity .2s,transform .15s;-webkit-appearance:none;margin-top:8px}
 .next-btn:hover{background:var(--gold-pale)}
 .next-btn:active{transform:scale(0.99);opacity:.9}
 .next-btn:disabled{opacity:.3;cursor:not-allowed;background:var(--gold)}
 
-/* EMAIL CAPTURE */
-.email-gate{
-  width:100%;border:0.5px solid var(--gold);
-  background:rgba(212,175,55,0.05);
-  padding:40px 32px 36px;
-  text-align:center;
-  position:relative;overflow:hidden;
-}
+.email-gate{width:100%;border:0.5px solid var(--gold);background:rgba(212,175,55,0.05);padding:40px 32px 36px;text-align:center;position:relative;overflow:hidden}
 .email-gate::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
 .email-gate::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
 .gate-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);opacity:.7;display:block;margin-bottom:14px}
 .gate-title{font-family:'Cinzel',serif;font-size:clamp(17px,5vw,22px);font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--text);margin-bottom:10px;line-height:1.3}
 .gate-sub{font-size:15px;font-style:italic;color:var(--text-muted);line-height:1.75;margin-bottom:28px}
-.gate-field{
-  width:100%;padding:15px 18px;
-  background:rgba(255,255,255,0.03);
-  border:0.5px solid var(--gold-line);
-  outline:none;
-  font-family:'Cormorant Garamond',serif;
-  font-size:16px;font-weight:300;
-  color:var(--text);caret-color:var(--gold);
-  margin-bottom:10px;
-  transition:border-color .2s,background .2s;
-}
+.gate-field{width:100%;padding:15px 18px;background:rgba(255,255,255,0.03);border:0.5px solid var(--gold-line);outline:none;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:300;color:var(--text);caret-color:var(--gold);margin-bottom:10px;transition:border-color .2s,background .2s}
 .gate-field:focus{border-color:var(--gold);background:rgba(212,175,55,0.06)}
 .gate-field::placeholder{color:var(--text-dim);font-style:italic}
 .gate-name-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.gate-btn{
-  display:block;width:100%;padding:20px 32px;
-  background:var(--gold);color:var(--black);
-  font-family:'Cinzel',serif;font-size:12px;font-weight:500;
-  letter-spacing:.32em;text-transform:uppercase;
-  border:none;cursor:pointer;margin-top:8px;
-  transition:background .25s,opacity .2s;-webkit-appearance:none;
-}
+.gate-btn{display:block;width:100%;padding:20px 32px;background:var(--gold);color:var(--black);font-family:'Cinzel',serif;font-size:12px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;border:none;cursor:pointer;margin-top:8px;transition:background .25s,opacity .2s;-webkit-appearance:none}
 .gate-btn:hover{background:var(--gold-pale)}
 .gate-btn:disabled{opacity:.4;cursor:not-allowed}
 .gate-privacy{font-size:11px;color:var(--text-dim);margin-top:12px;font-style:italic;line-height:1.6}
 .gate-privacy a{color:var(--gold);text-decoration:none}
 
-/* RESULTS */
 .result-panel{display:none;width:100%}
 .result-header{text-align:center;padding:44px 0 36px;border-bottom:0.5px solid var(--gold-line);margin-bottom:36px}
 .result-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);opacity:.7;display:block;margin-bottom:16px}
@@ -221,46 +127,48 @@ body::after{
 .result-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,4.5vw,20px);color:var(--gold);letter-spacing:.06em}
 .result-body{font-size:clamp(15px,4vw,17px);line-height:1.9;color:var(--text-muted);font-style:italic;margin-bottom:28px}
 .result-body strong{font-style:normal;color:var(--text);font-weight:400}
-.result-block{
-  width:100%;padding:28px 28px 24px;
-  border-left:2px solid var(--gold);
-  background:var(--gold-dim);
-  margin-bottom:28px;
-}
+.result-block{width:100%;padding:28px 28px 24px;border-left:2px solid var(--gold);background:var(--gold-dim);margin-bottom:28px}
 .result-block-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);opacity:.8;display:block;margin-bottom:10px}
 .result-block-text{font-size:clamp(15px,4vw,17px);line-height:1.85;color:var(--text);font-style:italic}
 .result-cta-section{text-align:center;padding:36px 0 0}
 .result-cta-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:20px}
-.result-cta-btn{
-  display:inline-block;padding:20px 48px;
-  background:var(--gold);color:var(--black);
-  font-family:'Cinzel',serif;font-size:13px;font-weight:500;
-  letter-spacing:.3em;text-transform:uppercase;
-  border:none;cursor:pointer;text-decoration:none;
-  transition:background .25s;-webkit-appearance:none;
-}
+.result-cta-btn{display:inline-block;padding:20px 48px;background:var(--gold);color:var(--black);font-family:'Cinzel',serif;font-size:13px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;transition:background .25s;-webkit-appearance:none}
 .result-cta-btn:hover{background:var(--gold-pale)}
 .result-cta-note{font-size:12px;font-style:italic;color:var(--text-dim);margin-top:14px;line-height:1.6}
 
-/* ORNAMENT */
+/* BELLE5 REVEAL */
+.belle5-reveal{
+  width:100%;margin-top:36px;
+  border:0.5px solid var(--gold);
+  background:rgba(212,175,55,0.06);
+  padding:32px 28px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.belle5-reveal::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.belle5-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);opacity:.7;display:block;margin-bottom:12px}
+.belle5-title{font-family:'Cinzel',serif;font-size:clamp(15px,4vw,18px);font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--text);margin-bottom:10px}
+.belle5-desc{font-size:14px;font-style:italic;color:var(--text-muted);line-height:1.7;margin-bottom:24px}
+.belle5-code-wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:0.5px solid var(--gold-line);background:var(--gold-faint);margin-bottom:20px}
+.belle5-code{font-family:'Cinzel',serif;font-size:clamp(22px,6vw,28px);font-weight:400;letter-spacing:.2em;color:var(--gold)}
+.belle5-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim)}
+.belle5-copy-btn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--black);background:var(--gold);border:none;padding:8px 16px;cursor:pointer;transition:background .2s}
+.belle5-copy-btn:hover{background:var(--gold-pale)}
+.belle5-note{font-size:11px;font-style:italic;color:var(--text-dim);line-height:1.6}
+
 .ornament{display:flex;align-items:center;gap:14px;margin:32px 0;width:100%}
 .ornament-line{flex:1;height:0.5px;background:var(--gold-line)}
 .ornament-diamond{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);opacity:.7}
 
-/* ANIMATIONS */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes shimmer{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
 .fade-in{animation:fadeUp .6s ease both}
-.shimmer{animation:shimmer 2.5s ease-in-out infinite}
 
-/* SOCIAL PROOF */
 .proof-strip{display:flex;gap:0;width:100%;border:0.5px solid var(--gold-line);margin-bottom:36px}
 .proof-item{flex:1;padding:16px 12px;text-align:center;border-right:0.5px solid var(--gold-line)}
 .proof-item:last-child{border-right:none}
 .proof-num{font-family:'Cinzel',serif;font-size:clamp(16px,4.5vw,20px);color:var(--gold);display:block;letter-spacing:.04em;margin-bottom:4px}
 .proof-lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);line-height:1.4}
 
-/* FOOTER */
 .quiz-footer{margin-top:60px;padding-top:28px;border-top:0.5px solid var(--gold-line);text-align:center}
 .footer-text{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim)}
 
@@ -289,7 +197,6 @@ body::after{
 
 <div class="page">
 
-  <!-- HERO -->
   <div class="quiz-hero fade-in">
     <span class="hero-eyebrow">Free Personalised Reading</span>
     <div class="hero-rule"></div>
@@ -300,10 +207,10 @@ body::after{
       You feel it — something unresolved, something unsaid.
       <strong>Answer 5 questions</strong> and Belle will reveal
       what the energy between you is truly communicating right now.
+      Complete the quiz to unlock your exclusive session discount.
     </p>
   </div>
 
-  <!-- SOCIAL PROOF -->
   <div class="proof-strip fade-in">
     <div class="proof-item">
       <span class="proof-num">4,500+</span>
@@ -315,14 +222,12 @@ body::after{
     </div>
     <div class="proof-item">
       <span class="proof-num">Free</span>
-      <span class="proof-lbl">No Card Needed</span>
+      <span class="proof-lbl">+ Discount Code</span>
     </div>
   </div>
 
-  <!-- QUIZ CONTAINER -->
   <div id="quizContainer">
 
-    <!-- PROGRESS -->
     <div class="progress-wrap" id="progressWrap" style="display:none">
       <div class="progress-meta">
         <span class="progress-label">Your Reading</span>
@@ -333,15 +238,13 @@ body::after{
       </div>
     </div>
 
-    <!-- START BUTTON -->
     <div id="startSection" style="text-align:center;margin-bottom:32px">
       <button class="next-btn" id="startBtn" style="max-width:380px;margin:0 auto">
         Begin Your Reading
       </button>
-      <p style="font-size:12px;font-style:italic;color:var(--text-dim);margin-top:12px;letter-spacing:.06em">Takes 2 minutes &middot; Personalised insight &middot; No payment required</p>
+      <p style="font-size:12px;font-style:italic;color:var(--text-dim);margin-top:12px;letter-spacing:.06em">Takes 2 minutes &middot; Personalised insight &middot; Exclusive code on completion</p>
     </div>
 
-    <!-- QUESTIONS -->
     <div id="questionSection" style="display:none">
       <div class="question-card fade-in" id="questionCard">
         <span class="question-number" id="questionNumber">Question 1 of 5</span>
@@ -352,7 +255,6 @@ body::after{
       <button class="next-btn" id="nextBtn" disabled>Continue</button>
     </div>
 
-    <!-- EMAIL GATE -->
     <div id="emailGate" style="display:none">
       <div class="ornament">
         <div class="ornament-line"></div>
@@ -362,17 +264,16 @@ body::after{
       <div class="email-gate fade-in">
         <span class="gate-eyebrow">Your Reading Is Ready</span>
         <div class="gate-title">Receive Your<br>Personalised Insight</div>
-        <p class="gate-sub">Belle has read your energy. Enter your details below and your full personalised reading will be revealed — plus a private message from Belle about what she sees for you.</p>
+        <p class="gate-sub">Belle has read your energy. Enter your details to reveal your full personalised reading — and unlock your exclusive 5% session discount.</p>
         <div class="gate-name-row">
           <input class="gate-field" id="gateFirstName" type="text" placeholder="Your first name" autocomplete="given-name">
           <input class="gate-field" id="gateEmail" type="email" placeholder="Your email address" autocomplete="email">
         </div>
         <button class="gate-btn" id="gateBtn">Reveal My Reading</button>
-        <p class="gate-privacy">Your details are private and protected. By continuing you agree to our <a href="/privacy.html">Privacy Policy</a>. We never share your information.</p>
+        <p class="gate-privacy">Your details are private and protected. By continuing you agree to our <a href="/privacy.html">Privacy Policy</a>.</p>
       </div>
     </div>
 
-    <!-- RESULTS -->
     <div id="resultSection" class="result-panel">
       <div class="result-header fade-in">
         <span class="result-eyebrow">Your Personalised Reading</span>
@@ -389,10 +290,26 @@ body::after{
         <div class="result-block-text" id="resultNextStep"></div>
       </div>
       <div class="result-cta-section fade-in">
-        <span class="result-cta-label">Go Deeper With a Private Session</span>
-        <a href="/" class="result-cta-btn">Book Your Live Reading — $5.99/min</a>
-        <p class="result-cta-note">Session credits never expire &middot; Pause anytime &middot; Start from $25</p>
+        <span class="result-cta-label" id="ctaLabel">Go Deeper With a Private Session</span>
+        <a href="/?promo=BELLE5" class="result-cta-btn">Book Your Live Reading</a>
+        <p class="result-cta-note">Your discount is applied automatically &middot; Session credits never expire &middot; Start from $23.75</p>
       </div>
+
+      <!-- BELLE5 REVEAL -->
+      <div class="belle5-reveal fade-in">
+        <span class="belle5-eyebrow">Your Exclusive Discount</span>
+        <div class="belle5-title">5% Off Your First Session</div>
+        <p class="belle5-desc">As a thank you for completing your reading, Belle has reserved an exclusive code for you. Apply it at checkout for 5% off any live session package.</p>
+        <div class="belle5-code-wrap">
+          <div>
+            <div class="belle5-code">BELLE5</div>
+            <div class="belle5-label">Your Code</div>
+          </div>
+          <button class="belle5-copy-btn" id="belle5CopyBtn" onclick="copyBelle5()">Copy</button>
+        </div>
+        <p class="belle5-note">One use per person &middot; Applied at checkout &middot; Or click the button above to auto-apply</p>
+      </div>
+
     </div>
 
   </div>
@@ -413,7 +330,6 @@ body::after{
 (function(){
 "use strict";
 
-/* ── QUESTIONS ── */
 var QUESTIONS = [
   {
     text: "Where are you and your person right now?",
@@ -467,7 +383,6 @@ var QUESTIONS = [
   }
 ];
 
-/* ── RESULTS ── */
 var RESULTS = {
   separation: {
     conflicted: {
@@ -515,19 +430,17 @@ var RESULTS = {
       title: "The Return",
       subtitle: "Reconnection is a threshold, not a destination",
       body: "Coming back together after separation is one of the most complex energetic events in a twin flame or soul connection. It holds within it the entire history of the connection — the joy, the pain, the growth, the longing. It can feel uncertain because it is uncertain. Both of you are navigating the space between who you were and who you have become. <strong>This is not failure. This is evolution.</strong>",
-      belle: "What I see in this reconnection is genuine feeling on both sides mixed with genuine fear. The uncertainty you are sensing is not a sign that this is wrong — it is a sign that both of you are taking it seriously this time. The previous version of this connection had patterns that didn't serve you. You are both feeling your way toward something different.",
+      belle: "What I see in this reconnection is genuine feeling on both sides mixed with genuine fear. The uncertainty you are sensing is not a sign that this is wrong — it is a sign that both of you are taking it seriously this time.",
       next: "Move slowly. Let the reconnection breathe. Do not rush to define it or secure it — that pressure will create the same patterns that caused the separation. Allow it to unfold with trust and you will find that this version has a foundation the previous one was missing."
     }
   }
 };
 
-/* ── STATE ── */
 var currentQ = 0;
 var answers  = [];
 var userName = "";
 var userEmail= "";
 
-/* ── ELEMENTS ── */
 function $(id){ return document.getElementById(id); }
 
 var startSection    = $("startSection");
@@ -536,14 +449,12 @@ var questionSection = $("questionSection");
 var emailGate       = $("emailGate");
 var resultSection   = $("resultSection");
 
-/* ── PROGRESS ── */
 function updateProgress(){
   var pct = Math.round((currentQ / QUESTIONS.length) * 100);
   $("progressFill").style.width = pct + "%";
   $("progressCount").textContent = "Question " + (currentQ + 1) + " of " + QUESTIONS.length;
 }
 
-/* ── RENDER QUESTION ── */
 function renderQuestion(){
   var q = QUESTIONS[currentQ];
   $("questionNumber").textContent = "Question " + (currentQ + 1) + " of " + QUESTIONS.length;
@@ -553,13 +464,11 @@ function renderQuestion(){
   var container = $("optionsContainer");
   container.innerHTML = "";
 
-  q.options.forEach(function(opt, i){
+  q.options.forEach(function(opt){
     var btn = document.createElement("button");
     btn.className = "option";
     btn.setAttribute("data-value", opt.value);
-    btn.innerHTML =
-      '<div class="option-indicator"></div>' +
-      '<div class="option-text">' + opt.text + '</div>';
+    btn.innerHTML = '<div class="option-indicator"></div><div class="option-text">' + opt.text + '</div>';
     btn.addEventListener("click", function(){
       container.querySelectorAll(".option").forEach(function(o){ o.classList.remove("selected"); });
       btn.classList.add("selected");
@@ -569,23 +478,17 @@ function renderQuestion(){
   });
 
   $("nextBtn").disabled = true;
-
   var card = $("questionCard");
   card.style.animation = "none";
   card.offsetHeight;
   card.style.animation = "fadeUp .5s ease both";
-
   updateProgress();
 }
 
-/* ── KLAVIYO SUBMIT ── */
 function klaviyoSubmit(email, firstName, answers) {
   fetch("https://a.klaviyo.com/client/subscriptions/?company_id=TErGAh", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "revision": "2023-12-15"
-    },
+    headers: { "Content-Type": "application/json", "revision": "2023-12-15" },
     body: JSON.stringify({
       data: {
         type: "subscription",
@@ -607,28 +510,19 @@ function klaviyoSubmit(email, firstName, answers) {
             }
           }
         },
-        relationships: {
-          list: {
-            data: {
-              type: "list",
-              id: "T9vepx"
-            }
-          }
-        }
+        relationships: { list: { data: { type: "list", id: "T9vepx" } } }
       }
     })
   }).catch(function(){});
 }
 
-/* ── START ── */
 $("startBtn").addEventListener("click", function(){
-  startSection.style.display   = "none";
-  progressWrap.style.display   = "block";
-  questionSection.style.display= "block";
+  startSection.style.display    = "none";
+  progressWrap.style.display    = "block";
+  questionSection.style.display = "block";
   renderQuestion();
 });
 
-/* ── NEXT ── */
 $("nextBtn").addEventListener("click", function(){
   var selected = $("optionsContainer").querySelector(".option.selected");
   if(!selected) return;
@@ -645,7 +539,6 @@ $("nextBtn").addEventListener("click", function(){
   }
 });
 
-/* ── EMAIL GATE SUBMIT ── */
 $("gateBtn").addEventListener("click", function(){
   var firstName = $("gateFirstName").value.trim();
   var email     = $("gateEmail").value.trim();
@@ -659,7 +552,6 @@ $("gateBtn").addEventListener("click", function(){
   userName  = firstName;
   userEmail = email;
 
-  /* Submit to Netlify Forms */
   var formData = new URLSearchParams();
   formData.append("form-name", "quiz-lead");
   formData.append("first_name", firstName);
@@ -676,45 +568,46 @@ $("gateBtn").addEventListener("click", function(){
     body: formData.toString()
   }).catch(function(){});
 
-  /* Submit to Klaviyo */
   klaviyoSubmit(email, firstName, answers);
 
   $("gateBtn").disabled = true;
   $("gateBtn").textContent = "Reading the energy\u2026";
 
   setTimeout(function(){
-    emailGate.style.display      = "none";
-    resultSection.style.display  = "block";
+    emailGate.style.display     = "none";
+    resultSection.style.display = "block";
     renderResult();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, 1800);
 });
 
-/* ── RENDER RESULT ── */
 function renderResult(){
   var situation = answers[0] || "separation";
   var energy    = answers[1] || "default";
-  var need      = answers[4] || "clarity_feelings";
 
   var pool   = RESULTS[situation] || RESULTS.separation;
   var result = pool[energy] || pool["default"] || RESULTS.separation.default;
 
-  $("resultTitle").textContent    = result.title;
-  $("resultSubtitle").textContent = result.subtitle;
-  $("resultBody").innerHTML       = result.body;
-  $("resultBelleMessage").textContent = result.belle;
+  $("resultTitle").textContent         = result.title;
+  $("resultSubtitle").textContent      = result.subtitle;
+  $("resultBody").innerHTML            = result.body;
+  $("resultBelleMessage").textContent  = result.belle;
+  $("resultNextStep").textContent      = result.next;
 
-  var nextText = result.next;
-  $("resultNextStep").textContent = nextText;
-
-  var cta = document.querySelector(".result-cta-section");
-  if(cta && userName){
-    var label = cta.querySelector(".result-cta-label");
+  if(userName){
+    var label = $("ctaLabel");
     if(label) label.textContent = userName + ", go deeper with a private session with Belle";
   }
 }
 
-/* Nav member link */
+/* Copy BELLE5 code */
+window.copyBelle5 = function() {
+  navigator.clipboard.writeText("BELLE5").then(function(){
+    var btn = $("belle5CopyBtn");
+    if(btn){ btn.textContent = "Copied \u2713"; setTimeout(function(){ btn.textContent = "Copy"; }, 2000); }
+  }).catch(function(){});
+};
+
 window.addEventListener("load", function(){
   if(!window.Clerk) return;
   window.Clerk.load().then(function(){
@@ -730,7 +623,6 @@ window.addEventListener("load", function(){
 }());
 </script>
 
-<!-- Netlify form detection -->
 <form name="quiz-lead" data-netlify="true" netlify-honeypot="bot-field" style="display:none">
   <input type="hidden" name="form-name" value="quiz-lead">
   <input name="bot-field">
@@ -743,11 +635,10 @@ window.addEventListener("load", function(){
   <input name="need">
 </form>
 
-<!-- Clerk -->
-<script>window.__clerk_publishable_key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ";</script>
+<script>window.__clerk_publishable_key="pk_live_Y2xlcmsucHN5Y2hpY2JlbGxlLmNvbSQ";</script>
 <script async crossorigin="anonymous"
-  data-clerk-publishable-key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ"
-  src="https://concise-wasp-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+  data-clerk-publishable-key="pk_live_Y2xlcmsucHN5Y2hpY2JlbGxlLmNvbSQ"
+  src="https://clerk.psychicbelle.com/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
 ></script>
 
 </body>
