@@ -1312,5 +1312,17 @@ window.addEventListener("load", function() {
 });
 </script>
 
+<!-- Netlify form detection -->
+<form name="offline-reading" netlify netlify-honeypot="bot-field" style="display:none">
+  <input type="hidden" name="form-name" value="offline-reading">
+  <input name="email" type="email">
+  <input name="client_name" type="text">
+  <input name="client_dob" type="date">
+  <input name="poi_name" type="text">
+  <input name="poi_dob" type="date">
+  <textarea name="question"></textarea>
+  <textarea name="context"></textarea>
+</form>
+
 </body>
 </html>
