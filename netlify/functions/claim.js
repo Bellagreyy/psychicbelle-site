@@ -1,7 +1,6 @@
 // netlify/functions/claim.js
 // Handles BELLE10 claim — saves belle10_claimed: true
 // and belle10_claimed_at: timestamp for BELIEVE15 3-day window
-
 const https = require("https");
 
 exports.handler = async function (event) {
@@ -16,9 +15,8 @@ exports.handler = async function (event) {
   if (!userId)
     return { statusCode: 400, body: JSON.stringify({ error: "Missing userId" }) };
 
-  const authHeader   = event.headers["authorization"] || "";
-  const sessionToken = authHeader.replace("Bearer ", "");
-  if (!sessionToken)
+  const authHeader = event.headers["authorization"] || "";
+  if (!authHeader.startsWith("Bearer "))
     return { statusCode: 401, body: JSON.stringify({ error: "Unauthorised" }) };
 
   const secretKey = process.env.CLERK_SECRET_KEY;
@@ -26,12 +24,6 @@ exports.handler = async function (event) {
     return { statusCode: 500, body: JSON.stringify({ error: "Server config error" }) };
 
   try {
-    const verifyRes = await clerkRequest("GET",
-      `/v1/sessions/verify?token=${encodeURIComponent(sessionToken)}`, null, secretKey);
-    const session = JSON.parse(verifyRes);
-    if (!session || session.user_id !== userId)
-      return { statusCode: 403, body: JSON.stringify({ error: "Token mismatch" }) };
-
     const userRes  = await clerkRequest("GET", `/v1/users/${userId}`, null, secretKey);
     const userData = JSON.parse(userRes);
 
@@ -41,14 +33,13 @@ exports.handler = async function (event) {
     const current = userData.public_metadata || {};
     const newMeta = Object.assign({}, current, {
       belle10_claimed:    true,
-      belle10_claimed_at: Date.now()   // timestamp for BELIEVE15 3-day window
+      belle10_claimed_at: Date.now()
     });
 
     await clerkRequest("PATCH", `/v1/users/${userId}`,
       JSON.stringify({ public_metadata: newMeta }), secretKey);
 
     return { statusCode: 200, body: JSON.stringify({ success: true }) };
-
   } catch (err) {
     console.error("claim.js error:", err);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
