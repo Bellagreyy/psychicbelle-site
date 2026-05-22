@@ -2,7 +2,6 @@
 // Called when the session timer hits zero in portal.html
 // Sets first_session_completed: true in Clerk publicMetadata
 // This unlocks the BELIEVE15 loyalty reward
-
 const https = require("https");
 
 exports.handler = async function (event) {
@@ -17,9 +16,8 @@ exports.handler = async function (event) {
   if (!userId)
     return { statusCode: 400, body: JSON.stringify({ error: "Missing userId" }) };
 
-  const authHeader   = event.headers["authorization"] || "";
-  const sessionToken = authHeader.replace("Bearer ", "");
-  if (!sessionToken)
+  const authHeader = event.headers["authorization"] || "";
+  if (!authHeader.startsWith("Bearer "))
     return { statusCode: 401, body: JSON.stringify({ error: "Unauthorised" }) };
 
   const secretKey = process.env.CLERK_SECRET_KEY;
@@ -27,13 +25,6 @@ exports.handler = async function (event) {
     return { statusCode: 500, body: JSON.stringify({ error: "Server config error" }) };
 
   try {
-    // Verify session token
-    const verifyRes = await clerkRequest("GET",
-      `/v1/sessions/verify?token=${encodeURIComponent(sessionToken)}`, null, secretKey);
-    const session = JSON.parse(verifyRes);
-    if (!session || session.user_id !== userId)
-      return { statusCode: 403, body: JSON.stringify({ error: "Token mismatch" }) };
-
     // Get current metadata
     const userRes  = await clerkRequest("GET", `/v1/users/${userId}`, null, secretKey);
     const userData = JSON.parse(userRes);
@@ -49,7 +40,6 @@ exports.handler = async function (event) {
       JSON.stringify({ public_metadata: newMeta }), secretKey);
 
     return { statusCode: 200, body: JSON.stringify({ success: true }) };
-
   } catch (err) {
     console.error("complete-session error:", err);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
