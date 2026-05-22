@@ -484,33 +484,10 @@ function renderQuestion(){
 }
 
 function klaviyoSubmit(email, firstName, answers) {
-  fetch("https://a.klaviyo.com/client/subscriptions/?company_id=TErGAh", {
+  fetch("/.netlify/functions/klaviyo-subscribe", {
     method: "POST",
-    headers: { "Content-Type": "application/json", "revision": "2024-02-15" },
-    body: JSON.stringify({
-      data: {
-        type: "subscription",
-        attributes: {
-          profile: {
-            data: {
-              type: "profile",
-              attributes: {
-                email: email,
-                first_name: firstName,
-                properties: {
-                  situation: answers[0] || "",
-                  energy_felt: answers[1] || "",
-                  fear: answers[2] || "",
-                  intuition: answers[3] || "",
-                  need: answers[4] || ""
-                }
-              }
-            }
-          }
-        },
-        relationships: { list: { data: { type: "list", id: "T9vepx" } } }
-      }
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: email, firstName: firstName, answers: answers })
   }).catch(function(){});
 }
 
