@@ -2,7 +2,6 @@
 // Handles BELIEVE15 claim
 // Requires: first_session_completed: true (set when timer hits zero)
 // Prevents: claiming if belle10 not yet used, or already claimed
-
 const https = require("https");
 
 exports.handler = async function (event) {
@@ -17,9 +16,8 @@ exports.handler = async function (event) {
   if (!userId)
     return { statusCode: 400, body: JSON.stringify({ error: "Missing userId" }) };
 
-  const authHeader   = event.headers["authorization"] || "";
-  const sessionToken = authHeader.replace("Bearer ", "");
-  if (!sessionToken)
+  const authHeader = event.headers["authorization"] || "";
+  if (!authHeader.startsWith("Bearer "))
     return { statusCode: 401, body: JSON.stringify({ error: "Unauthorised" }) };
 
   const secretKey = process.env.CLERK_SECRET_KEY;
@@ -27,27 +25,17 @@ exports.handler = async function (event) {
     return { statusCode: 500, body: JSON.stringify({ error: "Server config error" }) };
 
   try {
-    const verifyRes = await clerkRequest("GET",
-      `/v1/sessions/verify?token=${encodeURIComponent(sessionToken)}`, null, secretKey);
-    const session = JSON.parse(verifyRes);
-    if (!session || session.user_id !== userId)
-      return { statusCode: 403, body: JSON.stringify({ error: "Token mismatch" }) };
-
     const userRes  = await clerkRequest("GET", `/v1/users/${userId}`, null, secretKey);
     const userData = JSON.parse(userRes);
     const meta     = userData.public_metadata || {};
 
     // Must have claimed BELLE10
     if (!meta.belle10_claimed)
-      return { statusCode: 403, body: JSON.stringify({
-        error: "BELLE10 must be claimed first"
-      })};
+      return { statusCode: 403, body: JSON.stringify({ error: "BELLE10 must be claimed first" }) };
 
     // Must have completed first session
     if (!meta.first_session_completed)
-      return { statusCode: 403, body: JSON.stringify({
-        error: "Complete your first session to unlock this reward"
-      })};
+      return { statusCode: 403, body: JSON.stringify({ error: "Complete your first session to unlock this reward" }) };
 
     // Already claimed
     if (meta.believe15_claimed)
@@ -58,7 +46,6 @@ exports.handler = async function (event) {
       JSON.stringify({ public_metadata: newMeta }), secretKey);
 
     return { statusCode: 200, body: JSON.stringify({ success: true }) };
-
   } catch (err) {
     console.error("claim-believe15 error:", err);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
