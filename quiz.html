@@ -136,7 +136,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .result-cta-btn:hover{background:var(--gold-pale)}
 .result-cta-note{font-size:12px;font-style:italic;color:var(--text-dim);margin-top:14px;line-height:1.6}
 
-/* BELLE5 REVEAL */
 .belle5-reveal{
   width:100%;margin-top:36px;
   border:0.5px solid var(--gold);
@@ -295,7 +294,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <p class="result-cta-note">Your discount is applied automatically &middot; Session credits never expire &middot; Start from $23.75</p>
       </div>
 
-      <!-- BELLE5 REVEAL -->
       <div class="belle5-reveal fade-in">
         <span class="belle5-eyebrow">Your Exclusive Discount</span>
         <div class="belle5-title">5% Off Your First Session</div>
@@ -488,7 +486,7 @@ function renderQuestion(){
 function klaviyoSubmit(email, firstName, answers) {
   fetch("https://a.klaviyo.com/client/subscriptions/?company_id=TErGAh", {
     method: "POST",
-    headers: { "Content-Type": "application/json", "revision": "2023-12-15" },
+    headers: { "Content-Type": "application/json", "revision": "2024-02-15" },
     body: JSON.stringify({
       data: {
         type: "subscription",
@@ -600,7 +598,6 @@ function renderResult(){
   }
 }
 
-/* Copy BELLE5 code */
 window.copyBelle5 = function() {
   navigator.clipboard.writeText("BELLE5").then(function(){
     var btn = $("belle5CopyBtn");
