@@ -930,7 +930,7 @@ body.session-active{padding-top:52px}
      ============================================================ */
   document.addEventListener("DOMContentLoaded", function () {
 
-    var dot      = $("statusDot");
+var dot      = $("statusDot");
     var txt      = $("statusText");
     var preamble = $("ctaPreamble");
     var avail    = $("availText");
@@ -943,6 +943,12 @@ body.session-active{padding-top:52px}
     var pwrap    = $("promoFieldWrap");
     var pstatus  = $("promoStatus");
     var topup    = $("sbTopup");
+
+    if (offBtn) {
+      offBtn.addEventListener("click", function () {
+        window.location.href = STRIPE.offline;
+      });
+    }
 
     var promoOn = false;
     var selPkg  = null;
@@ -1163,10 +1169,6 @@ body.session-active{padding-top:52px}
       if (!selPkg) return;
       var url = promoOn ? STRIPE[selPkg+"Disc"] : STRIPE[selPkg];
       window.location.href = url;
-    });
-
-    offBtn.addEventListener("click", function () {
-      window.location.href = STRIPE.offline;
     });
 
     async function applyPromo() {
