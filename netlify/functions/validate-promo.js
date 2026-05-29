@@ -121,8 +121,8 @@ if (!userId) {
 
   const meta = user.public_metadata || {};
 
-  // Already claimed — only block BELIEVE15, not BELLE10
-  if (promo.metaKey && meta[promo.metaKey] === true && code !== "BELLE10") {
+    // Already claimed
+ if (promo.metaKey && meta[promo.metaKey] === true) {
     return invalid("This code has already been redeemed on your account.");
   }
 
