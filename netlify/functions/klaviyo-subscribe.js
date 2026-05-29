@@ -10,7 +10,7 @@ exports.handler = async function (event) {
     return { statusCode: 400, body: "Invalid JSON" };
   }
 
-  const { email, firstName, answers = {} } = body;
+  const { email } = body;
 
   const payload = {
     data: {
@@ -23,14 +23,6 @@ exports.handler = async function (event) {
               type: "profile",
               attributes: {
                 email,
-                first_name: firstName || "",
-                properties: {
-                  situation:    answers.situation    || "",
-                  energy_felt:  answers.energy_felt  || "",
-                  fear:         answers.fear         || "",
-                  intuition:    answers.intuition    || "",
-                  need:         answers.need         || "",
-                },
                 subscriptions: {
                   email: {
                     marketing: {
