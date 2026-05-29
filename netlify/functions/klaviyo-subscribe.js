@@ -16,7 +16,6 @@ exports.handler = async function (event) {
     data: {
       type: "profile-subscription-bulk-create-job",
       attributes: {
-        list_id: "T9vepx",
         profiles: {
           data: [
             {
@@ -33,6 +32,14 @@ exports.handler = async function (event) {
               },
             },
           ],
+        },
+      },
+      relationships: {
+        list: {
+          data: {
+            type: "list",
+            id: "T9vepx",
+          },
         },
       },
     },
