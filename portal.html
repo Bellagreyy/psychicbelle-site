@@ -381,7 +381,7 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
   <div class="booking-card">
     <div class="booking-title">Ready for your reading?</div>
     <p class="booking-desc">Select your credit package and your live session opens the moment payment clears.</p>
-    <a href="/" class="booking-btn">Go to Booking</a>
+    <a href="/" class="booking-btn" id="bookingBtn">Go to Booking</a>
   </div>
 
   <div class="portal-footer">
@@ -991,6 +991,22 @@ body.tidio-hidden #tidio-chat-iframe{display:none !important;visibility:hidden !
     renderBelle10(user);
     renderBelieve15(user);
     renderSaved(user);
+
+    /* ── Booking button promo routing ── */
+    var bookingBtn = document.getElementById("bookingBtn");
+    if (bookingBtn) {
+      var meta2 = user.publicMetadata || {};
+      var b10 = meta2.belle10_claimed === true;
+      var b15 = meta2.believe15_claimed === true;
+      var done = meta2.first_session_completed === true;
+      if (!b10) {
+        bookingBtn.href = "/?promo=BELLE10";
+      } else if (b10 && done && !b15) {
+        bookingBtn.href = "/?promo=BELIEVE15";
+      } else {
+        bookingBtn.href = "/";
+      }
+    }
 
     var meta = user.publicMetadata || {};
     if(meta.belle10_claimed === true) promoActive = true;
