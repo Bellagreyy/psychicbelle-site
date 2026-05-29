@@ -109,6 +109,16 @@ header{display:flex;align-items:center;justify-content:space-between;padding-bot
         <a href="https://psychicbelle.com/portal.html" target="_blank" class="btn-outline">Client portal</a>
       </div>
     </div>
+    <!-- LIVE TOGGLE PANEL -->
+<div class="tidio-panel" id="toggle-panel" style="margin-top:-1rem">
+  <div class="tidio-info">
+    <h2>Availability</h2>
+    <p id="toggle-status-text">Checking status…</p>
+  </div>
+  <div class="tidio-btns">
+    <button class="btn-gold" id="toggle-live-btn" style="opacity:0.4;cursor:not-allowed" disabled>—</button>
+  </div>
+</div>
 
     <div class="summary-row">
       <div class="stat"><div class="stat-val" id="stat-active">0</div><div class="stat-label">Active now</div></div>
@@ -278,6 +288,85 @@ function render(sessions) {
 }
 
 window.addEventListener('load', initClerk);
+</script>
+
+<script>
+// ── LIVE TOGGLE ──────────────────────────────────────────
+var currentLiveState = null;
+
+async function fetchLiveState() {
+  try {
+    var res = await fetch('/.netlify/functions/get-live-status');
+    var data = await res.json();
+    currentLiveState = data.live;
+    renderToggle();
+  } catch(e) {
+    document.getElementById('toggle-status-text').textContent = 'Could not fetch status.';
+  }
+}
+
+function renderToggle() {
+  var btn  = document.getElementById('toggle-live-btn');
+  var text = document.getElementById('toggle-status-text');
+  if (currentLiveState) {
+    text.innerHTML = '<span style="color:var(--green)">● Live now</span> — clients can book and chat';
+    btn.textContent = 'Go Offline';
+    btn.style.background = 'var(--red)';
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  } else {
+    text.innerHTML = '<span style="color:var(--amber)">● Offline</span> — only offline readings showing';
+    btn.textContent = 'Go Live';
+    btn.style.background = 'var(--green)';
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  }
+  btn.disabled = false;
+}
+
+async function toggleLiveState() {
+  var btn = document.getElementById('toggle-live-btn');
+  btn.disabled = true;
+  btn.textContent = '…';
+  var newState = !currentLiveState;
+  try {
+    var res = await fetch('/.netlify/functions/set-live-status', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + (window._readerSecret || '')
+      },
+      body: JSON.stringify({ live: newState })
+    });
+    var data = await res.json();
+    if (data.updated) {
+      currentLiveState = data.live;
+      renderToggle();
+    }
+  } catch(e) {
+    btn.textContent = 'Error — retry';
+    btn.disabled = false;
+  }
+}
+
+async function loadReaderSecret() {
+  try {
+    var token = await window.Clerk.session.getToken();
+    var res = await fetch('/.netlify/functions/get-reader-token', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    var data = await res.json();
+    window._readerSecret = data.secret;
+  } catch(e) {}
+}
+
+var _origShowDashboard = showDashboard;
+showDashboard = async function() {
+  _origShowDashboard();
+  await loadReaderSecret();
+  await fetchLiveState();
+  document.getElementById('toggle-live-btn').addEventListener('click', toggleLiveState);
+};
 </script>
 </body>
 </html>
