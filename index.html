@@ -1132,20 +1132,30 @@ var dot      = $("statusDot");
       return;
     }
 
-    /* Normal page load */
-    if (LIVE) {
-      dot.classList.add("live"); txt.classList.add("live");
-      txt.textContent    = "Belle is live now";
-      packSec.classList.add("visible");
-      preamble.innerHTML = "Choose your credit package below.<br><strong>Live chat opens immediately after payment.</strong>";
-      avail.innerHTML    = "Sessions begin the moment payment clears.<br>I am here and ready for you now.";
-    } else {
-      dot.classList.add("offline"); txt.classList.add("offline");
-      txt.textContent    = "Currently offline";
-      preamble.innerHTML = "I am offline right now but <strong>still reading today.</strong><br>Submit your question below &mdash; delivered within 24 hours.";
-      avail.innerHTML    = "Questions received after payment.<br>Full reading delivered within 24 hours by email.";
-    }
-    if (offSec) offSec.classList.add("visible");
+    /* Normal page load — fetch live status from Blob */
+fetch("/.netlify/functions/get-live-status")
+  .then(function(r) { return r.json(); })
+  .then(function(data) { applyLiveState(data.live); })
+  .catch(function() { applyLiveState(true); });
+
+function applyLiveState(isLive) {
+  if (isLive) {
+    dot.classList.add("live"); txt.classList.add("live");
+    txt.textContent    = "Belle is live now";
+    packSec.classList.add("visible");
+    preamble.innerHTML = "Choose your credit package below.<br><strong>Live chat opens immediately after payment.</strong>";
+    avail.innerHTML    = "Sessions begin the moment payment clears.<br>I am here and ready for you now.";
+  } else {
+    dot.classList.add("offline"); txt.classList.add("offline");
+    txt.textContent    = "Currently offline";
+    packSec.style.display = "none";
+    var quizBlock = document.querySelector(".quiz-cta-block");
+    if (quizBlock) quizBlock.style.display = "none";
+    preamble.innerHTML = "I am offline right now but <strong>still reading today.</strong><br>Submit your question below — delivered within 24 hours.";
+    avail.innerHTML    = "Questions received after payment.<br>Full reading delivered within 24 hours by email.";
+  }
+  if (offSec) offSec.classList.add("visible");
+}
 
     var cards = document.querySelectorAll(".pkg-card");
 
