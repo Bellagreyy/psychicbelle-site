@@ -279,9 +279,7 @@ body.session-active{padding-top:52px}
 .oform-note{font-size:11px;letter-spacing:.12em;color:var(--text-dim);text-transform:uppercase;margin-top:12px;text-align:center;font-family:'Cinzel',serif}
 .offline-success-icon{font-size:28px;color:var(--gold);text-align:center;display:block;margin-bottom:14px}
 .offline-success-title{font-family:'Cinzel',serif;font-size:clamp(15px,4vw,18px);letter-spacing:.16em;text-transform:uppercase;color:var(--text-primary);text-align:center;margin-bottom:10px}
-.footer-social{display:flex;gap:20px;justify-content:center;margin-top:12px}
-.footer-social a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s}
-.footer-social a:hover{color:var(--gold)}
+.offline-success-sub{font-size:14px;font-style:italic;color:var(--text-muted);line-height:1.75;text-align:center}
 </style>
 <body>
 
@@ -459,7 +457,7 @@ body.session-active{padding-top:52px}
 
     <!-- QUIZ CTA BLOCK -->
     <div class="quiz-cta-block">
-      <a href="/quiz.html" class="quiz-cta-btn">&#10022; &nbsp; Not sure where to start? Take the free quiz &nbsp; &#10022;</a>
+      <a href="/quiz.html" class="quiz-cta-btn">✦ &nbsp; Not sure where to start? Take the free quiz &nbsp; ✦</a>
       <p class="quiz-cta-sub">5 questions &middot; Personalised reading &middot; Unlock your discount code</p>
     </div>
 
@@ -511,7 +509,7 @@ body.session-active{padding-top:52px}
           <span class="terms-agree-text">I have read and agree to the <a href="/terms.html" target="_blank" class="terms-link">Terms &amp; Session Agreement</a>. I understand this service is for entertainment purposes only and I am 18 or older.</span>
         </label>
       </div>
-      <button class="live-cta-btn" id="liveBtn" disabled>Chat Now</button>
+      <button class="live-cta-btn" id="liveBtn" disabled>Begin Session</button>
       <p class="btn-subtext">Select a package above &middot; Secure checkout</p>
     </div>
 
@@ -578,7 +576,7 @@ body.session-active{padding-top:52px}
         <p class="oform-note">One question per purchase &middot; Response within 24 hours &middot; Check your spam folder</p>
       </form>
       <div id="offlineSuccess" style="display:none">
-        <div class="offline-success-icon">&#10022;</div>
+        <div class="offline-success-icon">✦</div>
         <div class="offline-success-title">Question Received</div>
         <p class="offline-success-sub">Belle has received your question and will respond within 24 hours. Please check your inbox — and your spam folder just in case.</p>
       </div>
@@ -593,11 +591,6 @@ body.session-active{padding-top:52px}
 
   <footer class="footer-ornament">
     <div class="footer-line"></div>
-    <div class="footer-social">
-      <a href="https://www.instagram.com/belle.psychic/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.tiktok.com/@belle.psychic" target="_blank" rel="noopener">TikTok</a>
-      <a href="https://uk.pinterest.com/bellepsychic/" target="_blank" rel="noopener">Pinterest</a>
-    </div>
     <p class="footer-text">&copy; Psychic Belle &middot; All rights reserved<br>Results are personal &amp; for entertainment purposes<br><a href="/terms.html" style="color:var(--text-dim);text-decoration:none;letter-spacing:0.15em;font-size:9px;font-family:'Cinzel',serif;text-transform:uppercase" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-dim)'">Terms &amp; Session Agreement</a> &nbsp;&middot;&nbsp; <a href="/privacy.html" style="color:var(--text-dim);text-decoration:none;letter-spacing:0.15em;font-size:9px;font-family:'Cinzel',serif;text-transform:uppercase" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-dim)'">Privacy Policy</a></p>
   </footer>
 
@@ -955,13 +948,6 @@ body.session-active{padding-top:52px}
     var selPkg  = null;
     var promoDiscount = 0;
 
-    /* FIX: attach offBtn handler here so it works in all states */
-    if (offBtn) {
-      offBtn.addEventListener("click", function () {
-        window.location.href = STRIPE.offline;
-      });
-    }
-
     var pauseBtn = $("sbPause");
     if (pauseBtn) {
       pauseBtn.addEventListener("click", function () {
@@ -1136,3 +1122,195 @@ body.session-active{padding-top:52px}
       setTimeout(function() {
         var el = $("packagesSection");
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 300);
+      return;
+    }
+
+    /* Normal page load */
+    if (LIVE) {
+      dot.classList.add("live"); txt.classList.add("live");
+      txt.textContent    = "Belle is live now";
+      packSec.classList.add("visible");
+      preamble.innerHTML = "Choose your credit package below.<br><strong>Live chat opens immediately after payment.</strong>";
+      avail.innerHTML    = "Sessions begin the moment payment clears.<br>I am here and ready for you now.";
+    } else {
+      dot.classList.add("offline"); txt.classList.add("offline");
+      txt.textContent    = "Currently offline";
+      preamble.innerHTML = "I am offline right now but <strong>still reading today.</strong><br>Submit your question below &mdash; delivered within 24 hours.";
+      avail.innerHTML    = "Questions received after payment.<br>Full reading delivered within 24 hours by email.";
+    }
+    if (offSec) offSec.classList.add("visible");
+
+    var cards = document.querySelectorAll(".pkg-card");
+
+    function updateLiveBtn() {
+      var agreed = termsAgree && termsAgree.checked;
+      liveBtn.disabled = !(agreed && !!selPkg);
+    }
+
+    for (var i = 0; i < cards.length; i++) {
+      (function (card) {
+        card.addEventListener("click", function () {
+          for (var j = 0; j < cards.length; j++) cards[j].classList.remove("selected");
+          card.classList.add("selected");
+          selPkg = card.getAttribute("data-pkg");
+          updateLiveBtn();
+        });
+      })(cards[i]);
+    }
+
+    liveBtn.addEventListener("click", function () {
+      if (!selPkg) return;
+      var url = promoOn ? STRIPE[selPkg+"Disc"] : STRIPE[selPkg];
+      window.location.href = url;
+    });
+
+    offBtn.addEventListener("click", function () {
+      window.location.href = STRIPE.offline;
+    });
+
+    async function applyPromo() {
+      var val = pinput.value.trim().toUpperCase();
+      if (!val) return;
+      papply.disabled = true; papply.textContent = "\u2026";
+      pstatus.textContent = ""; pstatus.className = "promo-status";
+
+      var userId = null; var token = null;
+      try {
+        if (window.Clerk && window.Clerk.user) {
+          userId = window.Clerk.user.id;
+          token  = await window.Clerk.session.getToken();
+        }
+      } catch(e) {}
+
+      try {
+        var res  = await fetch("/.netlify/functions/validate-promo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": token ? "Bearer " + token : ""
+          },
+          body: JSON.stringify({ userId: userId, code: val })
+        });
+        var data = await res.json();
+        if (data.valid) {
+          promoOn = true; promoDiscount = data.discount;
+          pinput.disabled = true; papply.disabled = true;
+          papply.textContent = "\u2713";
+          pwrap.classList.remove("invalid"); pwrap.classList.add("applied");
+          pstatus.textContent = "\u2736 " + data.code + " applied \u2014 " + data.discount + "% off";
+          pstatus.className = "promo-status ok";
+          applyDiscountToUI(data.discount);
+        } else {
+          promoOn = false; papply.disabled = false; papply.textContent = "Apply";
+          pwrap.classList.remove("applied"); pwrap.classList.add("invalid");
+          pstatus.textContent = data.reason || "Code not valid.";
+          pstatus.className = "promo-status err";
+          setTimeout(function(){ pwrap.classList.remove("invalid"); }, 400);
+        }
+      } catch(e) {
+        papply.disabled = false; papply.textContent = "Apply";
+        pstatus.textContent = "Could not validate. Please try again.";
+        pstatus.className = "promo-status err";
+      }
+    }
+
+    if (PROMO_PARAM) {
+      pinput.value = PROMO_PARAM;
+      setTimeout(applyPromo, 800);
+    }
+
+    function applyDiscountToUI(discountPct) {
+      var keys = ["starter","standard","premium"];
+      for (var k = 0; k < keys.length; k++) {
+        var key  = keys[k];
+        var cap  = key.charAt(0).toUpperCase()+key.slice(1);
+        var orig = PKG[key].price;
+        var disc = parseFloat((orig * (1 - discountPct/100)).toFixed(2));
+        $("was"+cap).textContent = fmtMoney(orig); $("was"+cap).classList.add("visible");
+        $("price"+cap).textContent = fmtMoney(disc); $("price"+cap).classList.add("discounted");
+      }
+      var origOff = PKG.offline.price;
+      var discOff = parseFloat((origOff * (1 - discountPct/100)).toFixed(2));
+      $("offlineWas").textContent = fmtMoney(origOff); $("offlineWas").classList.add("visible");
+      $("offlinePrice").textContent = fmtMoney(discOff); $("offlinePrice").classList.add("discounted");
+    }
+
+    var track    = document.getElementById("carouselTrack");
+    var dotsWrap = document.getElementById("carouselDots");
+    var prevBtn  = document.getElementById("carouselPrev");
+    var nextBtn  = document.getElementById("carouselNext");
+
+    if (track && dotsWrap && prevBtn && nextBtn) {
+      var reviewCards = track.querySelectorAll(".review-card");
+      var reviewTotal = reviewCards.length;
+      var current     = 0;
+      var autoTimer   = null;
+
+      for (var d = 0; d < reviewTotal; d++) {
+        (function(idx) {
+          var dot = document.createElement("button");
+          dot.className = "carousel-dot" + (idx === 0 ? " active" : "");
+          dot.setAttribute("aria-label", "Review " + (idx + 1));
+          dot.addEventListener("click", function() { goTo(idx); resetAuto(); });
+          dotsWrap.appendChild(dot);
+        })(d);
+      }
+
+      function goTo(idx) {
+        current = (idx + reviewTotal) % reviewTotal;
+        track.style.transform = "translateX(-" + (current * track.parentElement.offsetWidth) + "px)";
+        var dots = dotsWrap.querySelectorAll(".carousel-dot");
+        for (var i = 0; i < dots.length; i++) {
+          dots[i].className = "carousel-dot" + (i === current ? " active" : "");
+        }
+      }
+
+      function resetAuto() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(function() { goTo(current + 1); }, 5000);
+      }
+
+      window.addEventListener("resize", function() { goTo(current); });
+      prevBtn.addEventListener("click", function() { goTo(current - 1); resetAuto(); });
+      nextBtn.addEventListener("click", function() { goTo(current + 1); resetAuto(); });
+
+      var touchStartX = 0;
+      track.addEventListener("touchstart", function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener("touchend", function(e) {
+        var diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) { goTo(diff > 0 ? current + 1 : current - 1); resetAuto(); }
+      }, { passive: true });
+
+      resetAuto();
+    }
+
+    papply.addEventListener("click", applyPromo);
+    pinput.addEventListener("keydown", function (e) { if (e.key === "Enter") applyPromo(); });
+
+  });
+
+}());
+</script>
+
+<script async crossorigin="anonymous"
+  data-clerk-publishable-key="pk_live_Y2xlcmsucHN5Y2hpY2JlbGxlLmNvbSQ"
+  src="https://clerk.psychicbelle.com/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+></script>
+<script src="//code.tidio.co/ymud1rzkyzk90r85ach0scowv0rblxnr.js" async></script>
+<script>
+window.addEventListener("load", function() {
+  if (!window.Clerk) return;
+  window.Clerk.load().then(function() {
+    var user = window.Clerk.user;
+    var link = document.getElementById("navMemberLink");
+    if (user && link) {
+      link.textContent = (user.firstName || "Member") + " \u2192";
+      link.href = "/portal.html";
+    }
+  }).catch(function(){});
+});
+</script>
+
+</body>
+</html>

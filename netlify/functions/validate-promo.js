@@ -12,6 +12,7 @@ const CODES = {
   BELLE5: {
     type:     "public",
     discount: 5,
+    metaKey:  "belle5_claimed",
     active:   true
   },
   BELLE10: {
@@ -93,7 +94,17 @@ exports.handler = async function(event) {
   }
 
   // PUBLIC codes — valid for anyone, no login needed
+  // If logged in, enforce one-time use via Clerk metadata
   if (promo.type === "public") {
+    if (userId && promo.metaKey) {
+      const user = await getClerkUser(userId);
+      if (user) {
+        const meta = user.public_metadata || {};
+        if (meta[promo.metaKey] === true) {
+          return invalid("This code has already been redeemed on your account.");
+        }
+      }
+    }
     return valid(code, promo.discount, "public");
   }
 
