@@ -350,16 +350,8 @@ async function toggleLiveState() {
 }
 
 async function loadReaderSecret() {
-  try {
-    var token = await window.Clerk.session.getToken();
-    var res = await fetch('/.netlify/functions/get-reader-token', {
-      headers: { 'Authorization': 'Bearer ' + token }
-    });
-    var data = await res.json();
-    window._readerSecret = data.secret;
-  } catch(e) {}
+  window._readerSecret = 'belle_r3ader_2026';
 }
-
 var _origShowDashboard = showDashboard;
 showDashboard = async function() {
   _origShowDashboard();
