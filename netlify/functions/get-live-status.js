@@ -1,19 +1,17 @@
-const { getStore } = require("@netlify/blobs");
-
 exports.handler = async () => {
   try {
-    const store = getStore("site-config");
-    const val = await store.get("live_status");
-    const live = val === null ? true : val === "true";
+    var res = await fetch(
+      process.env.UPSTASH_REDIS_REST_URL + "/get/live_status",
+      { headers: { Authorization: "Bearer " + process.env.UPSTASH_REDIS_REST_TOKEN } }
+    );
+    var data = await res.json();
+    var live = data.result === null ? true : data.result === "true";
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json", "Cache-Control": "no-cache" },
       body: JSON.stringify({ live })
     };
   } catch (e) {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ live: true })
-    };
+    return { statusCode: 200, body: JSON.stringify({ live: true }) };
   }
 };
