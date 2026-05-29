@@ -2,7 +2,6 @@ exports.handler = async function (event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
-
   let body;
   try {
     body = JSON.parse(event.body);
@@ -10,14 +9,15 @@ exports.handler = async function (event) {
     return { statusCode: 400, body: "Invalid JSON" };
   }
 
-  const { email, firstName } = body;
+  const { email, firstName, answers = {} } = body;
+
   const headers = {
     "Content-Type": "application/json",
     "Authorization": `Klaviyo-API-Key ${process.env.KLAVIYO_PRIVATE_KEY}`,
     "revision": "2024-02-15",
   };
 
-  // Step 1: Create/update profile with first name
+  // Step 1: Create/update profile with first name AND quiz answers
   await fetch("https://a.klaviyo.com/api/profiles/", {
     method: "POST",
     headers,
@@ -27,12 +27,19 @@ exports.handler = async function (event) {
         attributes: {
           email,
           first_name: firstName || "",
+          properties: {
+            quiz_situation:   answers.situation   || "",
+            quiz_energy:      answers.energy_felt || "",
+            quiz_fear:        answers.fear        || "",
+            quiz_intuition:   answers.intuition   || "",
+            quiz_need:        answers.need        || "",
+          },
         },
       },
     }),
   }).catch(() => {});
 
-  // Step 2: Subscribe to list
+  // Step 2: Subscribe to list (unchanged)
   const response = await fetch("https://a.klaviyo.com/api/profile-subscription-bulk-create-jobs/", {
     method: "POST",
     headers,
