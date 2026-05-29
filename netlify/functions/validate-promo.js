@@ -109,8 +109,8 @@ exports.handler = async function(event) {
   }
 
   // MEMBER + SESSION codes require userId
-  if (!userId) {
-    return invalid("Please sign in to The Sanctuary to use this code.");
+if (!userId) {
+    return invalid("Sign in to activate this code.");
   }
 
   // Fetch user from Clerk
