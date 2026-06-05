@@ -781,12 +781,12 @@ nav {
   document.getElementById("tidioFab").addEventListener("click", function () {
     try {
       if (window.tidioChatApi && window.tidioChatApi.open) {
-        window.tidioChatApi.open();
+        window.location.href = "/#packages";
       } else {
         /* Queue until Tidio is ready */
         document.addEventListener("tidioChat-ready", function () {
           if (window.tidioChatApi && window.tidioChatApi.open) {
-            window.tidioChatApi.open();
+            window.location.href = "/#packages";
           }
         });
       }
