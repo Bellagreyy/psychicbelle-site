@@ -1131,12 +1131,30 @@ var dot      = $("statusDot");
       }, 300);
       return;
     }
+function scrollToAnchor() {
+  if (window.location.hash) {
+    var target = document.querySelector(window.location.hash);
+    if (target) {
+      setTimeout(function() {
+        target.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }
+}
 
+/* Normal page load — fetch live status from Blob */
+fetch("/.netlify/functions/get-live-status")
     /* Normal page load — fetch live status from Blob */
 fetch("/.netlify/functions/get-live-status")
   .then(function(r) { return r.json(); })
-  .then(function(data) { applyLiveState(data.live); })
-  .catch(function() { applyLiveState(true); });
+  .then(function(data) {
+    applyLiveState(data.live);
+    scrollToAnchor();
+  })
+  .catch(function() {
+    applyLiveState(true);
+    scrollToAnchor();
+  });
 
 function applyLiveState(isLive) {
   if (isLive) {
