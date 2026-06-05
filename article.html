@@ -777,20 +777,9 @@ nav {
     document.head.appendChild(l);
   }
 
-  /* ── Tidio FAB ── */
+/* ── Tidio FAB ── */
   document.getElementById("tidioFab").addEventListener("click", function () {
-    try {
-      if (window.tidioChatApi && window.tidioChatApi.open) {
-        window.location.href = "/#packages";
-      } else {
-        /* Queue until Tidio is ready */
-        document.addEventListener("tidioChat-ready", function () {
-          if (window.tidioChatApi && window.tidioChatApi.open) {
-            window.location.href = "/#packages";
-          }
-        });
-      }
-    } catch (e) {}
+    window.location.href = "/#packagesSection";
   });
 
   /* ── Clerk: auth + Save to Sanctuary ── */
