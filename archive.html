@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Archive — Psychic Belle | Twin Flame &amp; Divine Union Insights</title>
-<meta name="description" content="Psychic Belle's private archive of insights on Twin Flame Union, Person of Interest readings, No Contact strategy, and Divine Union guidance.">
+<title>The Archive — Dear Belle | Psychic Belle</title>
+<meta name="description" content="Dear Belle — Psychic Belle's column on twin flame connections, divine union, no contact, and the energy behind the silence.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://psychicbelle.com/archive.html">
-<meta property="og:title" content="The Archive — Psychic Belle">
-<meta property="og:description" content="Insights on Twin Flame Union, POI readings, No Contact strategy, and Divine Union guidance from Psychic Belle.">
+<meta property="og:title" content="The Archive — Dear Belle · Psychic Belle">
+<meta property="og:description" content="Dear Belle — insights on twin flame connections, divine union, no contact, and the energy behind the silence.">
 <meta property="og:url" content="https://psychicbelle.com/archive.html">
 <meta property="og:image" content="https://psychicbelle.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,16 +17,18 @@
 <script src="//code.tidio.co/ymud1rzkyzk90r85ach0scowv0rblxnr.js" async></script>
 <style>
 :root {
-  --gold:       #D4AF37;
-  --gold-pale:  #e8d27a;
-  --gold-dim:   rgba(212,175,55,0.15);
-  --gold-line:  rgba(212,175,55,0.35);
-  --gold-faint: rgba(212,175,55,0.07);
-  --black:      #0a0a0a;
-  --surface:    #111111;
-  --text:       #f0ead8;
-  --text-muted: rgba(240,234,216,0.55);
-  --text-dim:   rgba(240,234,216,0.32);
+  --bg:         #0A0A2E;
+  --bg-deep:    #07071a;
+  --bg-lift:    #0F0F3A;
+  --ice:        #C5DEEF;
+  --ice-pale:   #e8f4fc;
+  --ice-dim:    rgba(197,222,239,0.15);
+  --ice-line:   rgba(197,222,239,0.25);
+  --ice-faint:  rgba(197,222,239,0.06);
+  --border:     #1a1a4a;
+  --text:       #ffffff;
+  --text-muted: rgba(255,255,255,0.65);
+  --text-dim:   rgba(255,255,255,0.32);
   --green:      #4ade80;
 }
 
@@ -34,7 +36,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--black);
+  background: var(--bg);
   color: var(--text);
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 300;
@@ -45,23 +47,22 @@ body {
 body::before {
   content: '';
   position: fixed; inset: 0;
-  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(212,175,55,0.05) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(197,222,239,0.04) 0%, transparent 70%);
   pointer-events: none; z-index: 0;
 }
 
 /* ── NAV ── */
 nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(10,10,10,0.95);
-  border-bottom: 0.5px solid var(--gold-line);
+  background: rgba(10,10,46,0.95);
+  border-bottom: 0.5px solid var(--ice-line);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .nav-inner {
   max-width: 1100px; margin: 0 auto;
-  padding: 0 24px;
-  height: 56px;
+  padding: 0 24px; height: 56px;
   display: flex; align-items: center;
   justify-content: space-between; gap: 16px;
 }
@@ -69,36 +70,29 @@ nav {
 .nav-brand {
   font-family: 'Cinzel', serif;
   font-size: 12px; letter-spacing: 0.28em;
-  text-transform: uppercase; color: var(--gold);
-  text-decoration: none;
-  white-space: nowrap;
+  text-transform: uppercase; color: var(--ice);
+  text-decoration: none; white-space: nowrap;
 }
 
-.nav-links {
-  display: flex; gap: 28px; list-style: none;
-}
+.nav-links { display: flex; gap: 28px; list-style: none; }
 
 .nav-links a {
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.28em;
   text-transform: uppercase; color: var(--text-dim);
-  text-decoration: none;
-  transition: color 0.2s;
+  text-decoration: none; transition: color 0.2s;
 }
 .nav-links a:hover,
-.nav-links a.active { color: var(--gold); }
+.nav-links a.active { color: var(--ice); }
 
 .nav-auth {
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: color 0.2s;
+  text-transform: uppercase; color: var(--text-dim);
+  text-decoration: none; white-space: nowrap; transition: color 0.2s;
 }
-.nav-auth:hover { color: var(--gold); }
-#navUserName { color: var(--gold); }
+.nav-auth:hover { color: var(--ice); }
+#navUserName { color: var(--ice); }
 
 /* ── PAGE LAYOUT ── */
 .page {
@@ -111,203 +105,170 @@ nav {
 .archive-hero {
   text-align: center;
   padding: 72px 0 56px;
-  border-bottom: 0.5px solid var(--gold-line);
+  border-bottom: 0.5px solid var(--ice-line);
   margin-bottom: 56px;
 }
 
 .hero-eyebrow {
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.42em;
+  text-transform: uppercase; color: var(--ice);
+  opacity: 0.6; display: block; margin-bottom: 12px;
+}
+
+.hero-column {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.38em;
   text-transform: uppercase; color: var(--text-dim);
-  display: block; margin-bottom: 18px;
+  display: block; margin-bottom: 10px;
 }
 
 .hero-title {
   font-family: 'Cinzel', serif;
   font-size: clamp(32px, 8vw, 52px);
   font-weight: 400; letter-spacing: 0.14em;
-  color: var(--text); margin-bottom: 16px;
-  line-height: 1.2;
+  color: var(--text); margin-bottom: 6px; line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 3vw, 24px);
+  font-style: italic; font-weight: 300;
+  color: var(--ice); opacity: 0.7;
+  margin-bottom: 20px; letter-spacing: 0.04em;
 }
 
 .hero-sub {
   font-style: italic;
-  font-size: clamp(15px, 3.5vw, 18px);
-  color: var(--text-muted); letter-spacing: 0.06em;
-  max-width: 520px; margin: 0 auto 28px;
-  line-height: 1.7;
+  font-size: clamp(15px, 3.5vw, 17px);
+  color: var(--text-muted); letter-spacing: 0.04em;
+  max-width: 520px; margin: 0 auto 28px; line-height: 1.75;
 }
 
-.ornament {
-  display: flex; align-items: center;
-  gap: 16px; max-width: 280px;
-  margin: 0 auto;
-}
-.ornament-line { flex: 1; height: 0.5px; background: var(--gold-line); }
-.ornament-diamond {
-  width: 6px; height: 6px;
-  background: var(--gold); transform: rotate(45deg); opacity: 0.8;
-}
+.ornament { display: flex; align-items: center; gap: 16px; max-width: 280px; margin: 0 auto; }
+.ornament-line { flex: 1; height: 0.5px; background: var(--ice-line); }
+.ornament-diamond { width: 6px; height: 6px; background: var(--ice); transform: rotate(45deg); opacity: 0.4; }
 
 /* ── FILTER TABS ── */
 .filter-bar {
-  display: flex; gap: 0;
-  flex-wrap: wrap;
-  border: 0.5px solid var(--gold-line);
-  margin-bottom: 48px;
-  width: fit-content;
+  display: flex; gap: 0; flex-wrap: wrap;
+  border: 0.5px solid var(--ice-line);
+  margin-bottom: 48px; width: fit-content;
 }
 
 .filter-btn {
   background: transparent;
-  border: none; border-right: 0.5px solid var(--gold-line);
+  border: none; border-right: 0.5px solid var(--ice-line);
   padding: 11px 20px;
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.25em;
   text-transform: uppercase; color: var(--text-dim);
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  cursor: pointer; transition: background 0.2s, color 0.2s;
   white-space: nowrap;
 }
 .filter-btn:last-child { border-right: none; }
-.filter-btn:hover { background: var(--gold-faint); color: var(--text); }
-.filter-btn.active { background: var(--gold-faint); color: var(--gold); }
+.filter-btn:hover { background: var(--ice-faint); color: var(--text); }
+.filter-btn.active { background: var(--ice-faint); color: var(--ice); }
 
 /* ── FEATURED POST ── */
 .featured-post {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
+  display: grid; grid-template-columns: 1fr 1fr;
+  border: 0.5px solid var(--ice-line);
+  background: var(--ice-faint);
   margin-bottom: 48px;
-  text-decoration: none;
-  color: inherit;
+  text-decoration: none; color: inherit;
   transition: border-color 0.3s, background 0.3s;
   animation: fadeUp 0.6s ease both;
 }
-.featured-post:hover {
-  border-color: var(--gold);
-  background: rgba(212,175,55,0.1);
-}
+.featured-post:hover { border-color: var(--ice); background: rgba(197,222,239,0.08); }
 
 .featured-visual {
-  background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.03) 100%);
+  background: linear-gradient(135deg, rgba(197,222,239,0.08) 0%, rgba(197,222,239,0.02) 100%);
   min-height: 260px;
   display: flex; align-items: center; justify-content: center;
-  border-right: 0.5px solid var(--gold-line);
+  border-right: 0.5px solid var(--ice-line);
   position: relative; overflow: hidden;
 }
 
 .featured-visual::before {
   content: '';
   position: absolute; inset: 0;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 40px,
-    rgba(212,175,55,0.03) 40px,
-    rgba(212,175,55,0.03) 41px
-  );
+  background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(197,222,239,0.02) 40px, rgba(197,222,239,0.02) 41px);
 }
 
 .featured-visual-symbol {
   font-family: 'Cinzel', serif;
-  font-size: 64px; color: var(--gold);
-  opacity: 0.15; z-index: 1;
-  user-select: none;
+  font-size: 64px; color: var(--ice);
+  opacity: 0.1; z-index: 1; user-select: none;
 }
 
 .featured-body {
   padding: 36px 36px 32px;
-  display: flex; flex-direction: column;
-  justify-content: space-between;
+  display: flex; flex-direction: column; justify-content: space-between;
 }
 
-.featured-meta {
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 16px;
-}
+.featured-meta { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
 
 .post-category {
   font-family: 'Cinzel', serif;
   font-size: 8px; letter-spacing: 0.3em;
-  text-transform: uppercase; color: var(--gold);
-  opacity: 0.8;
+  text-transform: uppercase; color: var(--ice); opacity: 0.75;
 }
 
-.post-dot {
-  width: 3px; height: 3px;
-  background: var(--text-dim); border-radius: 50%;
-}
+.post-dot { width: 3px; height: 3px; background: var(--text-dim); border-radius: 50%; }
 
-.post-date {
-  font-size: 11px; font-style: italic;
-  color: var(--text-dim); letter-spacing: 0.06em;
-}
+.post-date { font-size: 11px; font-style: italic; color: var(--text-dim); letter-spacing: 0.06em; }
 
 .featured-tag {
   font-family: 'Cinzel', serif;
   font-size: 8px; letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--black); background: var(--gold);
-  padding: 3px 10px;
+  text-transform: uppercase; color: var(--bg);
+  background: var(--ice); padding: 3px 10px;
 }
 
 .featured-title {
   font-family: 'Cinzel', serif;
   font-size: clamp(16px, 3vw, 22px);
   font-weight: 400; letter-spacing: 0.1em;
-  color: var(--text); line-height: 1.35;
-  margin-bottom: 14px;
+  color: var(--text); line-height: 1.35; margin-bottom: 14px;
 }
 
 .featured-excerpt {
   font-size: clamp(14px, 2vw, 16px);
   font-style: italic; line-height: 1.8;
-  color: var(--text-muted); margin-bottom: 24px;
-  flex: 1;
+  color: var(--text-muted); margin-bottom: 24px; flex: 1;
 }
 
 .read-link {
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.28em;
-  text-transform: uppercase; color: var(--gold);
+  text-transform: uppercase; color: var(--ice);
   display: flex; align-items: center; gap: 10px;
 }
-
 .read-link::after {
-  content: '';
-  display: block; width: 24px; height: 0.5px;
-  background: var(--gold);
-  transition: width 0.3s;
+  content: ''; display: block; width: 24px; height: 0.5px;
+  background: var(--ice); transition: width 0.3s;
 }
-
 .featured-post:hover .read-link::after { width: 40px; }
 
 /* ── POST GRID ── */
 .posts-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--gold-line);
-  border: 0.5px solid var(--gold-line);
-  margin-bottom: 56px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--ice-line);
+  border: 0.5px solid var(--ice-line); margin-bottom: 56px;
 }
 
 .post-card {
-  background: var(--black);
+  background: var(--bg);
   padding: 32px 28px;
   text-decoration: none; color: inherit;
-  display: flex; flex-direction: column;
-  gap: 12px;
+  display: flex; flex-direction: column; gap: 12px;
   transition: background 0.25s;
   animation: fadeUp 0.6s ease both;
 }
-.post-card:hover { background: var(--gold-faint); }
+.post-card:hover { background: var(--ice-faint); }
 
-.post-card-meta {
-  display: flex; align-items: center; gap: 10px;
-}
+.post-card-meta { display: flex; align-items: center; gap: 10px; }
 
 .post-card-title {
   font-family: 'Cinzel', serif;
@@ -318,45 +279,30 @@ nav {
 
 .post-card-excerpt {
   font-size: 13.5px; font-style: italic;
-  line-height: 1.75; color: var(--text-muted);
-  flex: 1;
+  line-height: 1.75; color: var(--text-muted); flex: 1;
 }
 
 .post-card-footer {
   display: flex; align-items: center;
   justify-content: space-between;
   padding-top: 12px;
-  border-top: 0.5px solid rgba(212,175,55,0.1);
+  border-top: 0.5px solid rgba(197,222,239,0.08);
 }
 
-.read-time {
-  font-size: 10px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--text-dim);
-}
+.read-time { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
 
-.card-arrow {
-  font-size: 14px; color: var(--gold); opacity: 0.6;
-  transition: opacity 0.2s, transform 0.2s;
-}
+.card-arrow { font-size: 14px; color: var(--ice); opacity: 0.5; transition: opacity 0.2s, transform 0.2s; }
 .post-card:hover .card-arrow { opacity: 1; transform: translateX(4px); }
 
 /* ── EMPTY STATE ── */
-.empty-state {
-  grid-column: 1 / -1;
-  padding: 64px 32px;
-  text-align: center;
-}
-.empty-text {
-  font-style: italic; color: var(--text-dim);
-  font-size: 16px;
-}
+.empty-state { grid-column: 1 / -1; padding: 64px 32px; text-align: center; }
+.empty-text { font-style: italic; color: var(--text-dim); font-size: 16px; }
 
-/* ── CONSULT CTA ── */
+/* ── CTA BANNER ── */
 .consult-banner {
-  width: 100%;
-  padding: 44px 40px;
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
+  width: 100%; padding: 44px 40px;
+  border: 0.5px solid var(--ice-line);
+  background: var(--ice-faint);
   text-align: center;
   animation: fadeUp 0.6s ease both 0.4s;
 }
@@ -378,26 +324,26 @@ nav {
 .consult-desc {
   font-size: 15px; font-style: italic;
   color: var(--text-muted); line-height: 1.7;
-  margin-bottom: 28px; max-width: 420px; margin-left: auto; margin-right: auto;
+  margin-bottom: 28px; max-width: 420px;
+  margin-left: auto; margin-right: auto;
 }
 
 .consult-btn {
-  display: inline-block;
-  padding: 16px 40px;
-  background: var(--gold); color: var(--black);
+  display: inline-block; padding: 16px 40px;
+  background: var(--text); color: var(--bg);
   font-family: 'Cinzel', serif;
   font-size: 11px; font-weight: 500;
   letter-spacing: 0.3em; text-transform: uppercase;
   border: none; cursor: pointer; text-decoration: none;
-  transition: background 0.25s;
-  -webkit-appearance: none;
+  transition: background 0.25s; -webkit-appearance: none;
 }
-.consult-btn:hover { background: var(--gold-pale); }
+.consult-btn:hover { background: var(--ice); }
 
 /* ── FOOTER ── */
 footer {
-  border-top: 0.5px solid var(--gold-line);
-  margin-top: 56px; padding: 32px 24px;
+  border-top: 0.5px solid var(--border);
+  background: var(--bg-deep);
+  margin-top: 56px; padding: 36px 24px;
 }
 
 .footer-inner {
@@ -409,25 +355,19 @@ footer {
 .footer-brand {
   font-family: 'Cinzel', serif;
   font-size: 11px; letter-spacing: 0.28em;
-  text-transform: uppercase; color: var(--gold);
+  text-transform: uppercase; color: var(--ice); opacity: 0.6;
 }
 
-.footer-text {
-  font-size: 10px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--text-dim);
-}
+.footer-text { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
 
-.footer-links {
-  display: flex; gap: 24px; list-style: none;
-}
-
+.footer-links { display: flex; gap: 24px; list-style: none; }
 .footer-links a {
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.22em;
   text-transform: uppercase; color: var(--text-dim);
   text-decoration: none; transition: color 0.2s;
 }
-.footer-links a:hover { color: var(--gold); }
+.footer-links a:hover { color: var(--ice); }
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
@@ -454,13 +394,13 @@ footer {
 </head>
 <body>
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="/index.html" class="nav-brand">Psychic Belle</a>
     <ul class="nav-links">
       <li><a href="/index.html">Readings</a></li>
-      <li><a href="/archive.html" class="active">Archive</a></li>
+      <li><a href="/archive.html" class="active">The Archive</a></li>
       <li><a href="/portal.html">The Sanctuary</a></li>
     </ul>
     <a href="/portal.html" class="nav-auth" id="navAuthLink">
@@ -469,15 +409,16 @@ footer {
   </div>
 </nav>
 
-<!-- ── MAIN ── -->
 <main>
   <div class="page">
 
     <!-- Hero -->
     <header class="archive-hero">
       <span class="hero-eyebrow">Insights &amp; Guidance</span>
-      <h1 class="hero-title">The Archive</h1>
-      <p class="hero-sub">Private writings on Twin Flame Union, Divine alignment, and the frequencies that govern your connection.</p>
+      <span class="hero-column">A Column by</span>
+      <h1 class="hero-title">Dear Belle</h1>
+      <p class="hero-subtitle">The Archive</p>
+      <p class="hero-sub">Real questions. The energy behind them. Written for the woman who already knows something is there — and needs clarity on what it means.</p>
       <div class="ornament">
         <div class="ornament-line"></div>
         <div class="ornament-diamond"></div>
@@ -500,30 +441,32 @@ footer {
     <div class="consult-banner">
       <span class="consult-eyebrow">Private Sessions</span>
       <h2 class="consult-title">Ready for a direct reading?</h2>
-      <p class="consult-desc">These writings offer insight. A live session gives you precision — your specific situation, your specific person, your specific timeline.</p>
-      <a href="/index.html" class="consult-btn">Book a Session</a>
+      <p class="consult-desc">These writings offer insight. A reading gives you precision — your specific situation, your specific person, your specific timeline.</p>
+      <a href="https://go.psychicbelle.com/connection-reading" class="consult-btn">Get Your Reading</a>
     </div>
 
   </div>
 </main>
 
-<!-- ── FOOTER ── */
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <span class="footer-brand">Psychic Belle</span>
     <ul class="footer-links">
       <li><a href="/index.html">Readings</a></li>
-      <li><a href="/archive.html">Archive</a></li>
+      <li><a href="/archive.html">The Archive</a></li>
       <li><a href="/portal.html">The Sanctuary</a></li>
+      <li><a href="/terms.html">Terms</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
     </ul>
     <span class="footer-text">&copy; Psychic Belle 2026</span>
   </div>
 </footer>
 
-<!-- ── DATA ── -->
+<!-- DATA -->
 <script src="posts.js"></script>
 
-<!-- ── CLERK ── -->
+<!-- CLERK -->
 <script>window.__clerk_publishable_key = "pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ";</script>
 <script async crossorigin="anonymous"
   data-clerk-publishable-key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ"
@@ -536,7 +479,6 @@ footer {
 
   var currentCategory = "all";
 
-  /* ── Build category filters ── */
   function buildFilters() {
     var categories = ["all"];
     BELLE_POSTS.forEach(function (p) {
@@ -562,7 +504,6 @@ footer {
     });
   }
 
-  /* ── Render posts ── */
   function renderPosts() {
     var filtered = BELLE_POSTS.filter(function (p) {
       return currentCategory === "all" || p.category === currentCategory;
@@ -573,32 +514,29 @@ footer {
     var featuredEl = document.getElementById("featuredContainer");
     var gridEl     = document.getElementById("postsGrid");
 
-    /* Featured */
     featuredEl.innerHTML = "";
     if (featured.length > 0) {
       var fp = featured[0];
-      featuredEl.innerHTML = '<a class="featured-post" href="article.html?post=' + fp.slug + '" aria-label="Read: ' + fp.title + '">' +
-        '<div class="featured-visual"><span class="featured-visual-symbol" aria-hidden="true">&#10022;</span></div>' +
-        '<div class="featured-body">' +
-          '<div>' +
-            '<div class="featured-meta">' +
-              '<span class="featured-tag">Featured</span>' +
-              '<span class="post-category">' + fp.category + '</span>' +
-              '<span class="post-dot"></span>' +
-              '<span class="post-date">' + fp.date + '</span>' +
+      featuredEl.innerHTML =
+        '<a class="featured-post" href="article.html?post=' + fp.slug + '" aria-label="Read: ' + fp.title + '">' +
+          '<div class="featured-visual"><span class="featured-visual-symbol" aria-hidden="true">&#10022;</span></div>' +
+          '<div class="featured-body">' +
+            '<div>' +
+              '<div class="featured-meta">' +
+                '<span class="featured-tag">Featured</span>' +
+                '<span class="post-category">' + fp.category + '</span>' +
+                '<span class="post-dot"></span>' +
+                '<span class="post-date">' + fp.date + '</span>' +
+              '</div>' +
+              '<h2 class="featured-title">' + fp.title + '</h2>' +
+              '<p class="featured-excerpt">' + fp.excerpt + '</p>' +
             '</div>' +
-            '<h2 class="featured-title">' + fp.title + '</h2>' +
-            '<p class="featured-excerpt">' + fp.excerpt + '</p>' +
+            '<span class="read-link">Read</span>' +
           '</div>' +
-          '<span class="read-link">Read</span>' +
-        '</div>' +
-      '</a>';
-
-      /* Remaining featured go into grid */
+        '</a>';
       regular = featured.slice(1).concat(regular);
     }
 
-    /* Grid */
     gridEl.innerHTML = "";
     if (regular.length === 0 && featured.length === 0) {
       gridEl.innerHTML = '<div class="empty-state"><p class="empty-text">No articles in this category yet.</p></div>';
@@ -628,7 +566,6 @@ footer {
     });
   }
 
-  /* ── Clerk nav ── */
   window.addEventListener("load", async function () {
     buildFilters();
     renderPosts();
@@ -639,15 +576,13 @@ footer {
       var navLink = document.getElementById("navAuthLink");
       var navName = document.getElementById("navUserName");
       if (user) {
-        navName.textContent = (user.firstName || "Member") + " \u2192 Sanctuary";
+        navName.textContent = (user.firstName || "Member") + " → Sanctuary";
         navLink.href = "/portal.html";
       } else {
         navName.textContent = "Sign In";
         navLink.href = "/login.html";
       }
-    } catch (e) {
-      /* Clerk unavailable — silent fail */
-    }
+    } catch (e) { /* Clerk unavailable */ }
   });
 
 }());
