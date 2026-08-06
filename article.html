@@ -3,26 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Title and meta filled dynamically by JS -->
-<title>The Archive — Psychic Belle</title>
+<title>Dear Belle — Psychic Belle</title>
 <meta name="robots" content="index, follow">
-  <script>const l=document.createElement('link');l.rel='canonical';l.href=window.location.href;document.head.appendChild(l);</script>
+<script>const l=document.createElement('link');l.rel='canonical';l.href=window.location.href;document.head.appendChild(l);</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
 <script src="//code.tidio.co/ymud1rzkyzk90r85ach0scowv0rblxnr.js" async></script>
 <style>
 :root {
-  --gold:       #D4AF37;
-  --gold-pale:  #e8d27a;
-  --gold-dim:   rgba(212,175,55,0.15);
-  --gold-line:  rgba(212,175,55,0.35);
-  --gold-faint: rgba(212,175,55,0.07);
-  --black:      #0a0a0a;
-  --surface:    #111111;
-  --text:       #f0ead8;
-  --text-muted: rgba(240,234,216,0.55);
-  --text-dim:   rgba(240,234,216,0.32);
+  --bg:         #0A0A2E;
+  --bg-deep:    #07071a;
+  --bg-lift:    #0F0F3A;
+  --ice:        #C5DEEF;
+  --ice-pale:   #e8f4fc;
+  --ice-dim:    rgba(197,222,239,0.15);
+  --ice-line:   rgba(197,222,239,0.25);
+  --ice-faint:  rgba(197,222,239,0.06);
+  --border:     #1a1a4a;
+  --text:       #ffffff;
+  --text-muted: rgba(255,255,255,0.65);
+  --text-dim:   rgba(255,255,255,0.32);
   --green:      #4ade80;
 }
 
@@ -30,28 +31,27 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--black);
+  background: var(--bg);
   color: var(--text);
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 300;
   min-height: 100vh;
   overflow-x: hidden;
-  /* Bottom padding so FAB doesn't cover content */
   padding-bottom: 100px;
 }
 
 body::before {
   content: '';
   position: fixed; inset: 0;
-  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(212,175,55,0.05) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(197,222,239,0.04) 0%, transparent 70%);
   pointer-events: none; z-index: 0;
 }
 
 /* ── NAV ── */
 nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(10,10,10,0.95);
-  border-bottom: 0.5px solid var(--gold-line);
+  background: rgba(10,10,46,0.95);
+  border-bottom: 0.5px solid var(--ice-line);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -66,7 +66,7 @@ nav {
 .nav-brand {
   font-family: 'Cinzel', serif;
   font-size: 12px; letter-spacing: 0.28em;
-  text-transform: uppercase; color: var(--gold);
+  text-transform: uppercase; color: var(--ice);
   text-decoration: none;
 }
 
@@ -82,7 +82,7 @@ nav {
   content: '←';
   font-size: 12px; transition: transform 0.2s;
 }
-.nav-back:hover { color: var(--gold); }
+.nav-back:hover { color: var(--ice); }
 .nav-back:hover::before { transform: translateX(-3px); }
 
 .nav-auth {
@@ -92,7 +92,19 @@ nav {
   text-decoration: none; transition: color 0.2s;
   white-space: nowrap;
 }
-.nav-auth:hover { color: var(--gold); }
+.nav-auth:hover { color: var(--ice); }
+
+/* ── READING PROGRESS BAR ── */
+.reading-progress {
+  position: fixed; top: 56px; left: 0; right: 0;
+  height: 2px; z-index: 99;
+  background: rgba(197,222,239,0.08);
+}
+.reading-progress-fill {
+  height: 100%; width: 0%;
+  background: var(--ice);
+  transition: width 0.1s linear;
+}
 
 /* ── ARTICLE LAYOUT ── */
 .page {
@@ -101,24 +113,72 @@ nav {
   padding: 0 24px;
 }
 
+/* ── DEAR BELLE MASTHEAD ── */
+.dear-belle-masthead {
+  padding: 64px 0 32px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.masthead-column {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.45em;
+  text-transform: uppercase; color: var(--ice);
+  opacity: 0.6; display: block; margin-bottom: 10px;
+}
+
+.masthead-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: 400; letter-spacing: 0.12em;
+  color: var(--text); line-height: 1.2;
+}
+
+.masthead-rule {
+  width: 48px; height: 0.5px;
+  background: var(--ice); opacity: 0.3;
+  margin: 20px 0;
+}
+
+/* ── READER QUESTION ── */
+.reader-question {
+  border-left: 1.5px solid var(--ice);
+  padding: 18px 24px;
+  background: var(--ice-faint);
+  margin-bottom: 36px;
+  animation: fadeUp 0.5s ease both 0.1s;
+}
+
+.reader-question-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--ice);
+  opacity: 0.5; display: block; margin-bottom: 10px;
+}
+
+.reader-question-text {
+  font-size: clamp(17px, 3vw, 20px);
+  font-style: italic; line-height: 1.8;
+  color: var(--text-muted); letter-spacing: 0.02em;
+}
+
 /* ── ARTICLE HEADER ── */
 .article-header {
-  padding: 64px 0 48px;
-  border-bottom: 0.5px solid var(--gold-line);
-  margin-bottom: 52px;
-  animation: fadeUp 0.6s ease both;
+  padding-bottom: 36px;
+  border-bottom: 0.5px solid var(--ice-line);
+  margin-bottom: 48px;
+  animation: fadeUp 0.5s ease both 0.15s;
 }
 
 .article-meta {
   display: flex; align-items: center;
-  gap: 12px; margin-bottom: 22px; flex-wrap: wrap;
+  gap: 12px; margin-bottom: 18px; flex-wrap: wrap;
 }
 
 .article-category {
   font-family: 'Cinzel', serif;
   font-size: 8px; letter-spacing: 0.35em;
-  text-transform: uppercase; color: var(--gold);
-  opacity: 0.85;
+  text-transform: uppercase; color: var(--ice);
+  opacity: 0.75;
 }
 
 .meta-dot {
@@ -134,34 +194,31 @@ nav {
 
 .article-title {
   font-family: 'Cinzel', serif;
-  font-size: clamp(24px, 6vw, 38px);
+  font-size: clamp(20px, 5vw, 32px);
   font-weight: 400; letter-spacing: 0.1em;
-  line-height: 1.25; color: var(--text);
-  margin-bottom: 20px;
+  line-height: 1.3; color: var(--text);
+  margin-bottom: 16px;
 }
 
 .article-excerpt {
-  font-size: clamp(16px, 3vw, 19px);
+  font-size: clamp(16px, 3vw, 18px);
   font-style: italic; line-height: 1.8;
   color: var(--text-muted); letter-spacing: 0.03em;
 }
 
-/* ── SANCTUARY SAVE BUTTON ── */
+/* ── SANCTUARY BAR ── */
 .sanctuary-bar {
-  display: none; /* shown when logged in */
+  display: none;
   align-items: center; gap: 14px;
   padding: 14px 20px;
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
+  border: 0.5px solid var(--ice-line);
+  background: var(--ice-faint);
   margin-bottom: 48px;
   animation: fadeUp 0.5s ease both 0.2s;
 }
-
 .sanctuary-bar.visible { display: flex; }
 
-.sanctuary-icon {
-  font-size: 14px; color: var(--gold); flex-shrink: 0;
-}
+.sanctuary-icon { font-size: 14px; color: var(--ice); flex-shrink: 0; }
 
 .sanctuary-text {
   font-family: 'Cinzel', serif;
@@ -172,8 +229,8 @@ nav {
 
 .sanctuary-btn {
   background: transparent;
-  border: 0.5px solid var(--gold-line);
-  color: var(--gold);
+  border: 0.5px solid var(--ice-line);
+  color: var(--ice);
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -182,35 +239,15 @@ nav {
   transition: background 0.2s, border-color 0.2s, color 0.2s;
   -webkit-appearance: none;
 }
-.sanctuary-btn:hover {
-  background: var(--gold); color: var(--black);
-  border-color: var(--gold);
-}
-.sanctuary-btn.saved {
-  color: var(--green); border-color: var(--green);
-  cursor: default;
-}
-.sanctuary-btn.saved:hover {
-  background: transparent; color: var(--green); border-color: var(--green);
-}
-
-/* ── READING PROGRESS BAR ── */
-.reading-progress {
-  position: fixed; top: 56px; left: 0; right: 0;
-  height: 2px; z-index: 99;
-  background: rgba(212,175,55,0.1);
-}
-.reading-progress-fill {
-  height: 100%; width: 0%;
-  background: var(--gold);
-  transition: width 0.1s linear;
-}
+.sanctuary-btn:hover { background: var(--ice); color: var(--bg); border-color: var(--ice); }
+.sanctuary-btn.saved { color: var(--green); border-color: var(--green); cursor: default; }
+.sanctuary-btn.saved:hover { background: transparent; color: var(--green); border-color: var(--green); }
 
 /* ── TABLE OF CONTENTS ── */
 .toc {
   width: 100%;
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
+  border: 0.5px solid var(--ice-line);
+  background: var(--ice-faint);
   padding: 28px 28px 24px;
   margin-bottom: 48px;
   animation: fadeUp 0.5s ease both 0.1s;
@@ -220,14 +257,13 @@ nav {
   display: flex; align-items: center;
   justify-content: space-between;
   margin-bottom: 18px;
-  cursor: pointer;
-  user-select: none;
+  cursor: pointer; user-select: none;
 }
 
 .toc-eyebrow {
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.35em;
-  text-transform: uppercase; color: var(--gold);
+  text-transform: uppercase; color: var(--ice);
   opacity: 0.8;
 }
 
@@ -237,40 +273,28 @@ nav {
   text-transform: uppercase; color: var(--text-dim);
   transition: color 0.2s;
 }
-.toc-toggle:hover { color: var(--gold); }
+.toc-toggle:hover { color: var(--ice); }
 
-.toc-list {
-  list-style: none;
-  display: flex; flex-direction: column; gap: 0;
-}
-
+.toc-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
 .toc-list.collapsed { display: none; }
 
-.toc-item {
-  border-top: 0.5px solid rgba(212,175,55,0.1);
-}
+.toc-item { border-top: 0.5px solid rgba(197,222,239,0.08); }
 .toc-item:first-child { border-top: none; }
 
 .toc-link {
   display: flex; align-items: center; gap: 14px;
-  padding: 11px 0;
-  text-decoration: none;
-  color: var(--text-muted);
-  font-size: 16px;
-  font-style: italic;
-  line-height: 1.4;
+  padding: 11px 0; text-decoration: none;
+  color: var(--text-muted); font-size: 16px;
+  font-style: italic; line-height: 1.4;
   letter-spacing: 0.02em;
   transition: color 0.2s, padding-left 0.2s;
 }
-.toc-link:hover {
-  color: var(--gold);
-  padding-left: 6px;
-}
+.toc-link:hover { color: var(--ice); padding-left: 6px; }
 
 .toc-num {
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.2em;
-  color: var(--gold); opacity: 0.5;
+  color: var(--ice); opacity: 0.5;
   flex-shrink: 0; width: 18px;
 }
 
@@ -278,34 +302,42 @@ nav {
   font-family: 'Cinzel', serif;
   font-size: 9px; letter-spacing: 0.22em;
   text-transform: uppercase; color: var(--text-dim);
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 0.5px solid rgba(212,175,55,0.1);
+  margin-top: 16px; padding-top: 14px;
+  border-top: 0.5px solid rgba(197,222,239,0.08);
 }
 
-/* ── ARTICLE BODY TYPOGRAPHY — mobile-first 18px minimum ── */
-.article-body {
-  animation: fadeUp 0.6s ease both 0.15s;
+/* ── STICKY TOC — auto-collapse on scroll ── */
+.toc.is-sticky {
+  position: sticky; top: 58px; z-index: 50;
+  background: rgba(10,10,46,0.97);
+  backdrop-filter: blur(12px);
+  border-left: none; border-right: none;
+  padding: 12px 28px;
+  margin-left: -24px; margin-right: -24px;
+  width: calc(100% + 48px);
+  max-width: none;
 }
+.toc.is-sticky .toc-list { display: none; }
+.toc.is-sticky .toc-word-count { display: none; }
+.toc.is-sticky .toc-toggle { display: inline; }
+.toc.is-sticky.expanded .toc-list { display: flex; }
+
+/* ── ARTICLE BODY ── */
+.article-body { animation: fadeUp 0.6s ease both 0.15s; }
 
 .article-body p {
   font-size: clamp(18px, 3vw, 20px);
-  line-height: 2;
-  color: rgba(240,234,216,0.72);
-  margin-bottom: 32px;
-  letter-spacing: 0.015em;
-  /* Improved dark-mode readability — slightly warm off-white not pure white */
+  line-height: 2; color: rgba(255,255,255,0.72);
+  margin-bottom: 32px; letter-spacing: 0.015em;
 }
 
 .article-body h2 {
   font-family: 'Cinzel', serif;
-  font-size: clamp(15px, 3vw, 18px);
+  font-size: clamp(13px, 3vw, 16px);
   font-weight: 400; letter-spacing: 0.18em;
   text-transform: uppercase; color: var(--text);
-  margin: 56px 0 20px;
-  padding-top: 32px;
-  border-top: 0.5px solid rgba(212,175,55,0.15);
-  /* Scroll offset so TOC anchors clear the sticky nav */
+  margin: 56px 0 20px; padding-top: 32px;
+  border-top: 0.5px solid rgba(197,222,239,0.12);
   scroll-margin-top: 80px;
 }
 
@@ -313,90 +345,69 @@ nav {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(17px, 3vw, 20px);
   font-weight: 400; font-style: italic;
-  letter-spacing: 0.06em;
-  color: var(--gold); opacity: 0.9;
-  margin: 36px 0 14px;
+  letter-spacing: 0.06em; color: var(--ice);
+  opacity: 0.9; margin: 36px 0 14px;
   scroll-margin-top: 80px;
 }
 
-.article-body strong {
-  font-weight: 400; color: var(--text);
-  font-style: normal;
-}
-
-.article-body em {
-  font-style: italic;
-  color: var(--gold); opacity: 0.85;
-}
+.article-body strong { font-weight: 400; color: var(--text); font-style: normal; }
+.article-body em { font-style: italic; color: var(--ice); opacity: 0.85; }
 
 .article-body ul,
-.article-body ol {
-  padding-left: 20px;
-  margin-bottom: 32px;
-}
+.article-body ol { padding-left: 20px; margin-bottom: 32px; }
 
 .article-body li {
   font-size: clamp(18px, 3vw, 20px);
-  line-height: 1.9;
-  color: rgba(240,234,216,0.72);
-  margin-bottom: 10px;
-  letter-spacing: 0.015em;
+  line-height: 1.9; color: rgba(255,255,255,0.72);
+  margin-bottom: 10px; letter-spacing: 0.015em;
 }
 
 .article-body blockquote {
-  border-left: 1.5px solid var(--gold);
+  border-left: 1.5px solid var(--ice);
   padding: 22px 26px;
-  background: rgba(212,175,55,0.06);
+  background: var(--ice-faint);
   margin: 40px 0;
   font-size: clamp(18px, 3vw, 21px);
-  font-style: italic;
-  color: var(--text);
-  line-height: 1.85;
-  letter-spacing: 0.02em;
+  font-style: italic; color: var(--text);
+  line-height: 1.85; letter-spacing: 0.02em;
 }
 
-/* Divider between major sections */
 .article-body hr {
   border: none;
-  border-top: 0.5px solid rgba(212,175,55,0.2);
+  border-top: 0.5px solid rgba(197,222,239,0.15);
   margin: 52px 0;
 }
 
-/* ── ARTICLE CTA — mid-article Belle prompt ── */
+/* ── MID-ARTICLE CTA ── */
 .article-cta {
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
+  border: 0.5px solid var(--ice-line);
+  background: var(--ice-faint);
   padding: 28px 26px;
-  margin: 52px 0;
-  text-align: center;
+  margin: 52px 0; text-align: center;
 }
 
 .article-cta-text {
   font-size: clamp(16px, 3vw, 18px);
-  font-style: italic;
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin-bottom: 18px;
+  font-style: italic; color: var(--text-muted);
+  line-height: 1.7; margin-bottom: 18px;
 }
 
 .article-cta-btn {
   display: inline-block;
   padding: 13px 28px;
-  background: var(--gold); color: var(--black);
+  background: var(--text); color: var(--bg);
   font-family: 'Cinzel', serif;
   font-size: 10px; font-weight: 500;
   letter-spacing: 0.28em; text-transform: uppercase;
   border: none; cursor: pointer; text-decoration: none;
-  transition: background 0.2s;
-  -webkit-appearance: none;
+  transition: background 0.2s; -webkit-appearance: none;
 }
-.article-cta-btn:hover { background: var(--gold-pale); }
+.article-cta-btn:hover { background: var(--ice); }
 
 /* ── ARTICLE FOOTER ── */
 .article-footer {
-  margin-top: 64px;
-  padding-top: 36px;
-  border-top: 0.5px solid var(--gold-line);
+  margin-top: 64px; padding-top: 36px;
+  border-top: 0.5px solid var(--ice-line);
   animation: fadeUp 0.6s ease both 0.3s;
 }
 
@@ -408,91 +419,71 @@ nav {
 }
 
 .related-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: grid; grid-template-columns: 1fr 1fr;
   gap: 14px; margin-bottom: 44px;
 }
 
 .related-card {
   padding: 22px 20px;
-  border: 0.5px solid var(--gold-line);
-  background: var(--gold-faint);
+  border: 0.5px solid var(--ice-line);
+  background: var(--ice-faint);
   text-decoration: none; color: inherit;
   transition: border-color 0.25s, background 0.25s;
 }
-.related-card:hover {
-  border-color: var(--gold);
-  background: rgba(212,175,55,0.1);
-}
+.related-card:hover { border-color: var(--ice); background: rgba(197,222,239,0.08); }
 
 .related-cat {
   font-family: 'Cinzel', serif;
   font-size: 8px; letter-spacing: 0.3em;
-  text-transform: uppercase; color: var(--gold);
+  text-transform: uppercase; color: var(--ice);
   opacity: 0.7; display: block; margin-bottom: 8px;
 }
 
 .related-title {
   font-family: 'Cinzel', serif;
   font-size: 13px; letter-spacing: 0.1em;
-  font-weight: 400; color: var(--text);
-  line-height: 1.4;
+  font-weight: 400; color: var(--text); line-height: 1.4;
 }
 
-/* ── FLOATING ACTION BUTTON ── */
-.tidio-fab {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  z-index: 200;
-  background: var(--gold);
-  display: flex; align-items: center;
-  justify-content: center; gap: 14px;
-  padding: 18px 32px;
-  cursor: pointer; border: none;
-  transition: background 0.25s;
-  -webkit-appearance: none;
-  box-shadow: 0 -4px 32px rgba(212,175,55,0.2);
-}
-.tidio-fab:hover { background: var(--gold-pale); }
-.tidio-fab:active { opacity: 0.9; }
-
-.fab-icon {
-  font-size: 16px; color: var(--black);
-  flex-shrink: 0;
-}
-
-.fab-text {
-  font-family: 'Cinzel', serif;
-  font-size: 11px; font-weight: 500;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--black);
-}
-
-/* ── NOT FOUND ── */
-#notFound {
-  display: none;
-  text-align: center;
-  padding: 120px 24px;
-}
-.notfound-title {
-  font-family: 'Cinzel', serif;
-  font-size: 24px; letter-spacing: 0.14em;
-  color: var(--text); margin-bottom: 14px;
-}
-.notfound-sub {
-  font-style: italic; color: var(--text-muted);
-  margin-bottom: 32px;
-}
+/* ── BACK BUTTON ── */
 .back-btn {
-  display: inline-block;
-  padding: 14px 32px;
-  background: var(--gold); color: var(--black);
+  display: inline-block; padding: 14px 32px;
+  background: var(--text); color: var(--bg);
   font-family: 'Cinzel', serif;
   font-size: 10px; letter-spacing: 0.28em;
   text-transform: uppercase; text-decoration: none;
   transition: background 0.25s;
 }
-.back-btn:hover { background: var(--gold-pale); }
+.back-btn:hover { background: var(--ice); }
+
+/* ── FLOATING ACTION BUTTON ── */
+.tidio-fab {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 200; background: var(--text);
+  display: flex; align-items: center;
+  justify-content: center; gap: 14px;
+  padding: 18px 32px; cursor: pointer; border: none;
+  transition: background 0.25s; -webkit-appearance: none;
+  box-shadow: 0 -4px 32px rgba(197,222,239,0.1);
+}
+.tidio-fab:hover { background: var(--ice); }
+.tidio-fab:active { opacity: 0.9; }
+
+.fab-icon { font-size: 16px; color: var(--bg); flex-shrink: 0; }
+.fab-text {
+  font-family: 'Cinzel', serif;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--bg);
+}
+
+/* ── NOT FOUND ── */
+#notFound { display: none; text-align: center; padding: 120px 24px; }
+.notfound-title {
+  font-family: 'Cinzel', serif; font-size: 24px;
+  letter-spacing: 0.14em; color: var(--text); margin-bottom: 14px;
+}
+.notfound-sub { font-style: italic; color: var(--text-muted); margin-bottom: 32px; }
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
@@ -505,12 +496,13 @@ nav {
   .page { padding: 0 16px; }
   .related-grid { grid-template-columns: 1fr; }
   .fab-text { font-size: 10px; letter-spacing: 0.22em; }
+  .toc.is-sticky { margin-left: -16px; margin-right: -16px; width: calc(100% + 32px); }
 }
 </style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="/index.html" class="nav-brand">Psychic Belle</a>
@@ -521,8 +513,7 @@ nav {
   </div>
 </nav>
 
-<!-- ── MAIN ARTICLE ── -->
-<!-- ── READING PROGRESS BAR ── -->
+<!-- READING PROGRESS BAR -->
 <div class="reading-progress" id="readingProgress" style="display:none">
   <div class="reading-progress-fill" id="progressFill"></div>
 </div>
@@ -534,12 +525,26 @@ nav {
     <div id="notFound">
       <h1 class="notfound-title">Article Not Found</h1>
       <p class="notfound-sub">This frequency has not been written yet.</p>
-      <a href="/archive.html" class="back-btn">Return to Archive</a>
+      <a href="/archive.html" class="back-btn">Return to The Archive</a>
     </div>
 
-    <!-- Article content (populated by JS) -->
+    <!-- Article content -->
     <article id="articleContent" style="display:none">
 
+      <!-- Dear Belle Masthead — always present -->
+      <div class="dear-belle-masthead">
+        <span class="masthead-column">A Column by</span>
+        <h2 class="masthead-title">Dear Belle</h2>
+        <div class="masthead-rule"></div>
+      </div>
+
+      <!-- Reader question — shown when question field exists in frontmatter -->
+      <div class="reader-question" id="readerQuestion" style="display:none">
+        <span class="reader-question-label">The Question</span>
+        <p class="reader-question-text" id="readerQuestionText"></p>
+      </div>
+
+      <!-- Article header -->
       <header class="article-header">
         <div class="article-meta">
           <span class="article-category" id="articleCategory"></span>
@@ -552,14 +557,14 @@ nav {
         <p class="article-excerpt" id="articleExcerpt"></p>
       </header>
 
-      <!-- Save to Sanctuary bar (logged-in users only) -->
+      <!-- Save to Sanctuary bar (logged-in only) -->
       <div class="sanctuary-bar" id="sanctuaryBar" role="complementary" aria-label="Save to Sanctuary">
         <span class="sanctuary-icon" aria-hidden="true">&#10022;</span>
         <span class="sanctuary-text">Save this insight to your Sanctuary</span>
         <button class="sanctuary-btn" id="sanctuaryBtn">Save</button>
       </div>
 
-      <!-- Table of Contents — auto-built from H2s by JS -->
+      <!-- Table of Contents -->
       <nav class="toc" id="tocContainer" aria-label="Table of Contents" style="display:none">
         <div class="toc-header" id="tocHeader">
           <span class="toc-eyebrow">In This Article</span>
@@ -572,28 +577,27 @@ nav {
       <!-- Article body -->
       <div class="article-body" id="articleBody"></div>
 
-      <!-- Article footer with related posts -->
+      <!-- Article footer -->
       <footer class="article-footer">
         <span class="article-footer-label">Continue Reading</span>
         <div class="related-grid" id="relatedGrid"></div>
-        <a href="/archive.html" class="back-btn" style="margin-top:8px">View Full Archive</a>
+        <a href="/archive.html" class="back-btn" style="margin-top:8px">Return to The Archive</a>
       </footer>
 
     </article>
-
   </div>
 </main>
 
-<!-- ── FLOATING ACTION BUTTON — Discuss with Belle ── -->
-<button class="tidio-fab" id="tidioFab" aria-label="Discuss this with Psychic Belle via live chat">
+<!-- FLOATING ACTION BUTTON -->
+<button class="tidio-fab" id="tidioFab" aria-label="Get a reading with Psychic Belle">
   <span class="fab-icon" aria-hidden="true">&#9728;</span>
-  <span class="fab-text">Discuss this Frequency with Belle</span>
+  <span class="fab-text">Get Your Reading with Belle</span>
 </button>
 
-<!-- ── DATA ── -->
+<!-- DATA -->
 <script src="posts.js"></script>
 
-<!-- ── CLERK ── -->
+<!-- CLERK -->
 <script>window.__clerk_publishable_key = "pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ";</script>
 <script async crossorigin="anonymous"
   data-clerk-publishable-key="pk_test_Y29uY2lzZS13YXNwLTQ4LmNsZXJrLmFjY291bnRzLmRldiQ"
@@ -604,7 +608,6 @@ nav {
 (function () {
   "use strict";
 
-  /* ── Get slug from URL ── */
   var slug = new URLSearchParams(window.location.search).get("post") || "";
   var post = null;
 
@@ -612,7 +615,6 @@ nav {
     if (BELLE_POSTS[i].slug === slug) { post = BELLE_POSTS[i]; break; }
   }
 
-  /* ── Not found ── */
   if (!post) {
     document.getElementById("notFound").style.display = "block";
     document.getElementById("tidioFab").style.display  = "none";
@@ -620,17 +622,14 @@ nav {
     renderArticle(post);
   }
 
-  /* ── Render article ── */
   function renderArticle(p) {
-    /* Update <head> meta dynamically */
-    document.title = p.title + " — Psychic Belle";
+    document.title = p.title + " — Dear Belle";
     setMeta("description", p.excerpt);
-    setMeta("og:title",       p.title + " — Psychic Belle");
+    setMeta("og:title",       p.title + " — Dear Belle · Psychic Belle");
     setMeta("og:description", p.excerpt);
     setMeta("og:url", "https://psychicbelle.com/article.html?post=" + p.slug);
     setCanonical("https://psychicbelle.com/article.html?post=" + p.slug);
 
-    /* Populate article */
     document.getElementById("articleCategory").textContent = p.category;
     document.getElementById("articleDate").textContent     = p.date;
     document.getElementById("articleReadtime").textContent = p.readTime + " read";
@@ -639,16 +638,18 @@ nav {
     document.getElementById("articleBody").innerHTML       = p.content;
     document.getElementById("articleContent").style.display = "block";
 
-    /* ── Build Table of Contents from H2s ── */
+    /* Reader question — show if field exists in post data */
+    if (p.question) {
+      var qBlock = document.getElementById("readerQuestion");
+      var qText  = document.getElementById("readerQuestionText");
+      qText.textContent = p.question;
+      qBlock.style.display = "block";
+    }
+
     buildTOC();
-
-    /* ── Word count ── */
     buildWordCount(p.content);
-
-    /* ── Reading progress bar ── */
     initProgressBar();
-
-    /* ── Related posts ── */
+    initStickyTOC();
     buildRelated(p);
   }
 
@@ -656,7 +657,7 @@ nav {
   function buildTOC() {
     var body     = document.getElementById("articleBody");
     var headings = body.querySelectorAll("h2");
-    if (headings.length < 2) return; /* Skip TOC for short posts */
+    if (headings.length < 2) return;
 
     var tocContainer = document.getElementById("tocContainer");
     var tocList      = document.getElementById("tocList");
@@ -667,21 +668,17 @@ nav {
     tocList.innerHTML = "";
 
     headings.forEach(function (h, idx) {
-      /* Give each heading a stable anchor ID */
       var id = "section-" + (idx + 1);
       h.setAttribute("id", id);
 
-      var li   = document.createElement("li");
+      var li = document.createElement("li");
       li.className = "toc-item";
 
-      var a    = document.createElement("a");
+      var a = document.createElement("a");
       a.className = "toc-link";
-      a.href   = "#" + id;
-      a.innerHTML =
-        '<span class="toc-num">' + (idx + 1) + '</span>' +
-        h.textContent;
+      a.href = "#" + id;
+      a.innerHTML = '<span class="toc-num">' + (idx + 1) + '</span>' + h.textContent;
 
-      /* Smooth scroll with offset for sticky nav */
       a.addEventListener("click", function (e) {
         e.preventDefault();
         var target = document.getElementById(id);
@@ -695,42 +692,71 @@ nav {
       tocList.appendChild(li);
     });
 
-    /* Collapse/expand toggle */
     tocHeader.addEventListener("click", function () {
-      collapsed = !collapsed;
-      tocList.className = "toc-list" + (collapsed ? " collapsed" : "");
-      tocToggle.textContent = collapsed ? "Expand" : "Collapse";
+      var toc = document.getElementById("tocContainer");
+      if (toc.classList.contains("is-sticky")) {
+        toc.classList.toggle("expanded");
+        tocToggle.textContent = toc.classList.contains("expanded") ? "Collapse" : "Expand";
+      } else {
+        collapsed = !collapsed;
+        tocList.className = "toc-list" + (collapsed ? " collapsed" : "");
+        tocToggle.textContent = collapsed ? "Expand" : "Collapse";
+      }
     });
 
     tocContainer.style.display = "block";
   }
 
-  /* ── Word count & reading time ── */
+  /* ── Sticky TOC — becomes sticky bar on scroll, collapses automatically ── */
+  function initStickyTOC() {
+    var toc = document.getElementById("tocContainer");
+    if (!toc || toc.style.display === "none") return;
+
+    var tocToggle   = document.getElementById("tocToggle");
+    var tocOffset   = null;
+
+    window.addEventListener("scroll", function () {
+      if (tocOffset === null) {
+        tocOffset = toc.getBoundingClientRect().top + window.scrollY;
+      }
+
+      if (window.scrollY > tocOffset + toc.offsetHeight) {
+        if (!toc.classList.contains("is-sticky")) {
+          toc.classList.add("is-sticky");
+          toc.classList.remove("expanded");
+          tocToggle.textContent = "Expand";
+        }
+      } else {
+        if (toc.classList.contains("is-sticky")) {
+          toc.classList.remove("is-sticky");
+          toc.classList.remove("expanded");
+          tocToggle.textContent = "Collapse";
+        }
+      }
+    }, { passive: true });
+  }
+
+  /* ── Word count ── */
   function buildWordCount(content) {
-    /* Strip HTML tags to count only words */
     var text  = content.replace(/<[^>]+>/g, " ");
     var words = text.trim().split(/\s+/).filter(function (w) { return w.length > 0; }).length;
-    var mins  = Math.max(1, Math.round(words / 200)); /* 200wpm comfortable reading pace */
-
-    var el = document.getElementById("tocWordCount");
-    if (el) {
-      el.textContent = words.toLocaleString() + " words \u00B7 " + mins + " min read";
-    }
+    var mins  = Math.max(1, Math.round(words / 200));
+    var el    = document.getElementById("tocWordCount");
+    if (el) el.textContent = words.toLocaleString() + " words · " + mins + " min read";
   }
 
   /* ── Reading progress bar ── */
   function initProgressBar() {
-    var bar    = document.getElementById("readingProgress");
-    var fill   = document.getElementById("progressFill");
-    var body   = document.getElementById("articleBody");
+    var bar  = document.getElementById("readingProgress");
+    var fill = document.getElementById("progressFill");
+    var body = document.getElementById("articleBody");
     bar.style.display = "block";
 
     window.addEventListener("scroll", function () {
-      var bodyRect  = body.getBoundingClientRect();
-      var bodyTop   = bodyRect.top + window.scrollY;
-      var bodyEnd   = bodyTop + body.offsetHeight;
-      var scrolled  = window.scrollY + window.innerHeight;
-      var progress  = Math.min(1, Math.max(0, (scrolled - bodyTop) / (bodyEnd - bodyTop)));
+      var bodyTop  = body.getBoundingClientRect().top + window.scrollY;
+      var bodyEnd  = bodyTop + body.offsetHeight;
+      var scrolled = window.scrollY + window.innerHeight;
+      var progress = Math.min(1, Math.max(0, (scrolled - bodyTop) / (bodyEnd - bodyTop)));
       fill.style.width = (progress * 100) + "%";
     }, { passive: true });
   }
@@ -760,6 +786,11 @@ nav {
     });
   }
 
+  /* ── FAB → Connection Reading sales page ── */
+  document.getElementById("tidioFab").addEventListener("click", function () {
+    window.location.href = "https://go.psychicbelle.com/connection-reading";
+  });
+
   /* ── Meta helpers ── */
   function setMeta(name, content) {
     var el = document.querySelector('meta[name="' + name + '"], meta[property="' + name + '"]');
@@ -778,18 +809,11 @@ nav {
     document.head.appendChild(l);
   }
 
-/* ── Tidio FAB ── */
-  document.getElementById("tidioFab").addEventListener("click", function () {
-    window.location.href = "/#packagesSection";
-  });
-
   /* ── Clerk: auth + Save to Sanctuary ── */
   window.addEventListener("load", async function () {
     try {
       await window.Clerk.load();
       var user = window.Clerk.user;
-
-      /* Nav */
       var navLink = document.getElementById("navAuthLink");
       var navName = document.getElementById("navUserName");
 
@@ -797,65 +821,39 @@ nav {
         navName.textContent = user.firstName || "Member";
         navLink.href = "/portal.html";
 
-        /* Show sanctuary bar */
         if (post) {
-          var bar    = document.getElementById("sanctuaryBar");
-          var btn    = document.getElementById("sanctuaryBtn");
+          var bar = document.getElementById("sanctuaryBar");
+          var btn = document.getElementById("sanctuaryBtn");
           bar.classList.add("visible");
 
-          /* Check if already saved */
           var saved = user.publicMetadata &&
                       user.publicMetadata.saved_articles &&
                       user.publicMetadata.saved_articles.indexOf(post.id) !== -1;
 
-          if (saved) {
-            btn.textContent = "Saved \u2713";
-            btn.classList.add("saved");
-          }
+          if (saved) { btn.textContent = "Saved ✓"; btn.classList.add("saved"); }
 
           btn.addEventListener("click", async function () {
             if (btn.classList.contains("saved")) return;
-            btn.disabled = true;
-            btn.textContent = "Saving\u2026";
-
+            btn.disabled = true; btn.textContent = "Saving…";
             try {
               var token = await window.Clerk.session.getToken();
               var res = await fetch("/.netlify/functions/save-article", {
                 method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": "Bearer " + token
-                },
-                body: JSON.stringify({
-                  userId:    user.id,
-                  articleId: post.id
-                })
+                headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+                body: JSON.stringify({ userId: user.id, articleId: post.id })
               });
-
               if (res.ok) {
                 await window.Clerk.user.reload();
-                btn.textContent = "Saved \u2713";
-                btn.classList.add("saved");
-                btn.disabled = false;
-              } else {
-                btn.textContent = "Save";
-                btn.disabled = false;
-              }
-            } catch (e) {
-              btn.textContent = "Save";
-              btn.disabled = false;
-            }
+                btn.textContent = "Saved ✓"; btn.classList.add("saved"); btn.disabled = false;
+              } else { btn.textContent = "Save"; btn.disabled = false; }
+            } catch (e) { btn.textContent = "Save"; btn.disabled = false; }
           });
         }
-
       } else {
         navName.textContent = "Sign In";
         navLink.href = "/login.html";
       }
-
-    } catch (e) {
-      /* Clerk unavailable */
-    }
+    } catch (e) { /* Clerk unavailable */ }
   });
 
 }());
