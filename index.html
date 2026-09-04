@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PsychicBelle</title>
+<title>Psychic Belle — Connection Readings</title>
+<meta name="description" content="Get clarity on your connection. Written readings delivered within 48 hours by Psychic Belle.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://psychicbelle.com">
+<meta property="og:title" content="Psychic Belle — Connection Readings">
+<meta property="og:description" content="Get clarity on your connection. Written readings delivered within 48 hours.">
+<meta property="og:url" content="https://psychicbelle.com">
+<meta property="og:image" content="https://psychicbelle.com/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,92 +21,98 @@
     --bg-deep: #07071a;
     --bg-lift: #0F0F3A;
     --ice: #C5DEEF;
+    --ice-line: rgba(197,222,239,0.25);
+    --ice-faint: rgba(197,222,239,0.06);
     --border: #1a1a4a;
-    --border-light: #E8E8E8;
     --text: #ffffff;
-    --text-secondary: #d9d9d9;
-    --text-muted: #808080;
-    --text-faint: #4d4d4d;
+    --text-secondary: rgba(255,255,255,0.72);
+    --text-muted: rgba(255,255,255,0.65);
+    --text-dim: rgba(255,255,255,0.32);
+    --text-faint: rgba(255,255,255,0.18);
   }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); font-family: 'Cormorant Garamond', serif; color: var(--text); line-height: 1.6; }
+  body { background: var(--bg); font-family: 'Cormorant Garamond', serif; color: var(--text); line-height: 1.6; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(197,222,239,0.04) 0%, transparent 70%); pointer-events: none; z-index: 0; }
 
   /* NAV */
-  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(10,10,46,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(10,10,46,0.95); backdrop-filter: blur(8px); border-bottom: 0.5px solid var(--border); }
   .nav-wordmark { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.32em; color: var(--ice); text-transform: uppercase; text-decoration: none; }
   .nav-links { display: flex; gap: 32px; list-style: none; }
-  .nav-links a { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.22em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.22em; color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover { color: var(--ice); }
 
   /* HERO */
-  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
-  .hero::before { content: ''; position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(ellipse, rgba(197,222,239,0.04) 0%, transparent 70%); pointer-events: none; }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; position: relative; z-index: 1; border-bottom: 0.5px solid var(--border); }
   .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.35em; color: var(--ice); text-transform: uppercase; margin-bottom: 24px; opacity: 0.7; }
   .hero-headline { font-family: 'Cinzel', serif; font-size: clamp(28px,5vw,52px); font-weight: 400; letter-spacing: 0.06em; color: var(--text); line-height: 1.3; max-width: 700px; margin-bottom: 8px; }
   .hero-headline em { font-style: italic; color: var(--ice); font-family: 'Cormorant Garamond', serif; font-size: clamp(32px,5.5vw,58px); }
-  .hero-free { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 40px; }
-  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; font-style: italic; color: var(--text-secondary); max-width: 460px; margin-bottom: 48px; line-height: 1.7; }
-  .btn-primary { display: inline-block; background: var(--text); border: 1px solid var(--border-light); padding: 18px 48px; color: var(--bg); font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background 0.2s; }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; font-style: italic; color: var(--text-muted); max-width: 460px; margin-bottom: 48px; line-height: 1.7; }
+  .btn-primary { display: inline-block; background: var(--text); border: 1px solid rgba(255,255,255,0.8); padding: 18px 48px; color: var(--bg); font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
   .btn-primary:hover { background: var(--ice); }
-  .hero-symbol { margin-top: 64px; font-size: 16px; color: var(--ice); opacity: 0.25; letter-spacing: 0.5em; }
+  .hero-symbol { margin-top: 64px; font-size: 16px; color: var(--ice); opacity: 0.2; letter-spacing: 0.5em; }
 
-  /* SECTION BASE */
+  /* READING SECTION */
+  .reading-section { position: relative; z-index: 1; padding: 96px 24px; border-bottom: 0.5px solid var(--border); }
+  .reading-inner { max-width: 800px; margin: 0 auto; }
   .section-eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.32em; color: var(--ice); text-transform: uppercase; margin-bottom: 16px; opacity: 0.7; }
-  .section-headline { font-family: 'Cinzel', serif; font-size: clamp(20px,3vw,32px); font-weight: 400; letter-spacing: 0.08em; color: var(--text); margin-bottom: 16px; line-height: 1.4; }
-  .section-sub { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 56px; max-width: 520px; line-height: 1.7; }
-  .divider-line { width: 40px; height: 1px; background: var(--ice); opacity: 0.3; margin-bottom: 48px; }
+  .section-headline { font-family: 'Cinzel', serif; font-size: clamp(22px,3vw,34px); font-weight: 400; letter-spacing: 0.08em; color: var(--text); margin-bottom: 16px; line-height: 1.4; }
+  .section-sub { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; font-style: italic; color: var(--text-muted); margin-bottom: 48px; line-height: 1.7; }
+  .divider-line { width: 40px; height: 0.5px; background: var(--ice); opacity: 0.3; margin-bottom: 40px; }
 
-  /* PRODUCTS */
-  .products-section { background: var(--bg-deep); max-width: 100%; padding: 96px 24px; }
-  .products-inner { max-width: 1100px; margin: 0 auto; }
-  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-  .product-card { background: var(--bg); padding: 36px 32px; transition: background 0.2s; }
-  .product-card:hover { background: var(--bg-lift); }
-  .product-card.full { grid-column: 1 / -1; background: var(--bg-lift); }
-  .product-card.full:hover { background: #131340; }
-  .product-tag { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.28em; color: var(--ice); text-transform: uppercase; margin-bottom: 16px; opacity: 0.6; }
-  .product-name { font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 0.12em; color: var(--text); margin-bottom: 10px; font-weight: 400; }
-  .product-desc { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
-  .product-price { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.18em; color: var(--text-muted); }
-  .product-cta { display: inline-block; margin-top: 20px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.22em; color: var(--ice); text-transform: uppercase; text-decoration: none; border-bottom: 1px solid rgba(197,222,239,0.3); padding-bottom: 2px; transition: border-color 0.2s; }
-  .product-cta:hover { border-color: var(--ice); }
-  .coming-soon-label { display: inline-block; margin-top: 20px; font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.2em; color: var(--text-faint); text-transform: uppercase; }
+  .reading-card { border: 0.5px solid var(--ice-line); background: var(--ice-faint); padding: 48px; margin-bottom: 32px; }
+  .reading-card-tag { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.32em; color: var(--ice); text-transform: uppercase; opacity: 0.6; margin-bottom: 20px; display: block; }
+  .reading-card-name { font-family: 'Cinzel', serif; font-size: clamp(18px,3vw,26px); letter-spacing: 0.1em; color: var(--text); margin-bottom: 16px; font-weight: 400; }
+  .reading-card-desc { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; color: var(--text-secondary); line-height: 1.85; margin-bottom: 32px; }
+  .reading-card-includes { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 10px; }
+  .reading-card-includes li { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--text-muted); display: flex; gap: 12px; align-items: flex-start; }
+  .reading-card-includes li::before { content: '✦'; font-size: 8px; color: var(--ice); opacity: 0.5; margin-top: 6px; flex-shrink: 0; }
+  .reading-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 0.5px solid var(--ice-line); flex-wrap: wrap; gap: 20px; }
+  .reading-card-price { font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 0.12em; color: var(--text); }
+  .reading-card-price span { font-size: 10px; letter-spacing: 0.2em; color: var(--text-dim); display: block; margin-top: 4px; font-family: 'Cinzel', serif; text-transform: uppercase; }
+  .btn-reading { display: inline-block; background: var(--text); color: var(--bg); font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; text-decoration: none; padding: 16px 36px; transition: background 0.2s; }
+  .btn-reading:hover { background: var(--ice); }
 
   /* DEAR BELLE */
-  .dear-belle-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); max-width: 100%; background: var(--bg); padding: 96px 24px; }
-  .dear-belle-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .dear-belle-preview { background: var(--bg-lift); border: 1px solid var(--border); padding: 40px; }
-  .preview-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.28em; color: var(--ice); text-transform: uppercase; margin-bottom: 20px; opacity: 0.6; }
-  .preview-question { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; font-weight: 300; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; border-left: 1px solid var(--ice); padding-left: 20px; opacity: 0.8; }
-  .preview-answer { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8; }
-  .coming-soon-tag { display: inline-block; margin-top: 32px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.28em; color: var(--text-faint); text-transform: uppercase; border: 1px solid var(--border); padding: 8px 20px; }
+  .archive-section { position: relative; z-index: 1; padding: 96px 24px; border-bottom: 0.5px solid var(--border); background: var(--bg-deep); }
+  .archive-inner { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .archive-preview { border: 0.5px solid var(--ice-line); background: var(--ice-faint); padding: 36px; }
+  .preview-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.28em; color: var(--ice); text-transform: uppercase; margin-bottom: 18px; opacity: 0.6; display: block; }
+  .preview-question { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic; font-weight: 300; color: var(--text-muted); line-height: 1.75; border-left: 1px solid var(--ice); padding-left: 18px; margin-bottom: 16px; }
+  .preview-answer { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 300; color: var(--text-dim); line-height: 1.8; }
+  .archive-cta { display: inline-block; margin-top: 28px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.22em; color: var(--ice); text-transform: uppercase; text-decoration: none; border-bottom: 0.5px solid rgba(197,222,239,0.3); padding-bottom: 2px; transition: border-color 0.2s; }
+  .archive-cta:hover { border-color: var(--ice); }
 
-  /* SOCIAL PROOF */
-  .proof-section { background: var(--bg-deep); max-width: 100%; padding: 96px 24px; text-align: center; }
-  .proof-inner { max-width: 700px; margin: 0 auto; }
-  .proof-stat { font-family: 'Cinzel', serif; font-size: clamp(36px,6vw,64px); color: var(--ice); opacity: 0.4; letter-spacing: 0.06em; margin-bottom: 8px; }
+  /* PROOF */
+  .proof-section { position: relative; z-index: 1; padding: 96px 24px; text-align: center; border-bottom: 0.5px solid var(--border); }
+  .proof-inner { max-width: 600px; margin: 0 auto; }
+  .proof-stat { font-family: 'Cinzel', serif; font-size: clamp(36px,6vw,64px); color: var(--ice); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
   .proof-label { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 300; font-style: italic; color: var(--text-muted); margin-bottom: 40px; }
-  .proof-link { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.24em; color: var(--ice); text-transform: uppercase; text-decoration: none; border-bottom: 1px solid rgba(197,222,239,0.3); padding-bottom: 2px; }
+  .proof-link { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.24em; color: var(--ice); text-transform: uppercase; text-decoration: none; border-bottom: 0.5px solid rgba(197,222,239,0.3); padding-bottom: 2px; transition: border-color 0.2s; }
   .proof-link:hover { border-color: var(--ice); }
 
   /* ABOUT */
-  .about-section { max-width: 100%; padding: 96px 24px; border-top: 1px solid var(--border); }
+  .about-section { position: relative; z-index: 1; padding: 96px 24px; border-bottom: 0.5px solid var(--border); }
   .about-inner { max-width: 700px; margin: 0 auto; }
   .about-body { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; color: var(--text-secondary); line-height: 1.9; margin-bottom: 20px; }
   .about-sign { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; font-weight: 300; color: var(--text-muted); margin-top: 32px; }
 
   /* FOOTER */
-  footer { background: var(--bg-deep); border-top: 1px solid var(--border); padding: 48px 40px; text-align: center; }
-  .footer-wordmark { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.32em; color: var(--ice); text-transform: uppercase; margin-bottom: 24px; opacity: 0.6; }
-  .footer-socials { display: flex; justify-content: center; gap: 32px; margin-bottom: 24px; list-style: none; }
+  footer { position: relative; z-index: 1; background: var(--bg-deep); border-top: 0.5px solid var(--border); padding: 48px 40px; text-align: center; }
+  .footer-wordmark { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.32em; color: var(--ice); text-transform: uppercase; margin-bottom: 24px; opacity: 0.5; }
+  .footer-socials { display: flex; justify-content: center; gap: 28px; margin-bottom: 16px; list-style: none; flex-wrap: wrap; }
   .footer-socials a { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.22em; color: var(--text-faint); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
   .footer-socials a:hover { color: var(--ice); }
+  .footer-legal-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; list-style: none; }
+  .footer-legal-links a { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.22em; color: var(--text-faint); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .footer-legal-links a:hover { color: var(--ice); }
   .footer-legal { font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 300; color: var(--text-faint); letter-spacing: 0.04em; }
 
   @media (max-width: 768px) {
     nav { padding: 16px 20px; }
     .nav-links { display: none; }
-    .dear-belle-inner { grid-template-columns: 1fr; gap: 40px; }
+    .archive-inner { grid-template-columns: 1fr; gap: 40px; }
+    .reading-card { padding: 32px 24px; }
+    .reading-card-footer { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
@@ -107,119 +122,74 @@
 <nav>
   <a href="/" class="nav-wordmark">PsychicBelle</a>
   <ul class="nav-links">
-    <li><a href="#readings">Readings</a></li>
-    <li><a href="#dear-belle">Dear Belle</a></li>
-    <li><a href="https://go.psychicbelle.com/the-collective">The Collective</a></li>
+    <li><a href="#reading">Reading</a></li>
+    <li><a href="/dear-belle.html">Dear Belle</a></li>
     <li><a href="https://go.psychicbelle.com">Get Clarity</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
-<div style="background: var(--bg); min-height: 100vh; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #1a1a4a;">
-  <div class="hero">
-    <div class="hero-eyebrow">Psychic · Spiritual Advisor</div>
-    <h1 class="hero-headline">Get Clarity On Your<br><em>Connection</em></h1>
-    <div class="hero-free">Free</div>
-    <p class="hero-sub">Whatever your situation — together, apart, or somewhere in between — find out what the energy is showing.</p>
-    <a href="https://go.psychicbelle.com" class="btn-primary">Begin Your Reading</a>
-    <div class="hero-symbol">✦ ✦ ✦</div>
-  </div>
+<div class="hero">
+  <div class="hero-eyebrow">Psychic · Spiritual Advisor</div>
+  <h1 class="hero-headline">Get Clarity On Your<br><em>Connection</em></h1>
+  <p class="hero-sub">Whatever your situation — together, apart, or somewhere in between — find out what the energy is showing.</p>
+  <a href="https://go.psychicbelle.com" class="btn-primary">Begin Your Reading</a>
+  <div class="hero-symbol">✦ ✦ ✦</div>
 </div>
 
-<!-- PRODUCTS -->
-<div class="products-section" id="readings">
-  <div class="products-inner">
-    <div class="section-eyebrow">Readings &amp; Guides</div>
-    <h2 class="section-headline">What Would You Like to Know?</h2>
-    <p class="section-sub">Every product is built around the questions you're already asking.</p>
-    <div class="products-grid">
+<!-- CONNECTION READING -->
+<div class="reading-section" id="reading">
+  <div class="reading-inner">
+    <div class="section-eyebrow">Private Reading</div>
+    <h2 class="section-headline">The Connection Reading</h2>
+    <div class="divider-line"></div>
+    <p class="section-sub">What this connection is, what it means, and what you're navigating — written by Belle, delivered within 48 hours.</p>
 
-      <!-- Connection Reading — live, first -->
-      <div class="product-card">
-        <div class="product-tag">Reading · Live</div>
-        <div class="product-name">Connection Reading</div>
-        <p class="product-desc">What this connection is, what it means, and what you're navigating. Written, delivered within 48 hours.</p>
-        <div class="product-price">$97</div>
-        <a href="https://go.psychicbelle.com/connection-reading" class="product-cta">Get your reading →</a>
+    <div class="reading-card">
+      <span class="reading-card-tag">Written Reading · Delivered within 48 hours</span>
+      <div class="reading-card-name">Connection Reading</div>
+      <p class="reading-card-desc">A full written reading of the energetic connection between you and your person. What's actually there, what the silence or distance means, what is moving and what is blocked — and what it means for what comes next.</p>
+      <ul class="reading-card-includes">
+        <li>The nature of your connection — twin flame, soulmate, or karmic</li>
+        <li>What his energy is currently showing</li>
+        <li>What Spirit brought through about this specific situation</li>
+        <li>What this means for you and what comes next</li>
+        <li>Delivered privately by email within 48 hours</li>
+      </ul>
+      <div class="reading-card-footer">
+        <div class="reading-card-price">
+          $97
+          <span>One-time · No subscription</span>
+        </div>
+        <a href="https://go.psychicbelle.com/connection-reading" class="btn-reading">Get Your Reading</a>
       </div>
-
-      <!-- The Collective — live, full width, second -->
-      <div class="product-card full" id="collective">
-        <div class="product-tag">Membership · Live</div>
-        <div class="product-name">The Collective</div>
-        <p class="product-desc">Monthly energetic guidance for the connection that stays on your mind. What the energy is doing around your connection, when the shift is coming, and exactly what you need to do. Delivered every month.</p>
-        <div class="product-price">$27 / month · cancel anytime</div>
-        <a href="https://go.psychicbelle.com/the-collective" class="product-cta">Join The Collective →</a>
-      </div>
-
-      <!-- Coming soon -->
-      <div class="product-card">
-        <div class="product-tag">Reading · Coming Soon</div>
-        <div class="product-name">Deep Reading</div>
-        <p class="product-desc">Everything in the Connection Reading, plus deeper channel work, the blocks, the timeline, and what shifts next.</p>
-        <div class="product-price">$197</div>
-        <a href="https://go.psychicbelle.com/coming-soon" class="product-cta">Join the waitlist →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-tag">Reading · Coming Soon</div>
-        <div class="product-name">His Blueprint</div>
-        <p class="product-desc">Who he is, how he thinks, your cosmic compatibility, timing windows, and how to approach reunion for his chart specifically.</p>
-        <div class="product-price">$297</div>
-        <a href="https://go.psychicbelle.com/coming-soon" class="product-cta">Join the waitlist →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-tag">Guide · Coming Soon</div>
-        <div class="product-name">Twin Flame Method</div>
-        <p class="product-desc">The complete guide to navigating a twin flame connection — what's happening, why it moves the way it does, and what you do next.</p>
-        <div class="product-price">$197</div>
-        <a href="https://go.psychicbelle.com/coming-soon" class="product-cta">Join the waitlist →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-tag">Guide · Coming Soon</div>
-        <div class="product-name">Karmic Flame Guide</div>
-        <p class="product-desc">Understanding the karmic cycle you're in, what it's here to teach, and how to complete it without losing yourself.</p>
-        <div class="product-price">$147</div>
-        <a href="https://go.psychicbelle.com/coming-soon" class="product-cta">Join the waitlist →</a>
-      </div>
-
-      <div class="product-card">
-        <div class="product-tag">Guide · Coming Soon</div>
-        <div class="product-name">Soulmate Code</div>
-        <p class="product-desc">How to recognise your soulmate connection, why it unfolds the way it does, and how to open the path between you.</p>
-        <div class="product-price">$127</div>
-        <a href="https://go.psychicbelle.com/coming-soon" class="product-cta">Join the waitlist →</a>
-      </div>
-
     </div>
   </div>
 </div>
 
 <!-- DEAR BELLE -->
-<div class="dear-belle-section" id="dear-belle">
-  <div class="dear-belle-inner">
+<div class="archive-section">
+  <div class="archive-inner">
     <div>
-      <div class="section-eyebrow">Dear Belle</div>
-      <h2 class="section-headline">The Psychic Agony Aunt Column</h2>
+      <div class="section-eyebrow">A Column by Belle</div>
+      <h2 class="section-headline">Dear Belle</h2>
       <div class="divider-line"></div>
-      <p class="about-body">Real questions. Real situations. The kind you type into a psychic chat at 2am when no one else would understand.</p>
-      <p class="about-body" style="margin-top: 16px;">Each piece reads the energy behind the situation — the signs, the pattern, what it means. If the signs are yours, you'll know.</p>
-      <a href="/archive.html" class="product-cta" style="margin-top:32px;display:inline-block;">Read Dear Belle →</a>
+      <p class="about-body">Real questions. The energy behind them. Written for the woman who already knows something is there — and needs clarity on what it means.</p>
+      <p class="about-body" style="margin-top:12px;">If the signs are yours, you'll know.</p>
+      <a href="/dear-belle.html" class="archive-cta">Read Dear Belle →</a>
     </div>
-    <div class="dear-belle-preview">
-      <div class="preview-label">Dear Belle</div>
+    <div class="archive-preview">
+      <span class="preview-label">Dear Belle</span>
       <p class="preview-question">"He went cold after things were going so well. Now he's watching my stories but not reaching out. What does it mean?"</p>
       <p class="preview-answer">There's a pattern that runs through almost every connection like this. It isn't about you. It isn't about someone else. It's about what happens when a man feels something he wasn't prepared to feel...</p>
     </div>
   </div>
 </div>
 
-<!-- SOCIAL PROOF -->
+<!-- PROOF -->
 <div class="proof-section">
   <div class="proof-inner">
-    <div class="section-eyebrow" style="text-align:center;">What Clients Say</div>
+    <div class="section-eyebrow" style="text-align:center;">Verified Reviews</div>
     <div class="proof-stat">91%</div>
     <p class="proof-label">accuracy rating across verified client readings</p>
     <a href="https://www.purplegarden.co/psychics/28055-psychic-belle" class="proof-link" target="_blank" rel="noopener">Read verified reviews on Purple Garden →</a>
@@ -229,15 +199,13 @@
 <!-- ABOUT -->
 <div class="about-section">
   <div class="about-inner">
-    <div class="about-text">
-      <div class="section-eyebrow">About Belle</div>
-      <h2 class="section-headline">I've Been Reading These Connections For Years.</h2>
-      <div class="divider-line"></div>
-      <p class="about-body">The push and pull. The silence that says more than words. The feeling that this person was written into your story before you even met.</p>
-      <p class="about-body">I know what you're navigating because I've read it hundreds of times. Not the surface version — the energetic architecture underneath. What's actually happening, what it means, and what shifts next.</p>
-      <p class="about-body">When you're ready for clarity, I'm here.</p>
-      <div class="about-sign">— Belle, PsychicBelle</div>
-    </div>
+    <div class="section-eyebrow">About Belle</div>
+    <h2 class="section-headline">I've Been Reading These Connections For Years.</h2>
+    <div class="divider-line"></div>
+    <p class="about-body">The push and pull. The silence that says more than words. The feeling that this person was written into your story before you even met.</p>
+    <p class="about-body">I know what you're navigating because I've read it hundreds of times. Not the surface version — the energetic architecture underneath. What's actually happening, what it means, and what shifts next.</p>
+    <p class="about-body">When you're ready for clarity, I'm here.</p>
+    <div class="about-sign">— Belle, PsychicBelle</div>
   </div>
 </div>
 
@@ -250,7 +218,7 @@
     <li><a href="https://www.tiktok.com/@belle.psychic" target="_blank" rel="noopener">TikTok</a></li>
     <li><a href="https://www.pinterest.com/bellepsychic" target="_blank" rel="noopener">Pinterest</a></li>
   </ul>
-  <ul class="footer-socials" style="margin-bottom:16px;">
+  <ul class="footer-legal-links">
     <li><a href="/terms.html">Terms</a></li>
     <li><a href="/privacy.html">Privacy</a></li>
   </ul>
