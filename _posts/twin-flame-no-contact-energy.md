@@ -1,8 +1,8 @@
 ---
 id: 9
 slug: "twin-flame-no-contact-energy"
-title: "Why You Can Still Feel Your Twin Flame in No Contact — The Energetic Truth"
-excerpt: "Feeling your twin flame during no contact is not wishful thinking. It is the energetic reality of a connection that operates beyond physical proximity — and understanding it changes everything about how you move through this period."
+title: "Why You Can Still Feel Your Twin Flame in No Contact - The Energetic Truth"
+excerpt: "Feeling your twin flame during no contact is not wishful thinking. It is the energetic reality of a connection that operates beyond physical proximity - and understanding it changes everything about how you move through this period."
 date: "October 2026"
 category: "Twin Flame"
 readTime: "11 min"
@@ -156,4 +156,3 @@ That is what the no contact period is for. And the field will reflect every bit 
 ---
 
 *Belle is the founder of PsychicBelle — a private reading practice for women in twin flame, soulmate, and karmic connections. All readings are written, asynchronous, and delivered as beautifully formatted documents. To find out what type of connection you're in, take the free quiz at [go.psychicbelle.com](https://go.psychicbelle.com).*
-
